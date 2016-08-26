@@ -11,8 +11,10 @@
             "email": "holegary@gmail.com"
         }
     ],
-    "psr-4": {
-        "PrettyRoutes\\": "src"
+    "autoload": {
+        "psr-4": {
+            "PrettyRoutes\\": "src"
+        }
     },
     "minimum-stability": "dev"
 }
