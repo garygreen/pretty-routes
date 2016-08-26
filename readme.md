@@ -3,6 +3,8 @@ Pretty Routes for Laravel 5
 
 Visualise your routes in pretty format.
 
+![Pretty Routes](https://raw.githubusercontent.com/garygreen/pretty-routes/master/screenshot.png)
+
 # Installation
 
 ```
