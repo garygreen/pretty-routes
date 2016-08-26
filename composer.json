@@ -1,0 +1,15 @@
+{
+    "name": "garygreen/pretty-routes",
+    "description": "Pretty routes for Laravel 5.",
+    "require": {
+        "laravel/framework": "5.1.*|5.2.*|5.3.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gary Green",
+            "email": "holegary@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
