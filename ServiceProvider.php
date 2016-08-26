@@ -30,7 +30,13 @@ class ServiceProvider extends IlluminateServiceProvider {
             __DIR__ . '/config.php' => config_path('pretty-routes.php')
         ]);
 
-        $this->app['router']->get($this->app['config']->get('pretty-routes.url'), MainController::class . '@show');
+        if (empty(config('app.debug')))
+        {
+            return;
+        }
+
+        $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
+        $kernel->pushMiddleware('PrettyRoutes\MainMiddleware');
     }
 
 }

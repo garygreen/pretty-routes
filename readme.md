@@ -11,6 +11,8 @@ Visualise your routes in pretty format.
 composer require garygreen/pretty-routes
 ```
 
+**Note:** It's recommended to add this to your `require-dev` section and register the provider manually if your env is in local mode.
+
 Add to your `config/app.php` providers array:
 
 ```
