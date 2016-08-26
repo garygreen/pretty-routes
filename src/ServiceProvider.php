@@ -22,12 +22,12 @@ class ServiceProvider extends IlluminateServiceProvider {
      */
     public function boot()
     {
-        $this->loadViewsFrom(realpath(__DIR__ . '/views'), 'pretty-routes');
+        $this->loadViewsFrom(realpath(__DIR__ . '/../views'), 'pretty-routes');
         $this->mergeConfigFrom(
-            __DIR__ . '/config.php', 'pretty-routes'
+            __DIR__ . '/../config.php', 'pretty-routes'
         );
         $this->publishes([
-            __DIR__ . '/config.php' => config_path('pretty-routes.php')
+            __DIR__ . '/../config.php' => config_path('pretty-routes.php')
         ]);
 
         if (empty(config('app.debug')))
