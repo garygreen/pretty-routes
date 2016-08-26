@@ -16,7 +16,7 @@ composer require garygreen/pretty-routes
 Add to your `config/app.php` providers array:
 
 ```
-"PrettyRoutes\ServiceProvider",
+PrettyRoutes\ServiceProvider::class,
 ```
 
 By default the package exposes a `/routes` url. If you wish to configure this, publish the config.
