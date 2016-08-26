@@ -7,4 +7,11 @@ return [
      */
     'url' => 'routes',
 
+    /**
+     * The methods to hide.
+     */
+    'hide_methods' => [
+        'HEAD',
+    ],
+
 ];

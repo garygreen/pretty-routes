@@ -47,7 +47,7 @@
             @foreach ($routes as $route)
                 <tr>
                     <td>
-                        @foreach ($route->methods() as $method)
+                        @foreach (array_diff($route->methods(), config('pretty-routes.hide_methods')) as $method)
                             <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
                         @endforeach
                     </td>
