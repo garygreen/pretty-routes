@@ -60,6 +60,6 @@
             @endforeach
         </tbody>
     </table>
-
+    {{ $routes->links() }}
 </body>
 </html>
