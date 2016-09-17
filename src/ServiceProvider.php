@@ -3,7 +3,8 @@
 use PrettyRoutes\MainController;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
-class ServiceProvider extends IlluminateServiceProvider {
+class ServiceProvider extends IlluminateServiceProvider
+{
 
     /**
      * Register.
@@ -30,13 +31,11 @@ class ServiceProvider extends IlluminateServiceProvider {
             __DIR__ . '/../config.php' => config_path('pretty-routes.php')
         ]);
 
-        if (empty(config('app.debug')))
-        {
+        if (empty(config('app.debug'))) {
             return;
         }
 
         $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
         $kernel->pushMiddleware('PrettyRoutes\MainMiddleware');
     }
-
 }
