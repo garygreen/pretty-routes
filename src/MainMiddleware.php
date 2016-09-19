@@ -15,7 +15,7 @@ class MainMiddleware {
      */
     public function handle($request, Closure $next)
     {
-        if ($request->path() == config('pretty-routes.url'))
+        if ($request->is(config('pretty-routes.url')))
         {
             return new Response(view('pretty-routes::routes', [
                 'routes' => Route::getRoutes(),
