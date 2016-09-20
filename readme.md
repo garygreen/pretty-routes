@@ -20,5 +20,5 @@ PrettyRoutes\ServiceProvider::class,
 By default the package exposes a `/routes` url. If you wish to configure this, publish the config.
 
 ```bash
-php artisan vendor:publish
+php artisan vendor:publish --provider="PrettyRoutes\ServiceProvider"
 ```
