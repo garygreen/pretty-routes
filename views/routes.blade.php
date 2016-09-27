@@ -78,7 +78,7 @@
         $(document).ready(function() {
              $(document).ready(function () {
                  var table = $('.table').DataTable( {
-                           "pageLength": 5,
+                           "pageLength": 10,
                             "pagingType": "full_numbers",
                             colReorder: true,
                             fixedHeader: true
