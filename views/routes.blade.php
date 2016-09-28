@@ -37,6 +37,7 @@
         <thead>
             <tr>
                 <th>Methods</th>
+                <th>Domain</td>
                 <th>Path</td>
                 <th>Name</th>
                 <th>Action</th>
@@ -52,6 +53,7 @@
                             <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
                         @endforeach
                     </td>
+                    <td>{{ $route->domain() }}</td>
                     <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}</td>
                     <td>{{ $route->getName() }}</td>
                     <td>{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
