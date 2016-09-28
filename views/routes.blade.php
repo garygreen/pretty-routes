@@ -27,17 +27,21 @@
         .tag {
             padding: 0.30em 0.8em;
         }
+
+        table.hide-domains .domain {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
     <h1 class="display-4">Routes ({{ count($routes) }})</h1>
 
-    <table class="table table-sm table-hover">
+    <table class="table table-sm table-hover" style="visibility: hidden;">
         <thead>
             <tr>
                 <th>Methods</th>
-                <th>Domain</td>
+                <th class="domain">Domain</td>
                 <th>Path</td>
                 <th>Name</th>
                 <th>Action</th>
@@ -53,7 +57,7 @@
                             <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
                         @endforeach
                     </td>
-                    <td>{{ $route->domain() }}</td>
+                    <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
                     <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}</td>
                     <td>{{ $route->getName() }}</td>
                     <td>{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
@@ -62,6 +66,21 @@
             @endforeach
         </tbody>
     </table>
+
+    <script type="text/javascript">
+        function hideEmptyDomainColumn() {
+            var table = document.querySelector('.table');
+            var domains = document.querySelectorAll('tbody .domain');
+            var emptyDomains = document.querySelectorAll('tbody .domain-empty');
+            if (domains.length == emptyDomains.length) {
+                table.className += ' hide-domains';
+            }
+
+            table.style.visibility = 'visible';
+        }
+
+        hideEmptyDomainColumn();
+    </script>
 
 </body>
 </html>
