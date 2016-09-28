@@ -70,8 +70,8 @@
     <script type="text/javascript">
         function hideEmptyDomainColumn() {
             var table = document.querySelector('.table');
-            var domains = document.querySelectorAll('tbody .domain');
-            var emptyDomains = document.querySelectorAll('tbody .domain-empty');
+            var domains = table.querySelectorAll('tbody .domain');
+            var emptyDomains = table.querySelectorAll('tbody .domain-empty');
             if (domains.length == emptyDomains.length) {
                 table.className += ' hide-domains';
             }
