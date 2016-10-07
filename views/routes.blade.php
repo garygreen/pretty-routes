@@ -61,7 +61,7 @@
                     <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}</td>
                     <td>{{ $route->getName() }}</td>
                     <td>{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
-                    <td>{{ implode(', ', $route->middleware()) }}
+                    <td>{{ implode(', ', array_merge($route->middleware(), $route->controllerMiddleware())) }}
                 </tr>
             @endforeach
         </tbody>
