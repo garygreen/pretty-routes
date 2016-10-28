@@ -31,45 +31,98 @@
         table.hide-domains .domain {
             display: none;
         }
+
+        ul.routePrefixLinks {
+            list-style: none;
+        }
+
+        ul.routePrefixLinks li {
+            background-color: #3B5998;
+            float: left;
+            margin-right:5px;
+            margin-top: 5px;
+            padding: 0 5px;
+        }
+
+        ul.routePrefixLinks li a {
+            color: #FFF;
+        }
+
+        td.routePrefixName h5 {
+            background-color: #edeff0;
+            padding-left:10px;
+        }
+
+        td.routePrefixName:hover {
+            background-color: #edeff0;
+        }
+
     </style>
 </head>
 <body>
 
     <h1 class="display-4">Routes ({{ count($routes) }})</h1>
 
+    <?php
+        $routePrefixLinks = collect($routes)->reduce(function ($arr,$item) {
+            $arr[] = $item->getPrefix();
+            return $arr;
+        }, collect([]))->reject(null)->unique()->map(function ($value, $key) {
+            return sprintf('<li><a href="#%s">%s</a></li>', $value, $value);
+        })->implode('');
+    ?>
+
+    @if ($routePrefixLinks && config('pretty-routes.group_by_prefix'))
+        <ul class="routePrefixLinks">{!! $routePrefixLinks !!}</ul>
+    @endif
+
     <table class="table table-sm table-hover" style="visibility: hidden;">
         <thead>
-            <tr>
-                <th>Methods</th>
-                <th class="domain">Domain</td>
-                <th>Path</td>
-                <th>Name</th>
-                <th>Action</th>
-                <th>Middleware</th>
-            </tr>
+        <tr>
+            <th>Methods</th>
+            <th class="domain">Domain</td>
+            <th>Path</td>
+            <th>Name</th>
+            <th>Action</th>
+            <th>Middleware</th>
+        </tr>
         </thead>
         <tbody>
-            <?php $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger']; ?>
-            @foreach ($routes as $route)
+
+        <?php
+            $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger'];
+            $lastRoutePrefix = '';
+
+            $routes = collect($routes)->reduce(function ($arr,$item) {
+                ( $item->getPrefix() != null ) ? $arr['routesWithPrefix'][]=$item : $arr['routesWithoutPrefix'][]=$item;
+                return $arr;
+            },[]);
+
+            $routes['routesWithoutPrefix'] = collect($routes['routesWithoutPrefix'])->sortBy(function ($item, $key) {
+                return $item->uri()[0];
+            });
+        ?>
+
+
+        @foreach($routes['routesWithoutPrefix'] as $route)
+
+            @include('pretty-routes::partials.item', ['route' => $route])
+
+        @endforeach
+
+
+        @foreach($routes['routesWithPrefix'] as $route)
+
+            @if ($lastRoutePrefix != $route->getPrefix() && config('pretty-routes.group_by_prefix'))
                 <tr>
-                    <td>
-                        @foreach (array_diff($route->methods(), config('pretty-routes.hide_methods')) as $method)
-                            <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
-                        @endforeach
-                    </td>
-                    <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
-                    <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}</td>
-                    <td>{{ $route->getName() }}</td>
-                    <td>{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
-                    <td>
-                      @if (method_exists($route, 'controllerMiddleware'))
-                        {{ implode(', ', array_merge($route->middleware(), $route->controllerMiddleware())) }}
-                      @else
-                        {{ implode(', ', $route->middleware()) }}
-                      @endif
-                    </td>
+                    <td colspan="6" id="{{ $route->getPrefix() }}" class="routePrefixName"><h5>{{ $route->getPrefix() }}</h5></td>
                 </tr>
-            @endforeach
+                <?php $lastRoutePrefix = $route->getPrefix(); ?>
+            @endif
+
+            @include('pretty-routes::partials.item', ['route' => $route])
+
+        @endforeach
         </tbody>
     </table>
 

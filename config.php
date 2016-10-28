@@ -13,5 +13,10 @@ return [
     'hide_methods' => [
         'HEAD',
     ],
-
+    
+    /**
+     * Group routes by prefix.
+     */
+    'group_by_prefix' => true,
+    
 ];
