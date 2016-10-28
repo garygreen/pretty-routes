@@ -61,85 +61,90 @@
 </head>
 <body>
 
-<h1 class="display-4">Routes ({{ count($routes) }})</h1>
+    <h1 class="display-4">Routes ({{ count($routes) }})</h1>
 
-<?php
-    $routePrefixLinks = collect($routes)->reduce(function ($arr,$item) {
-        $arr[] = $item->getPrefix();
-        return $arr;
-    },collect([]))->filter(function ($value, $key) {
-        return $value != null;
-    })->unique()->map(function ($value, $key) {
-        return sprintf('<li><a href="#%s">%s</a></li>', $value, $value);
-    })->implode("");
-?>
-
-@if ($routePrefixLinks)
-    <ul class="routePrefixLinks">{!! $routePrefixLinks !!}</ul>
-@endif
-
-<table class="table table-sm table-hover" style="visibility: hidden;">
-    <thead>
-    <tr>
-        <th>Methods</th>
-        <th class="domain">Domain</td>
-        <th>Path</td>
-        <th>Name</th>
-        <th>Action</th>
-        <th>Middleware</th>
-    </tr>
-    </thead>
-    <tbody>
     <?php
-    $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger'];
-    $lastRoutePrefix = '';
+        $routePrefixLinks = collect($routes)->reduce(function ($arr,$item) {
+            $arr[] = $item->getPrefix();
+            return $arr;
+        }, collect([]))->reject(null)->unique()->map(function ($value, $key) {
+            return sprintf('<li><a href="#%s">%s</a></li>', $value, $value);
+        })->implode('');
     ?>
 
-    @foreach ($routes as $route)
+    @if ($routePrefixLinks)
+        <ul class="routePrefixLinks">{!! $routePrefixLinks !!}</ul>
+    @endif
 
-        @if ($lastRoutePrefix != $route->getPrefix())
-            <tr>
-                <td colspan="6" id="{{ $route->getPrefix() }}" class="routePrefixName"><h5>{{ $route->getPrefix() }}</h5></td>
-            </tr>
-            <?php $lastRoutePrefix =  $route->getPrefix(); ?>
-        @endif
-
+    <table class="table table-sm table-hover" style="visibility: hidden;">
+        <thead>
         <tr>
-            <td>
-                @foreach (array_diff($route->methods(), config('pretty-routes.hide_methods')) as $method)
-                    <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
-                @endforeach
-            </td>
-            <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
-            <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}</td>
-            <td>{{ $route->getName() }}</td>
-            <td>{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
-            <td>
-                @if (method_exists($route, 'controllerMiddleware'))
-                    {{ implode(', ', array_merge($route->middleware(), $route->controllerMiddleware())) }}
-                @else
-                    {{ implode(', ', $route->middleware()) }}
-                @endif
-            </td>
+            <th>Methods</th>
+            <th class="domain">Domain</td>
+            <th>Path</td>
+            <th>Name</th>
+            <th>Action</th>
+            <th>Middleware</th>
         </tr>
-    @endforeach
-    </tbody>
-</table>
+        </thead>
+        <tbody>
 
-<script type="text/javascript">
-    function hideEmptyDomainColumn() {
-        var table = document.querySelector('.table');
-        var domains = table.querySelectorAll('tbody .domain');
-        var emptyDomains = table.querySelectorAll('tbody .domain-empty');
-        if (domains.length == emptyDomains.length) {
-            table.className += ' hide-domains';
+        <?php
+            $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger'];
+            $lastRoutePrefix = '';
+
+            $routes = collect($routes)->reduce(function ($arr,$item) {
+                if ($item->getPrefix() != null) {
+                    $arr['routesWithPrefix'][]=$item;
+                }
+                else {
+                    $arr['routesWithoutPrefix'][]=$item;
+                }
+                return $arr;
+            },[]);
+
+            $routes['routesWithoutPrefix'] = collect($routes['routesWithoutPrefix'])->sortBy(function ($item, $key) {
+                return $item->uri()[0];
+            });
+        ?>
+
+
+        @foreach($routes['routesWithoutPrefix'] as $route)
+
+            @include('pretty-routes::partials.item', ['route' => $route])
+
+        @endforeach
+
+
+        @foreach($routes['routesWithPrefix'] as $route)
+
+            @if ($lastRoutePrefix != $route->getPrefix())
+                <tr>
+                    <td colspan="6" id="{{ $route->getPrefix() }}" class="routePrefixName"><h5>{{ $route->getPrefix() }}</h5></td>
+                </tr>
+                <?php $lastRoutePrefix = $route->getPrefix(); ?>
+            @endif
+
+            @include('pretty-routes::partials.item', ['route' => $route])
+
+        @endforeach
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        function hideEmptyDomainColumn() {
+            var table = document.querySelector('.table');
+            var domains = table.querySelectorAll('tbody .domain');
+            var emptyDomains = table.querySelectorAll('tbody .domain-empty');
+            if (domains.length == emptyDomains.length) {
+                table.className += ' hide-domains';
+            }
+
+            table.style.visibility = 'visible';
         }
 
-        table.style.visibility = 'visible';
-    }
-
-    hideEmptyDomainColumn();
-</script>
+        hideEmptyDomainColumn();
+    </script>
 
 </body>
 </html>
