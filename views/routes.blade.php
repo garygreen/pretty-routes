@@ -72,7 +72,7 @@
         })->implode('');
     ?>
 
-    @if ($routePrefixLinks)
+    @if ($routePrefixLinks && config('pretty-routes.group_by_prefix'))
         <ul class="routePrefixLinks">{!! $routePrefixLinks !!}</ul>
     @endif
 
@@ -118,7 +118,7 @@
 
         @foreach($routes['routesWithPrefix'] as $route)
 
-            @if ($lastRoutePrefix != $route->getPrefix())
+            @if ($lastRoutePrefix != $route->getPrefix() && config('pretty-routes.group_by_prefix'))
                 <tr>
                     <td colspan="6" id="{{ $route->getPrefix() }}" class="routePrefixName"><h5>{{ $route->getPrefix() }}</h5></td>
                 </tr>
