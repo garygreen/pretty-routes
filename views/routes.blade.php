@@ -94,12 +94,7 @@
             $lastRoutePrefix = '';
 
             $routes = collect($routes)->reduce(function ($arr,$item) {
-                if ($item->getPrefix() != null) {
-                    $arr['routesWithPrefix'][]=$item;
-                }
-                else {
-                    $arr['routesWithoutPrefix'][]=$item;
-                }
+                ( $item->getPrefix() != null ) ? $arr['routesWithPrefix'][]=$item : $arr['routesWithoutPrefix'][]=$item;
                 return $arr;
             },[]);
 
