@@ -51,24 +51,33 @@
         <tbody>
             <?php $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger']; ?>
             @foreach ($routes as $route)
-                <tr>
-                    <td>
-                        @foreach (array_diff($route->methods(), config('pretty-routes.hide_methods')) as $method)
-                            <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
-                        @endforeach
-                    </td>
-                    <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
-                    <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}</td>
-                    <td>{{ $route->getName() }}</td>
-                    <td>{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
-                    <td>
-                      @if (is_callable([$route, 'controllerMiddleware']))
-                        {{ implode(', ', array_map($middlewareClosure, array_merge($route->middleware(), $route->controllerMiddleware()))) }}
-                      @else
-                        {{ implode(', ', $route->middleware()) }}
-                      @endif
-                    </td>
-                </tr>
+
+                @php
+                    $check = !empty(config('pretty-routes.ignore_uri'))
+                    ? !preg_match(config('pretty-routes.ignore_uri'), $route->uri())
+                    : $route->uri();
+                @endphp
+
+                @if ($check)
+                    <tr>
+                        <td>
+                            @foreach (array_diff($route->methods(), config('pretty-routes.hide_methods')) as $method)
+                                <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
+                            @endforeach
+                        </td>
+                        <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
+                        <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}</td>
+                        <td>{{ $route->getName() }}</td>
+                        <td>{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
+                        <td>
+                            @if (is_callable([$route, 'controllerMiddleware']))
+                                {{ implode(', ', array_map($middlewareClosure, array_merge($route->middleware(), $route->controllerMiddleware()))) }}
+                            @else
+                                {{ implode(', ', $route->middleware()) }}
+                            @endif
+                        </td>
+                    </tr>
+                @endif
             @endforeach
         </tbody>
     </table>

@@ -14,4 +14,8 @@ return [
         'HEAD',
     ],
 
+    /**
+     * ignore routes with certain urls through regex
+     */
+    'ignore_uri' => ''
 ];
