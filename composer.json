@@ -20,7 +20,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "PrettyRoutes\\ServiceProvider::class"
+                "PrettyRoutes\\ServiceProvider"
             ]
         }
     }
