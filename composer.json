@@ -2,7 +2,7 @@
     "name": "garygreen/pretty-routes",
     "description": "Pretty routes for Laravel 5.",
     "require": {
-        "laravel/framework": "5.1.*|5.2.*|5.3.*|5.4.*"
+        "laravel/framework": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*"
     },
     "license": "MIT",
     "authors": [
@@ -16,5 +16,12 @@
             "PrettyRoutes\\": "src"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "PrettyRoutes\\ServiceProvider::class"
+            ]
+        }
+    }
 }
