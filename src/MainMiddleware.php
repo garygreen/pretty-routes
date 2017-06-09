@@ -21,9 +21,14 @@ class MainMiddleware {
                 return $middleware instanceof Closure ? 'Closure' : $middleware;
             };
 
-            $routes = collect(Route::getRoutes())->filter(function ($value, $key) {
-                return !preg_match('#^_debugbar#', $value->uri());
-            });
+            if (empty(config('pretty-routes.hide_matching'))) {
+                $routes = Route::getRoutes();
+            } else {
+                $routes = collect(Route::getRoutes())->filter(function ($value, $key) {
+                    $regex = implode('|', config('pretty-routes.hide_matching'));
+                    return !preg_match('#' . $regex . '#i', $value->uri());
+                });
+            }
 
             return new Response(view('pretty-routes::routes', compact('routes', 'middlewareClosure')));
         }
