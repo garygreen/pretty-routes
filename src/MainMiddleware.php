@@ -20,10 +20,12 @@ class MainMiddleware {
             $middlewareClosure = function ($middleware) {
                 return $middleware instanceof Closure ? 'Closure' : $middleware;
             };
-            return new Response(view('pretty-routes::routes', [
-                'routes' => Route::getRoutes(),
-                'middlewareClosure' => $middlewareClosure,
-            ]));
+
+            $routes = collect(Route::getRoutes())->filter(function ($value, $key) {
+                return !preg_match('#^_debugbar#', $value->uri());
+            });
+
+            return new Response(view('pretty-routes::routes', compact('routes', 'middlewareClosure')));
         }
 
         return $next($request);
