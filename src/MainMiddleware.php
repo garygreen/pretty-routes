@@ -20,10 +20,16 @@ class MainMiddleware {
             $middlewareClosure = function ($middleware) {
                 return $middleware instanceof Closure ? 'Closure' : $middleware;
             };
-            return new Response(view('pretty-routes::routes', [
-                'routes' => Route::getRoutes(),
-                'middlewareClosure' => $middlewareClosure,
-            ]));
+
+            $routes = collect(Route::getRoutes());
+
+            foreach (config('pretty-routes.hide_matching') as $regex) {
+                $routes = $routes->filter(function ($value, $key) use ($regex) {
+                    return !preg_match($regex, $value->uri());
+                });
+            }
+
+            return new Response(view('pretty-routes::routes', compact('routes', 'middlewareClosure')));
         }
 
         return $next($request);

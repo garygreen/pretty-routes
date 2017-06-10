@@ -14,4 +14,11 @@ return [
         'HEAD',
     ],
 
+    /**
+     * The routes to hide with regular expression
+     */
+    'hide_matching' => [
+        '#^_debugbar#',
+    ],
+
 ];
