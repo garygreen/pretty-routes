@@ -7,6 +7,11 @@
             padding: 60px;
         }
 
+        .table {
+            margin-left: 100px;
+            width: calc(100% - 100px);
+        }
+
         .table-striped tbody tr:nth-of-type(odd) {
             background-color: rgba(0,0,0,.015);
         }
@@ -34,42 +39,68 @@
     </style>
 </head>
 <body>
+    @php
+        $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger'];
+        $x=[];
+
+        foreach ($routes as $route) {
+            if (str_contains($route->uri(), '/')) {
+                $o = strstr($route->uri(), '/', true);
+
+                if (preg_match('/^'.$o.'/', $route->uri())) {
+                    $x[$o][]=$route;
+                }
+            } else {
+                $x[$route->uri()][]=$route;
+            }
+        }
+
+        if ($check = !empty(config('pretty-routes.ignore_uri'))) {
+            $y = preg_grep(config('pretty-routes.ignore_uri'), array_keys($x));
+            foreach ($y as $key) {
+                unset($x[$key]);
+            }
+        }
+    @endphp
 
     <h1 class="display-4">Routes ({{ count($routes) }})</h1>
-
     <table class="table table-sm table-hover" style="visibility: hidden;">
         <thead>
             <tr>
                 <th>Methods</th>
-                <th class="domain">Domain</td>
-                <th>Path</td>
+                <th class="domain">Domain</th>
+                <th>Path</th>
                 <th>Name</th>
                 <th>Action</th>
                 <th>Middleware</th>
             </tr>
         </thead>
         <tbody>
-            <?php $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger']; ?>
-            @foreach ($routes as $route)
-                <tr>
-                    <td>
-                        @foreach (array_diff($route->methods(), config('pretty-routes.hide_methods')) as $method)
-                            <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
-                        @endforeach
-                    </td>
-                    <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
-                    <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}</td>
-                    <td>{{ $route->getName() }}</td>
-                    <td>{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
-                    <td>
-                      @if (is_callable([$route, 'controllerMiddleware']))
-                        {{ implode(', ', array_map($middlewareClosure, array_merge($route->middleware(), $route->controllerMiddleware()))) }}
-                      @else
-                        {{ implode(', ', $route->middleware()) }}
-                      @endif
-                    </td>
-                </tr>
-            @endforeach
+            <tr>
+                @foreach ($x as $item => $data)
+                    <th style="transform: translateX(-100px);">{{ empty($item) ? '/' : $item }}</th>
+                    @foreach ($data as $one)
+                        <tr>
+                            <td>
+                                @foreach (array_diff($one->methods(), config('pretty-routes.hide_methods')) as $method)
+                                    <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
+                                @endforeach
+                            </td>
+                            <td class="domain{{ strlen($one->domain()) == 0 ? ' domain-empty' : '' }}">{{ $one->domain() }}</td>
+                            <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $one->uri()) !!}</td>
+                            <td>{{ $one->getName() }}</td>
+                            <td>{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $one->getActionName()) !!}</td>
+                            <td>
+                                @if (is_callable([$one, 'controllerMiddleware']))
+                                    {{ implode(', ', array_map($middlewareClosure, array_merge($one->middleware(), $one->controllerMiddleware()))) }}
+                                @else
+                                    {{ implode(', ', $one->middleware()) }}
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                @endforeach
+            </tr>
         </tbody>
     </table>
 
