@@ -80,13 +80,13 @@
                                 {{ $data[$i]->domain() }}
                             </td>
                             <td>
-                                {!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $data[$i]->uri()) !!}
+                                {{ $data[$i]->uri() }}
                             </td>
                             <td>
                                 {{ $data[$i]->getName() }}
                             </td>
                             <td>
-                                {!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $data[$i]->getActionName()) !!}
+                                {{ $data[$i]->getActionName() }}
                             </td>
                             <td>
                                 @if (is_callable([$data[$i], 'controllerMiddleware']))
