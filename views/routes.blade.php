@@ -64,7 +64,7 @@
             <tr>
                 <th>Group</th>
                 <th>Methods</th>
-                <th>Domain</th>
+                <th class="hide-domain">Domain</th>
                 <th>Path</th>
                 <th>Name</th>
                 <th>Action</th>
@@ -75,51 +75,47 @@
             @foreach ($x as $item => $data)
                 <tr>
                     <th>{{ empty($item) ? '/' : $item }}</th>
-                    <td>
-                        @for ($i = 0; $i < count($data) ; $i++)
-                            @foreach (array_diff($data[$i]->methods(), config('pretty-routes.hide_methods')) as $method)
-                                <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
-                            @endforeach
-                            <br>
-                        @endfor
-                    </td>
-                    <td>
-                        @for ($i = 0; $i < count($data) ; $i++)
-                            {{ $data[$i]->domain() }}
-                            <br>
-                        @endfor
-                    </td>
-                    <td>
-                        @for ($i = 0; $i < count($data) ; $i++)
-                            {!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $data[$i]->uri()) !!}
-                            <br>
-                        @endfor
-                    </td>
-                    <td>
-                        @for ($i = 0; $i < count($data) ; $i++)
-                            {{ $data[$i]->getName() }}
-                            <br>
-                        @endfor
-                    </td>
-                    <td>
-                        @for ($i = 0; $i < count($data) ; $i++)
-                            {!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $data[$i]->getActionName()) !!}
-                            <br>
-                        @endfor
-                    </td>
-                    <td>
-                        @for ($i = 0; $i < count($data) ; $i++)
-                            @if (is_callable([$data[$i], 'controllerMiddleware']))
-                                {{ implode(', ', array_map($middlewareClosure, array_merge($data[$i]->middleware(), $data[$i]->controllerMiddleware()))) }}
-                            @else
-                                {{ implode(', ', $data[$i]->middleware()) }}
-                            @endif
-                            <br>
-                        @endfor
-                    </td>
+                    @for ($i = 0; $i < count($data) ; $i++)
+                        <tr>
+                            <td></td>
+                            <td>
+                                @foreach (array_diff($data[$i]->methods(), config('pretty-routes.hide_methods')) as $method)
+                                    <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
+                                @endforeach
+                            </td>
+                            <td class="domain">
+                                {{ $data[$i]->domain() }}
+                            </td>
+                            <td>
+                                {{ $data[$i]->uri() }}
+                            </td>
+                            <td>
+                                {{ $data[$i]->getName() }}
+                            </td>
+                            <td>
+                                {{ $data[$i]->getActionName() }}
+                            </td>
+                            <td>
+                                @if (is_callable([$data[$i], 'controllerMiddleware']))
+                                    {{ implode(', ', array_map($middlewareClosure, array_merge($data[$i]->middleware(), $data[$i]->controllerMiddleware()))) }}
+                                @else
+                                    {{ implode(', ', $data[$i]->middleware()) }}
+                                @endif
+                            </td>
+                        </tr>
+                    @endfor
                 </tr>
             @endforeach
         </tbody>
     </table>
+
+    <script>
+        $(function() {
+            if (!$('.domain').val()) {
+                $('.domain').hide();
+                $('.hide-domain').hide()
+            }
+        })
+    </script>
 </body>
 </html>
