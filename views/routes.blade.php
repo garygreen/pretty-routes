@@ -34,59 +34,81 @@
     </style>
 </head>
 <body>
+    @php
+        $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger'];
+        $x=[];
+
+        foreach ($routes as $route) {
+            if (str_contains($route->uri(), '/')) {
+                $o = strstr($route->uri(), '/', true);
+
+                if (preg_match('/^'.$o.'/', $route->uri())) {
+                    $x[$o][]=$route;
+                }
+            } else {
+                $x[$route->uri()][]=$route;
+            }
+        }
+    @endphp
 
     <h1 class="display-4">Routes ({{ count($routes) }})</h1>
-
-    <table class="table table-sm table-hover" style="visibility: hidden;">
+    <table class="table table-sm table-hover">
         <thead>
             <tr>
+                <th>Group</th>
                 <th>Methods</th>
-                <th class="domain">Domain</td>
-                <th>Path</td>
+                <th class="hide-domain">Domain</th>
+                <th>Path</th>
                 <th>Name</th>
                 <th>Action</th>
                 <th>Middleware</th>
             </tr>
         </thead>
         <tbody>
-            <?php $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger']; ?>
-            @foreach ($routes as $route)
+            @foreach ($x as $item => $data)
                 <tr>
-                    <td>
-                        @foreach (array_diff($route->methods(), config('pretty-routes.hide_methods')) as $method)
-                            <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
-                        @endforeach
-                    </td>
-                    <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
-                    <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}</td>
-                    <td>{{ $route->getName() }}</td>
-                    <td>{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
-                    <td>
-                      @if (is_callable([$route, 'controllerMiddleware']))
-                        {{ implode(', ', array_map($middlewareClosure, array_merge($route->middleware(), $route->controllerMiddleware()))) }}
-                      @else
-                        {{ implode(', ', $route->middleware()) }}
-                      @endif
-                    </td>
+                    <th>{{ empty($item) ? '/' : $item }}</th>
+                    @for ($i = 0; $i < count($data) ; $i++)
+                        <tr>
+                            <td></td>
+                            <td>
+                                @foreach (array_diff($data[$i]->methods(), config('pretty-routes.hide_methods')) as $method)
+                                    <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
+                                @endforeach
+                            </td>
+                            <td class="domain">
+                                {{ $data[$i]->domain() }}
+                            </td>
+                            <td>
+                                {{ $data[$i]->uri() }}
+                            </td>
+                            <td>
+                                {{ $data[$i]->getName() }}
+                            </td>
+                            <td>
+                                {{ $data[$i]->getActionName() }}
+                            </td>
+                            <td>
+                                @if (is_callable([$data[$i], 'controllerMiddleware']))
+                                    {{ implode(', ', array_map($middlewareClosure, array_merge($data[$i]->middleware(), $data[$i]->controllerMiddleware()))) }}
+                                @else
+                                    {{ implode(', ', $data[$i]->middleware()) }}
+                                @endif
+                            </td>
+                        </tr>
+                    @endfor
                 </tr>
             @endforeach
         </tbody>
     </table>
 
-    <script type="text/javascript">
-        function hideEmptyDomainColumn() {
-            var table = document.querySelector('.table');
-            var domains = table.querySelectorAll('tbody .domain');
-            var emptyDomains = table.querySelectorAll('tbody .domain-empty');
-            if (domains.length == emptyDomains.length) {
-                table.className += ' hide-domains';
+    <script>
+        $(function() {
+            if (!$('.domain').val()) {
+                $('.domain').hide();
+                $('.hide-domain').hide()
             }
-
-            table.style.visibility = 'visible';
-        }
-
-        hideEmptyDomainColumn();
+        })
     </script>
-
 </body>
 </html>
