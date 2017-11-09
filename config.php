@@ -13,6 +13,11 @@ return [
     'middlewares' => [],
 
     /**
+     * Indicates whether to enable pretty routes only when debug is enabled (APP_DEBUG).
+     */
+    'debug_only' => true,
+
+    /**
      * The methods to hide.
      */
     'hide_methods' => [
