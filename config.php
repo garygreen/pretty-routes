@@ -8,6 +8,11 @@ return [
     'url' => 'routes',
 
     /**
+     * The middleware(s) to apply before attempting to access routes page.
+     */
+    'middlewares' => [],
+
+    /**
      * The methods to hide.
      */
     'hide_methods' => [
@@ -19,6 +24,7 @@ return [
      */
     'hide_matching' => [
         '#^_debugbar#',
+        '#^routes$#'
     ],
 
 ];

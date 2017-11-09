@@ -1,6 +1,6 @@
 <?php namespace PrettyRoutes;
 
-use PrettyRoutes\MainController;
+use Route;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 class ServiceProvider extends IlluminateServiceProvider {
@@ -22,7 +22,12 @@ class ServiceProvider extends IlluminateServiceProvider {
      */
     public function boot()
     {
+        if (empty(config('app.debug'))) {
+            return;
+        }
+
         $this->loadViewsFrom(realpath(__DIR__ . '/../views'), 'pretty-routes');
+
         $this->mergeConfigFrom(
             __DIR__ . '/../config.php', 'pretty-routes'
         );
@@ -30,13 +35,9 @@ class ServiceProvider extends IlluminateServiceProvider {
             __DIR__ . '/../config.php' => config_path('pretty-routes.php')
         ]);
 
-        if (empty(config('app.debug')))
-        {
-            return;
-        }
-
-        $kernel = $this->app->make('Illuminate\Contracts\Http\Kernel');
-        $kernel->pushMiddleware('PrettyRoutes\MainMiddleware');
+        Route::get(config('pretty-routes.url'), 'PrettyRoutes\PrettyRoutesController@show')
+            ->name('pretty-routes.show')
+            ->middleware(config('pretty-routes.middlewares'));
     }
 
 }
