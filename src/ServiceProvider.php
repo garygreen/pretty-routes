@@ -26,7 +26,7 @@ class ServiceProvider extends IlluminateServiceProvider {
             __DIR__ . '/../config.php', 'pretty-routes'
         );
 
-        if (config('pretty-routes.debug_only') && empty(config('app.debug'))) {
+        if (config('pretty-routes.debug_only', true) && empty(config('app.debug'))) {
             return;
         }
 
