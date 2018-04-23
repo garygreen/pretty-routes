@@ -1,7 +1,7 @@
 <?php namespace PrettyRoutes;
 
-use Route;
 use Closure;
+use Route;
 
 class PrettyRoutesController {
 
@@ -17,6 +17,7 @@ class PrettyRoutesController {
         };
 
         $routes = collect(Route::getRoutes());
+        $colors = $this->colors();
 
         foreach (config('pretty-routes.hide_matching') as $regex) {
             $routes = $routes->filter(function ($value, $key) use ($regex) {
@@ -24,10 +25,22 @@ class PrettyRoutesController {
             });
         }
 
-        return view('pretty-routes::routes', [
-            'routes' => $routes,
-            'middlewareClosure' => $middlewareClosure,
-        ]);
+        return view('pretty-routes::routes', compact('routes', 'middlewareClosure', 'colors'));
+    }
+
+    /**
+     * @return array
+     */
+    protected function colors()
+    {
+        return [
+            'GET'    => 'success',
+            'HEAD'   => 'default',
+            'POST'   => 'primary',
+            'PUT'    => 'warning',
+            'PATCH'  => 'info',
+            'DELETE' => 'danger',
+        ];
     }
 
 }
