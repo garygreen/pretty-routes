@@ -20,7 +20,7 @@ class PrettyRoutesController {
 
         foreach (config('pretty-routes.hide_matching') as $regex) {
             $routes = $routes->filter(function ($value, $key) use ($regex) {
-                return !preg_match($regex, $value->uri());
+                return !str_is($regex, $value->uri());
             });
         }
 
