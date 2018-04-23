@@ -41,8 +41,8 @@
         <thead>
             <tr>
                 <th>Methods</th>
-                <th class="domain">Domain</td>
-                <th>Path</td>
+                <th class="domain">Domain</th>
+                <th>Path</th>
                 <th>Name</th>
                 <th>Action</th>
                 <th>Middleware</th>
