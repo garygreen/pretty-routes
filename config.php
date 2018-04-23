@@ -25,11 +25,13 @@ return [
     ],
 
     /**
-     * The routes to hide with regular expression
+     * The routes to hide with regular expression.
+     *
+     * This block determines if a given string matches a given pattern. Asterisks may be used to indicate wildcards.
      */
     'hide_matching' => [
-        '#^_debugbar#',
-        '#^routes$#'
+        '_debugbar*',
+        'routes*'
     ],
 
 ];
