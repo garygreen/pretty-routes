@@ -35,7 +35,7 @@
 </head>
 <body>
 
-    <h1 class="display-4">Routes ({{ count($routes) }})</h1>
+    <h1 class="display-4">Routes ({{ $routes->count() }})</h1>
 
     <table class="table table-sm table-hover" style="visibility: hidden;">
         <thead>
@@ -49,12 +49,11 @@
             </tr>
         </thead>
         <tbody>
-            <?php $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger']; ?>
             @foreach ($routes as $route)
                 <tr>
                     <td>
                         @foreach (array_diff($route->methods(), config('pretty-routes.hide_methods')) as $method)
-                            <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
+                            <span class="tag tag-{{ array_get($colors, $method) }}">{{ $method }}</span>
                         @endforeach
                     </td>
                     <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
