@@ -2,9 +2,27 @@
 <html>
 <head>
     <title>Routes list</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style type="text/css">
+        @switch(config('pretty-routes.mode'))
+            @case("dark")
+                :root {
+                    --main-bg-color: #2B2B2B;
+                    --color: #A9B7C6;
+                    --warning-color: #CC7832;
+                }
+                @break
+            @default
+                :root {
+                    --main-bg-color: #FFF;
+                    --warning-color: #ff5722;
+                }
+                @break
+        @endswitch
+
         body {
+            background-color: var(--main-bg-color);
+            color: var(--color);
             padding: 60px;
         }
 
@@ -18,14 +36,14 @@
         }
 
         .table thead th {
-            border-bottom: 1px solid #ff5722;
+            border-bottom: 1px solid var(--warning-color);
         }
 
         .text-warning {
-            color: #ff5722 !important;
+            color: var(--warning-color) !important;
         }
 
-        .tag {
+        .badge {
             padding: 0.30em 0.8em;
         }
 
@@ -50,12 +68,23 @@
             </tr>
         </thead>
         <tbody>
-            <?php $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger']; ?>
+            @switch(config('pretty-routes.mode'))
+                @case("dark")
+                    @php
+                        $methodColours = ['GET' => 'secondary', 'HEAD' => 'info', 'POST' => 'dark', 'PUT' => 'primary', 'PATCH' => 'info', 'DELETE' => 'danger']
+                    @endphp
+                @break
+                @default
+                    @php
+                        $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger']
+                    @endphp
+                    @break
+            @endswitch
             @foreach ($routes as $route)
                 <tr>
                     <td>
                         @foreach (array_diff($route->methods(), config('pretty-routes.hide_methods')) as $method)
-                            <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
+                            <span class="badge badge-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
                         @endforeach
                     </td>
                     <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>

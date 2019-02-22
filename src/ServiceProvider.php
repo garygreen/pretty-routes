@@ -37,7 +37,7 @@ class ServiceProvider extends IlluminateServiceProvider {
         ]);
 
         Route::get(config('pretty-routes.url'), 'PrettyRoutes\PrettyRoutesController@show')
-            ->name('pretty-routes.show')
+            ->name(config('pretty-routes.name'))
             ->middleware(config('pretty-routes.middlewares'));
     }
 

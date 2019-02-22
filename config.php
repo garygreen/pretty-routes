@@ -1,6 +1,15 @@
 <?php
 
 return [
+    /**
+     * Color mode, dark or light.
+     */
+    'mode' => 'dark',
+
+    /**
+     * The pretty route name.
+     */
+    'name' => 'pretty-routes.show',
 
     /**
      * The endpoint to access the routes.
