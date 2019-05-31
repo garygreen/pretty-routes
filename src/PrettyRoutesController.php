@@ -1,10 +1,12 @@
-<?php namespace PrettyRoutes;
+<?php
 
-use Route;
+namespace PrettyRoutes;
+
 use Closure;
+use Route;
 
-class PrettyRoutesController {
-
+class PrettyRoutesController
+{
     /**
      * Show pretty routes.
      *
@@ -25,9 +27,8 @@ class PrettyRoutesController {
         }
 
         return view('pretty-routes::routes', [
-            'routes' => $routes,
+            'routes'            => $routes,
             'middlewareClosure' => $middlewareClosure,
         ]);
     }
-
 }
