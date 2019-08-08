@@ -2,6 +2,11 @@
 
 return [
     /*
+    * Datatables mode.
+    */
+    'datatables' => false,
+
+    /*
      * Color mode, dark or light.
      */
     'mode' => 'dark',
@@ -9,7 +14,7 @@ return [
     /*
      * The pretty route name.
      */
-    'name' => 'pretty-routes.show',
+    'name' => 'sweet-routes',
 
     /*
      * The endpoint to access the routes.

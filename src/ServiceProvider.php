@@ -1,45 +1,35 @@
 <?php
 
-namespace PrettyRoutes;
+namespace Sweet;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
-use Route;
 
 class ServiceProvider extends IlluminateServiceProvider
 {
-    /**
-     * Register.
-     *
-     * @return
-     */
-    public function register()
-    {
-        //
-    }
-
     /**
      * Boot.
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config.php', 'pretty-routes'
+            __DIR__.'/../config.php', 'sweet-routes'
         );
 
-        if (config('pretty-routes.debug_only', true) && empty(config('app.debug'))) {
+        if (config('sweet-routes.debug_only', true) && empty(config('app.debug'))) {
             return;
         }
 
-        $this->loadViewsFrom(realpath(__DIR__.'/../views'), 'pretty-routes');
+        $this->loadViewsFrom(dirname(__DIR__).'/views', 'sweet-routes');
 
         $this->publishes([
-            __DIR__.'/../config.php' => config_path('pretty-routes.php'),
+            __DIR__.'/../config.php' => config_path('sweet-routes.php'),
         ]);
 
-        Route::get(config('pretty-routes.url'), 'PrettyRoutes\PrettyRoutesController@show')
-            ->name(config('pretty-routes.name'))
-            ->middleware(config('pretty-routes.middlewares'));
+        Route::get(config('sweet-routes.url'), RoutesController::class)
+            ->name(config('sweet-routes.name'))
+            ->middleware(config('sweet-routes.middlewares'));
     }
 }
