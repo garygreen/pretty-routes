@@ -3,7 +3,7 @@ Sweet Routes for Laravel 5
 
 Visualise your routes in sweet format.
 
-![Sweet Routes]
+![Sweet Routes](https://raw.githubusercontent.com/gboquizosanchez/sweet-routes/master/screenshot.png)
 
 # Installation
 

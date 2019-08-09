@@ -15,8 +15,8 @@
             @break
             @default
                 body {
-                    background-color: var(--{{ config('sweet-routes.background-color') ?? 'dark' }});
-                    color: var(--{{ config('sweet-routes.color') ?? 'light' }});
+                    background-color: var({{ config('sweet-routes.customizer.background-color') ?? '--dark' }});
+                    color: var({{ config('sweet-routes.customizer.font-color') ?? '--light' }});
                     padding: 60px;
                 }
             @break
@@ -32,15 +32,29 @@
         }
 
         .table thead th {
-            @if (config('sweet-routes.datatables'))
-                border-bottom: 1px solid var(--primary);
-            @else
-                border-bottom: 1px solid var(--{{ config('sweet-routes.strip') }});
-            @endif
+            border-bottom: 1px solid var({{ config('sweet-routes.customizer.strip') ?? '--orange' }});
+        }
+
+        .text-outstanding {
+            color: var({{ config('sweet-routes.customizer.text-method') ?? '--orange' }});
+        }
+
+        .page-item.active .page-link {
+            color: var({{ config('sweet-routes.customizer.page-link-active') ?? '--secondary' }}) !important;
+            border-color: var({{ config('sweet-routes.customizer.paginate-border') ?? '--orange' }}) !important;
+            background-color: var({{ config('sweet-routes.customizer.paginate-background') ?? '--orange' }}) !important;
+        }
+
+        .page-link {
+            color: var({{ config('sweet-routes.customizer.page-link') ?? '--secondary' }}) !important;
         }
 
         .badge {
             padding: 0.30em 0.8em;
+        }
+
+        table.hide-domains .domain {
+            display: none;
         }
 
     </style>
@@ -87,9 +101,9 @@
                             @endforeach
                         </td>
                         <td class="domain{{ strlen($route->domain()) === 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
-                        <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}</td>
+                        <td>{!! preg_replace('#({[^}]+})#', '<span class="text-outstanding">$1</span>', $route->uri()) !!}</td>
                         <td>{{ $route->getName() }}</td>
-                        <td>{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
+                        <td>{!! preg_replace('#(@.*)$#', '<span class="text-outstanding">$1</span>', $route->getActionName()) !!}</td>
                         <td>
                           @if (is_callable([$route, 'controllerMiddleware']))
                             {{ implode(', ', array_map($middlewareClosure, array_merge($route->middleware(), $route->controllerMiddleware()))) }}
