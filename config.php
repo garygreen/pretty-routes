@@ -29,6 +29,7 @@ return [
      */
     'hide_matching' => [
         '#^_debugbar#',
+        '#^flare#',
         '#^routes$#'
     ],
 
