@@ -55,7 +55,7 @@
                 <tr>
                     <td>
                         @foreach (array_diff($route->methods(), config('pretty-routes.hide_methods')) as $method)
-                            <span class="tag tag-{{ array_get($methodColours, $method) }}">{{ $method }}</span>
+                            <span class="tag tag-{{ $methodColours[$method] }}">{{ $method }}</span>
                         @endforeach
                     </td>
                     <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
