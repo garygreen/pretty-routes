@@ -2,7 +2,7 @@
     "name": "gboquizo/sweet-routes",
     "description": "Sweet routes for Laravel 5.",
     "require": {
-        "laravel/framework": "5.*.*"
+        "laravel/framework": ">=5.5@dev"
     },
     "license": "MIT",
     "authors": [
