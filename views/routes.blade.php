@@ -50,7 +50,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger']; ?>
+            <?php $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'OPTIONS' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger']; ?>
             @foreach ($routes as $route)
                 <tr>
                     <td>
