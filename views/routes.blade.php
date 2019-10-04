@@ -69,15 +69,37 @@
 
     <h1 class="display-4">Routes ({{ count($routes) }})</h1>
 
-        <table class="table table-sm table-hover" style="visibility: hidden;">
-            <thead>
+    <table class="table table-sm table-hover" style="visibility: hidden;">
+        <thead>
+            <tr>
+                <th>Methods</th>
+                <th class="domain">Domain</th>
+                <th>Path</th>
+                <th>Name</th>
+                <th>Action</th>
+                <th>Middleware</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'OPTIONS' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger']; ?>
+            @foreach ($routes as $route)
                 <tr>
-                    <th>Methods</th>
-                    <th class="domain">Domain</th>
-                    <th>Path</th>
-                    <th>Name</th>
-                    <th>Action</th>
-                    <th>Middleware</th>
+                    <td>
+                        @foreach (array_diff($route->methods(), config('pretty-routes.hide_methods')) as $method)
+                            <span class="tag tag-{{ $methodColours[$method] }}">{{ $method }}</span>
+                        @endforeach
+                    </td>
+                    <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
+                    <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}</td>
+                    <td>{{ $route->getName() }}</td>
+                    <td>{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
+                    <td>
+                      @if (is_callable([$route, 'controllerMiddleware']))
+                        {{ implode(', ', array_map($middlewareClosure, array_merge($route->middleware(), $route->controllerMiddleware()))) }}
+                      @else
+                        {{ implode(', ', $route->middleware()) }}
+                      @endif
+                    </td>
                 </tr>
             </thead>
             <tbody>

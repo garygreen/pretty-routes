@@ -70,10 +70,9 @@ return [
     */
     'hide_matching' => [
         '#^_debugbar#',
-        '#^routes$#',
-        '#^prequel#',
         '#^telescope#',
-        '#^__clockwork#',
+        '#^_ignition#',
+        '#^routes$#'
     ],
 
     /*
