@@ -32,5 +32,10 @@ return [
         '#^_ignition#',
         '#^routes$#'
     ],
+    
+    /**
+     * 
+     */
+    'sort_by' => null',
 
 ];
