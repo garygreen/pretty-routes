@@ -18,6 +18,10 @@ class PrettyRoutesController {
 
         $routes = collect(Route::getRoutes());
 
+        if (filled($sortBy = config('pretty-routes.sort_by'))) {
+            $routes = $routes->sortBy($sortBy);
+        }
+
         foreach (config('pretty-routes.hide_matching') as $regex) {
             $routes = $routes->filter(function ($value, $key) use ($regex) {
                 return !preg_match($regex, $value->uri());
