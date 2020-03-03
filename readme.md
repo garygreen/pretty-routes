@@ -1,4 +1,4 @@
-Pretty Routes for Laravel 5
+Pretty Routes for Laravel
 ====
 
 Visualise your routes in pretty format.
