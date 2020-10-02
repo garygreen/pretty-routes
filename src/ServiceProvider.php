@@ -1,6 +1,7 @@
-<?php namespace PrettyRoutes;
+<?php
 
-use Illuminate\Support\Facades\Route;
+namespace PrettyRoutes;
+
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 class ServiceProvider extends BaseServiceProvider
@@ -12,7 +13,8 @@ class ServiceProvider extends BaseServiceProvider
         }
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/pretty-routes.php', 'pretty-routes'
+            __DIR__ . '/../config/pretty-routes.php',
+            'pretty-routes'
         );
     }
 
