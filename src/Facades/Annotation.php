@@ -3,7 +3,7 @@
 namespace PrettyRoutes\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use PrettyRoutes\Support\Annotation as AnnotationSupport;
+use PrettyRoutes\Support\Annotation as Support;
 
 /**
  * @method static boolean isDeprecated(string $controller, string $method = null)
@@ -14,6 +14,6 @@ class Annotation extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return AnnotationSupport::class;
+        return Support::class;
     }
 }

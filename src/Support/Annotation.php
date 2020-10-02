@@ -33,6 +33,8 @@ class Annotation
      * @param  string  $controller
      * @param  string  $method
      *
+     * @throws \ReflectionException
+     *
      * @return bool
      */
     public function isDeprecatedMethod(string $controller, string $method)
@@ -71,10 +73,10 @@ class Annotation
      */
     protected function parse(string $action)
     {
-        $controller = Str::before($action, '@');
-        $method     = Str::after($action, '@');
-
-        return [$controller, $method];
+        return [
+            Str::before($action, '@'),
+            Str::after($action, '@'),
+        ];
     }
 
     /**
@@ -135,6 +137,8 @@ class Annotation
      *
      * @param  string  $controller
      * @param  string  $method
+     *
+     * @throws \ReflectionException
      *
      * @return \ReflectionMethod|null
      */

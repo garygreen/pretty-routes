@@ -1,34 +1,38 @@
 <?php namespace PrettyRoutes;
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
-class ServiceProvider extends IlluminateServiceProvider {
-
-    /**
-     * Boot.
-     *
-     * @return void
-     */
-    public function boot()
+class ServiceProvider extends BaseServiceProvider
+{
+    public function register()
     {
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config.php', 'pretty-routes'
-        );
-
-        if (config('pretty-routes.debug_only', true) && empty(config('app.debug'))) {
+        if ($this->isDisabled()) {
             return;
         }
 
-        $this->loadViewsFrom(realpath(__DIR__ . '/../views'), 'pretty-routes');
-
-        $this->publishes([
-            __DIR__ . '/../config.php' => config_path('pretty-routes.php')
-        ]);
-
-        Route::get(config('pretty-routes.url'), 'PrettyRoutes\PrettyRoutesController@show')
-            ->name('pretty-routes.show')
-            ->middleware(config('pretty-routes.middlewares'));
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/pretty-routes.php', 'pretty-routes'
+        );
     }
 
+    public function boot()
+    {
+        if ($this->isDisabled()) {
+            return;
+        }
+
+        $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views'), 'pretty-routes');
+
+        $this->publishes([
+            __DIR__ . '/../config/pretty-routes.php' => config_path('pretty-routes.php'),
+        ]);
+
+        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+    }
+
+    protected function isDisabled(): bool
+    {
+        return config('pretty-routes.debug_only', true) && empty(config('app.debug'));
+    }
 }

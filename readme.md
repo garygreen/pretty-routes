@@ -3,7 +3,9 @@ Pretty Routes for Laravel
 
 Visualise your routes in pretty format.
 
-![Pretty Routes](https://raw.githubusercontent.com/garygreen/pretty-routes/master/screenshot.png)
+<p align="center">
+    <img src="/.github/home-page-images/screenshot.png?raw=true" alt="Pretty Routes"/>
+</p>
 
 # Installation
 
@@ -19,7 +21,7 @@ Otherwise - add to your `config/app.php` providers array to where all your packa
 PrettyRoutes\ServiceProvider::class,
 ```
 
-By default the package exposes a `/routes` url. If you wish to configure this, publish the config.
+By default, the package exposes a `/routes` url. If you wish to configure this, publish the config.
 
 ```bash
 php artisan vendor:publish --provider="PrettyRoutes\ServiceProvider"
@@ -27,4 +29,4 @@ php artisan vendor:publish --provider="PrettyRoutes\ServiceProvider"
 
 If accessing `/routes` isn't working, ensure that you've included the provider within the same area as all your package providers (before all your app's providers) to ensure it takes priority.
 
-By default pretty routes only enables itself when `APP_DEBUG` env is true. You can configure this on the published config as above, or add any custom middlewares.
+By default, pretty routes only enables itself when `APP_DEBUG` env is true. You can configure this on the published config as above, or add any custom middlewares.

@@ -1,9 +1,10 @@
 {
     "name": "andrey-helldar/pretty-routes",
-    "description": "Pretty routes for Laravel 5+",
+    "description": "Pretty routes for Laravel 6+",
     "require": {
-        "doctrine/annotations": "^1.0|^2.0",
-        "laravel/framework": "5.*|^6.0|^7.0|^8.0"
+        "php": "7.2",
+        "doctrine/annotations": "^1.0",
+        "laravel/framework": "^6.0|^7.0|^8.0"
     },
     "license": "MIT",
     "authors": [
@@ -12,8 +13,8 @@
             "email": "holegary@gmail.com"
         },
         {
-        	"name": "Andrey Helldar",
-        	"email": "helldar@ai-rus.com"
+            "name": "Andrey Helldar",
+            "email": "helldar@ai-rus.com"
         }
     ],
     "autoload": {
