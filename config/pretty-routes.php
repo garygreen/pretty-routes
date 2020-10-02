@@ -24,7 +24,7 @@ return [
      */
 
     'hide_methods' => [
-        'HEAD',
+        'HEAD', 'OPTIONS'
     ],
 
     /*
