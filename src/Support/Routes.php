@@ -15,6 +15,7 @@ final class Routes
             ->filter(function (Route $route) {
                 return $this->allowUri($route->uri()) && $this->allowMethods($route->methods());
             })
+            ->values()
             ->mapInto(RouteModel::class)
             ->toArray();
     }

@@ -24,61 +24,69 @@
     <v-app>
         <v-main>
             <v-container>
-                <h1>
-                    <span v-text="trans('title')"></span> (<span v-text="routes.length"></span>)
-                </h1>
 
-                <v-data-table
-                        :headers="headers"
-                        :items="routes"
-                        :items-per-page="itemsPerPage"
-                        :search="search"
-                >
-                    <template v-slot:top>
+                <v-card>
+                    <v-card-title>
+                        <h1 class="display-1">
+                            <span v-text="trans('title')"></span> (<span v-text="routes.length"></span>)
+                        </h1>
+
+                        <v-spacer></v-spacer>
+
                         <v-text-field
                                 v-model="search"
                                 :label="trans('search')"
-                                class="mx-4"
+                                append-icon="mdi-magnify"
+                                single-line
+                                hide-details
                         ></v-text-field>
-                    </template>
+                    </v-card-title>
 
-                    <template v-slot:item.methods="{ item }">
-                        <v-chip
-                                v-for="badge in item.methods"
-                                v-text="badge.toUpperCase()"
-                                :color="badges[badge]"
-                                text-color="white"
-                                label
-                                small
-                                class="spaced"
-                        ></v-chip>
-                    </template>
+                    <v-data-table
+                            :headers="filteredHeaders"
+                            :items="routes"
+                            :items-per-page="itemsPerPage"
+                            :search="search"
+                            multi-sort
+                    >
+                        <template v-slot:item.methods="{ item }">
+                            <v-chip
+                                    v-for="badge in item.methods"
+                                    v-text="badge.toUpperCase()"
+                                    :color="badges[badge]"
+                                    text-color="white"
+                                    label
+                                    small
+                                    class="spaced"
+                            ></v-chip>
+                        </template>
 
-                    <template v-slot:item.path="{ item }">
-                        <span v-html="highlightParameters(item.path)"></span>
-                    </template>
+                        <template v-slot:item.path="{ item }">
+                            <span v-html="highlightParameters(item.path)"></span>
+                        </template>
 
-                    <template v-slot:item.action="{ item }">
-                        <v-tooltip top v-if="item.deprecated">
-                            <template v-slot:activator="{ on }">
+                        <template v-slot:item.action="{ item }">
+                            <v-tooltip top v-if="item.deprecated">
+                                <template v-slot:activator="{ on }">
                                 <span
                                         v-on="on"
                                         v-html="highlightMethod(item.action)"
                                         class="deprecated"
                                 ></span>
-                            </template>
-                            <span v-text="trans('deprecated')"></span>
-                        </v-tooltip>
+                                </template>
+                                <span v-text="trans('deprecated')"></span>
+                            </v-tooltip>
 
-                        <span v-else v-html="highlightMethod(item.action)"></span>
-                    </template>
+                            <span v-else v-html="highlightMethod(item.action)"></span>
+                        </template>
 
-                    <template
-                            v-slot:item.middlewares="{ item }"
-                    >
-                        @{{ item.middlewares.join(', ') }}
-                    </template>
-                </v-data-table>
+                        <template
+                                v-slot:item.middlewares="{ item }"
+                        >
+                            @{{ item.middlewares.join(', ') }}
+                        </template>
+                    </v-data-table>
+                </v-card>
             </v-container>
         </v-main>
     </v-app>
@@ -89,24 +97,28 @@
 
 <script>
     const trans = {
-        title: @lang('Routes'),
-        search: @lang('Search'),
-        priority: @lang('Priority'),
-        methods: @lang('Methods'),
-        domain: @lang('Domain'),
-        path: @lang('Path'),
-        name: @lang('Name'),
-        action: @lang('Action'),
-        middlewares: @lang('Middlewares'),
-        deprecated: @lang('Deprecated')
+        title: '@lang("Routes")',
+        search: '@lang("Search")',
+        priority: '@lang("Priority")',
+        methods: '@lang("Methods")',
+        domain: '@lang("Domain")',
+        path: '@lang("Path")',
+        name: '@lang("Name")',
+        action: '@lang("Action")',
+        middlewares: '@lang("Middlewares")',
+        deprecated: '@lang("Deprecated")'
     };
 
     new Vue({
         el: '#app',
-        vuetify: new Vuetify(),
+        vuetify: new Vuetify({
+            theme: {
+                dark: {{ config('pretty-routes.dark', false) ? 'true' : 'false' }}
+            }
+        }),
 
         data: {
-            itemsPerPage: 20,
+            itemsPerPage: 15,
             search: null,
 
             routes: @json($routes),
@@ -114,7 +126,7 @@
             headers: [
                 { text: trans.priority, sortable: true, value: 'priority' },
                 { text: trans.methods, sortable: true, value: 'methods' },
-                { text: trans.domain, sortable: true, value: 'domain', class: { show: this.isPresentDomain } },
+                { text: trans.domain, sortable: true, value: 'domain' },
                 { text: trans.path, sortable: true, value: 'path' },
                 { text: trans.name, sortable: true, value: 'name' },
                 { text: trans.action, sortable: true, value: 'action' },
@@ -122,19 +134,37 @@
             ],
 
             badges: {
-                get: 'green darken-1',
-                head: 'grey darken-1',
-                post: 'blue darken-1',
-                put: 'orange darken-1',
-                patch: 'cyan lighten-1',
-                delete: 'red darken-1',
-                options: 'lime darken-1'
+                GET: 'green darken-1',
+                HEAD: 'grey darken-1',
+                POST: 'blue darken-1',
+                PUT: 'orange darken-1',
+                PATCH: 'cyan lighten-1',
+                DELETE: 'red darken-1',
+                OPTIONS: 'lime darken-1'
             }
         },
 
         computed: {
-            isPresentDomain: (value) => {
+            isPresentDomain() {
+                return true;
+            },
+
+            existDomains() {
+                for (let i = 0; i < this.routes.length; i++) {
+                    if (this.routes[i].domain !== null) {
+                        return true;
+                    }
+                }
+
                 return false;
+            },
+
+            filteredHeaders() {
+                return this.headers.filter(item => {
+                    let exist = this.existDomains;
+
+                    return exist || (! exist && item.value !== 'domain');
+                });
             }
         },
 
@@ -144,26 +174,13 @@
             },
 
             highlightParameters(value) {
-                let splitted = value.split('/');
-                let regex = /^(\{.*\})$/i;
-
-                for (let i = 0; i < splitted.length; i++) {
-                    if (splitted[i].match(regex)) {
-                        splitted[i] = this.highlighting(splitted[i]);
-                    }
-                }
-
-                return splitted.join('/');
+                return value.replace(/({[^}]+})/gi, '<span class="orange--text text--darken-2">$1</span>');
             },
 
             highlightMethod(value) {
-                let splitted = value.split('@');
-
-                return splitted[0] + this.highlighting(splitted[1], '@');
-            },
-
-            highlighting(value, prefix = '') {
-                return `<span class="orange--text text--darken-2">${ prefix }${ value }</span>`;
+                return value === 'Closure'
+                    ? value
+                    : value.replace(/(@.*)$/gi, '<span class="orange--text text--darken-2">$&</span>');
             }
         }
     });

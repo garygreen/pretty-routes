@@ -25,7 +25,6 @@ return [
 
     'hide_methods' => [
         'HEAD',
-        'OPTIONS',
     ],
 
     /*
@@ -37,4 +36,10 @@ return [
         '#^_ignition#',
         '#^routes$#',
     ],
+
+    /*
+     * Set a dark theme.
+     */
+
+    'dark' => false,
 ];
