@@ -1,6 +1,6 @@
 <?php namespace PrettyRoutes;
 
-use Route;
+use Illuminate\Support\Facades\Route;
 use Closure;
 
 class PrettyRoutesController {

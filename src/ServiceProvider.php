@@ -1,6 +1,6 @@
 <?php namespace PrettyRoutes;
 
-use Route;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 class ServiceProvider extends IlluminateServiceProvider {
