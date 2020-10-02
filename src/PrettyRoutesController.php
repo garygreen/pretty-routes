@@ -1,8 +1,9 @@
-<?php namespace PrettyRoutes;
+<?php
+
+namespace PrettyRoutes;
 
 use Closure;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Route;
 use PrettyRoutes\Support\Routes;
 
 class PrettyRoutesController extends BaseController
