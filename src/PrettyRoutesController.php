@@ -1,10 +1,11 @@
 <?php namespace PrettyRoutes;
 
-use Illuminate\Support\Facades\Route;
 use Closure;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Route;
 
-class PrettyRoutesController {
-
+class PrettyRoutesController extends BaseController
+{
     /**
      * Show pretty routes.
      *
