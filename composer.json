@@ -4,7 +4,7 @@
     "require": {
         "php": "7.2",
         "doctrine/annotations": "^1.0",
-        "laravel/framework": "^6.0|^7.0|^8.0"
+        "laravel/framework": "^5.0|^6.0|^7.0|^8.0"
     },
     "license": "MIT",
     "authors": [
