@@ -1,55 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Routes list @if(config('app.name'))| {{ config('app.name') }}@endif</title>
-    <link
-        rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css"
-        integrity="sha384-MIwDKRSSImVFAZCVLtU0LMDdON6KVCrZHyVQQj6e8wIEJkW4tvwqXrbMIya1vriY"
-        crossorigin="anonymous">
-    <style type="text/css">
-        body {
-            padding: 60px;
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: rgba(0, 0, 0, .015);
-        }
-
-        .table td, .table th {
-            border-top: none;
-            font-size: 14px;
-        }
-
-        .table thead th {
-            border-bottom: 1px solid #ff5722;
-        }
-
-        .text-warning {
-            color: #ff5722 !important;
-        }
-
-        .tag {
-            padding: 0.30em 0.8em;
-        }
-
-        .strike {
-            text-decoration: line-through;
-        }
-
-        table.hide-domains .domain {
-            display: none;
-        }
-    </style>
+    <title>Routes list | {{ config('app.name') }}</title>
 
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <style>
+        .spaced { margin: 2px; }
+
+        .deprecated { text-decoration: line-through; }
+    </style>
 </head>
 <body>
 
@@ -58,123 +25,166 @@
         <v-main>
             <v-container>
                 <h1>
-                    Routes (<span v-text="routes.length"></span>)
+                    <span v-text="trans('title')"></span> (<span v-text="routes.length"></span>)
                 </h1>
 
                 <v-data-table
-                    :headers="table.headers"
-                    :items="table.items"
-                    :items-per-page="table.itemsPerPage"
-                ></v-data-table>
+                        :headers="headers"
+                        :items="routes"
+                        :items-per-page="itemsPerPage"
+                        :search="search"
+                >
+                    <template v-slot:top>
+                        <v-text-field
+                                v-model="search"
+                                :label="trans('search')"
+                                class="mx-4"
+                        ></v-text-field>
+                    </template>
+
+                    <template v-slot:item.methods="{ item }">
+                        <v-chip
+                                v-for="badge in item.methods"
+                                v-text="badge.toUpperCase()"
+                                :color="badges[badge]"
+                                text-color="white"
+                                label
+                                small
+                                class="spaced"
+                        ></v-chip>
+                    </template>
+
+                    <template v-slot:item.path="{ item }">
+                        <span v-html="highlightParameters(item.path)"></span>
+                    </template>
+
+                    <template v-slot:item.action="{ item }">
+                        <v-tooltip top v-if="item.deprecated">
+                            <template v-slot:activator="{ on }">
+                                <span
+                                        v-on="on"
+                                        v-html="highlightMethod(item.action)"
+                                        class="deprecated"
+                                ></span>
+                            </template>
+                            <span v-text="trans('deprecated')"></span>
+                        </v-tooltip>
+
+                        <span v-else v-html="highlightMethod(item.action)"></span>
+                    </template>
+
+                    <template
+                            v-slot:item.middlewares="{ item }"
+                    >
+                        @{{ item.middlewares.join(', ') }}
+                    </template>
+                </v-data-table>
             </v-container>
         </v-main>
     </v-app>
 </div>
 
-<h1 class="display-4">Routes ({{ count($routes) }})</h1>
-
-<table class="table table-sm table-hover" style="visibility: hidden;">
-    <thead>
-    <tr>
-        <th>Methods</th>
-        <th class="domain">Domain</th>
-        <th>Path</th>
-        <th>Name</th>
-        <th>Action</th>
-        <th>Middleware</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php $methodColours =
-        ['GET' => 'success', 'HEAD' => 'default', 'OPTIONS' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger']; ?>
-    @foreach ($routes as $route)
-        <tr>
-            <td>
-                @foreach (array_diff($route->methods(), config('pretty-routes.hide_methods')) as $method)
-                    <span class="tag tag-{{ $methodColours[$method] }}">{{ $method }}</span>
-                @endforeach
-            </td>
-            <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
-            <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}</td>
-            <td>{{ $route->getName() }}</td>
-            <td class="{{ \PrettyRoutes\Facades\Annotation::isDeprecated($route->getActionName()) ? 'strike' : '' }}">{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
-            <td>
-                @if (is_callable([$route, 'controllerMiddleware']))
-                    {{ implode(', ', array_map($middlewareClosure, array_merge($route->middleware(), $route->controllerMiddleware()))) }}
-                @else
-                    {{ implode(', ', $route->middleware()) }}
-                @endif
-            </td>
-        </tr>
-    @endforeach
-    </tbody>
-</table>
-
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 
-<style>
-
-</style>
-
 <script>
+    const trans = {
+        title: 'Routes',
+        search: 'Search',
+        priority: 'Priority',
+        methods: 'Methods',
+        domain: 'Domain',
+        path: 'Path',
+        name: 'Name',
+        action: 'Action',
+        middlewares: 'Middlewares',
+        deprecated: 'Deprecated'
+    };
+
     new Vue({
         el: '#app',
         vuetify: new Vuetify(),
+
         data: {
-            title: 'Foo',
+            itemsPerPage: 20,
+            search: null,
 
-            routes: [],
+            routes: [
+                {
+                    priority: 4,
+                    domain: 'test.local',
+                    methods: ['get', 'head'],
+                    path: '/foo/{bar}',
+                    name: 'foo.bar',
+                    action: 'FooController@foo',
+                    middlewares: ['api', 'auth'],
+                    deprecated: false
+                },
+                {
+                    priority: 3,
+                    domain: 'test.local',
+                    methods: ['put'],
+                    path: '/foo/{bar}/{baz}',
+                    name: 'foo.bar.update',
+                    action: 'FooController@update',
+                    middlewares: ['api', 'auth'],
+                    deprecated: true
+                }
+            ],
 
-            table: {
-                headers: [
-                    { text: 'Priority', sortable: true, value: 'priority' },
-                    { text: 'Domain', sortable: true, value: 'domain', class: { show: this.isPresentDomain } },
-                    { text: 'Methods', sortable: true, value: 'methods' },
-                    { text: 'Path', sortable: true, value: 'path' },
-                    { text: 'Name', sortable: true, value: 'name' },
-                    { text: 'Action', sortable: true, value: 'action' },
-                    { text: 'Middlewares', sortable: true, value: 'middlewares' }
-                ],
-
-                items: [
-                    {
-                        priority: 4,
-                        domain: 'test.local',
-                        methods: ['get', 'head'],
-                        path: '/foo/bar',
-                        name: 'foo.bar',
-                        action: 'FooController@foo',
-                        middlewares: ['api', 'auth']
-                    },
-                    {
-                        priority: 3,
-                        domain: 'test.local',
-                        methods: ['put'],
-                        path: '/foo/bar',
-                        name: 'foo.bar.update',
-                        action: 'FooController@update',
-                        middlewares: ['api', 'auth']
-                    }
-                ],
-
-                itemsPerPage: 20
-            },
+            headers: [
+                { text: trans.priority, sortable: true, value: 'priority' },
+                { text: trans.methods, sortable: true, value: 'methods' },
+                { text: trans.domain, sortable: true, value: 'domain', class: { show: this.isPresentDomain } },
+                { text: trans.path, sortable: true, value: 'path' },
+                { text: trans.name, sortable: true, value: 'name' },
+                { text: trans.action, sortable: true, value: 'action' },
+                { text: trans.middlewares, sortable: true, value: 'middlewares' }
+            ],
 
             badges: {
-                get: { text: 'GET', color: 'green' },
-                head: { text: 'HEAD', color: 'green' },
-                post: { text: 'POST', color: 'navy' },
-                put: { text: 'PUT', color: 'orange' },
-                patch: { text: 'PATCH', color: 'blue' },
-                delete: { text: 'DELETE', color: 'red' },
-                options: { text: 'OPTIONS', color: 'gray' }
+                get: 'green darken-1',
+                head: 'grey darken-1',
+                post: 'blue darken-1',
+                put: 'orange darken-1',
+                patch: 'cyan lighten-1',
+                delete: 'red darken-1',
+                options: 'lime darken-1'
             }
         },
 
         computed: {
             isPresentDomain: (value) => {
-                return true;
+                return false;
+            }
+        },
+
+        methods: {
+            trans(key) {
+                return trans[key];
+            },
+
+            highlightParameters(value) {
+                let splitted = value.split('/');
+                let regex = /^(\{.*\})$/i;
+
+                for (let i = 0; i < splitted.length; i++) {
+                    if (splitted[i].match(regex)) {
+                        splitted[i] = this.highlighting(splitted[i]);
+                    }
+                }
+
+                return splitted.join('/');
+            },
+
+            highlightMethod(value) {
+                let splitted = value.split('@');
+
+                return splitted[0] + this.highlighting(splitted[1], '@');
+            },
+
+            highlighting(value, prefix = '') {
+                return `<span class="orange--text text--darken-2">${ prefix }${ value }</span>`;
             }
         }
     });
