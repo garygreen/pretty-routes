@@ -1,5 +1,4 @@
-Pretty Routes for Laravel
-====
+# Pretty Routes for Laravel
 
 Visualise your routes in pretty format.
 
@@ -14,7 +13,7 @@ Visualise your routes in pretty format.
 [![Total Downloads][badge_downloads]][link_packagist]
 [![License][badge_license]][link_license]
 
-# Installation
+## Installation
 
 ```bash
 composer require andrey-helldar/pretty-routes
@@ -38,8 +37,14 @@ If accessing `/routes` isn't working, ensure that you've included the provider w
 
 By default, pretty routes only enables itself when `APP_DEBUG` env is true. You can configure this on the published config as above, or add any custom middlewares.
 
+## Upgrade from `garygreen/pretty-routes`
+
+1. In your `composer.json` file, replace `"garygreen/pretty-routes": "^1.0.10",` with `"andrey-helldar/pretty-routes": "^1.0",`.
+2. Run the command `composer update`.
+3. Profit!
+
 [badge_styleci]:    https://styleci.io/repos/130698068/shield
-[badge_laravel]:    https://img.shields.io/badge/Laravel-6.x%20%7C%207.x%20%7C%208.x-orange.svg?style=flat-square
+[badge_laravel]:    https://img.shields.io/badge/Laravel-5.x%20%7C%206.x%20%7C%207.x%20%7C%208.x-orange.svg?style=flat-square
 [badge_stable]:     https://img.shields.io/github/v/release/andrey-helldar/pretty-routes?label=stable&style=flat-square
 [badge_unstable]:   https://img.shields.io/badge/unstable-dev--master-orange?style=flat-square
 [badge_downloads]:  https://img.shields.io/packagist/dt/andrey-helldar/pretty-routes.svg?style=flat-square
