@@ -2,30 +2,51 @@
 
 namespace PrettyRoutes\Support;
 
-use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route as RouteFacade;
+use PrettyRoutes\Models\Route as RouteModel;
 
 final class Routes
 {
-    public function get()
+    public function get(): array
     {
-        $routes = $this->getRoutes();
+        return $this->getRoutes()
+            ->filter(function (Route $route) {
+                return $this->allowUri($route->uri()) && $this->allowMethods($route->methods());
+            })
+            ->mapInto(RouteModel::class)
+            ->toArray();
+    }
 
-        foreach ($this->getHideMatchings() as $regex) {
-            $routes = $routes->filter(static function ($value) use ($regex) {
-                return ! preg_match($regex, $value->uri());
-            });
+    protected function getRoutes(): Collection
+    {
+        return collect(RouteFacade::getRoutes());
+    }
+
+    protected function allowUri(string $uri): bool
+    {
+        foreach ($this->getHideMatching() as $regex) {
+            if (preg_match($regex, $uri)) {
+                return false;
+            }
         }
 
-        return $routes;
+        return true;
     }
 
-    protected function getRoutes()
+    protected function allowMethods(array $methods): bool
     {
-        return collect(Route::getRoutes());
+        return count(array_diff($methods, $this->getHideMethods())) > 0;
     }
 
-    protected function getHideMatchings(): array
+    protected function getHideMatching(): array
     {
         return config('pretty-routes.hide_matching', []);
+    }
+
+    protected function getHideMethods(): array
+    {
+        return config('pretty-routes.hide_methods', []);
     }
 }

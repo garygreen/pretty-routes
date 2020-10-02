@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 
-    <title>Routes list | {{ config('app.name') }}</title>
+    <title>@lang('Routes list') | {{ config('app.name') }}</title>
 
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
@@ -89,16 +89,16 @@
 
 <script>
     const trans = {
-        title: 'Routes',
-        search: 'Search',
-        priority: 'Priority',
-        methods: 'Methods',
-        domain: 'Domain',
-        path: 'Path',
-        name: 'Name',
-        action: 'Action',
-        middlewares: 'Middlewares',
-        deprecated: 'Deprecated'
+        title: @lang('Routes'),
+        search: @lang('Search'),
+        priority: @lang('Priority'),
+        methods: @lang('Methods'),
+        domain: @lang('Domain'),
+        path: @lang('Path'),
+        name: @lang('Name'),
+        action: @lang('Action'),
+        middlewares: @lang('Middlewares'),
+        deprecated: @lang('Deprecated')
     };
 
     new Vue({
@@ -109,28 +109,7 @@
             itemsPerPage: 20,
             search: null,
 
-            routes: [
-                {
-                    priority: 4,
-                    domain: 'test.local',
-                    methods: ['get', 'head'],
-                    path: '/foo/{bar}',
-                    name: 'foo.bar',
-                    action: 'FooController@foo',
-                    middlewares: ['api', 'auth'],
-                    deprecated: false
-                },
-                {
-                    priority: 3,
-                    domain: 'test.local',
-                    methods: ['put'],
-                    path: '/foo/{bar}/{baz}',
-                    name: 'foo.bar.update',
-                    action: 'FooController@update',
-                    middlewares: ['api', 'auth'],
-                    deprecated: true
-                }
-            ],
+            routes: @json($routes),
 
             headers: [
                 { text: trans.priority, sortable: true, value: 'priority' },
