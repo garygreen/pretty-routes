@@ -1,5 +1,4 @@
 # Pretty Routes for Laravel
-====
 
 Visualise your routes in pretty format.
 
