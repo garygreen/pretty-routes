@@ -6,16 +6,6 @@ use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 class ServiceProvider extends IlluminateServiceProvider {
 
     /**
-     * Register.
-     *
-     * @return
-     */
-    public function register()
-    {
-        //
-    }
-
-    /**
      * Boot.
      *
      * @return void
