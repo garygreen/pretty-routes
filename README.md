@@ -9,7 +9,6 @@ Visualise your routes in pretty format.
 
 [![StyleCI Status][badge_styleci]][link_styleci]
 [![For Laravel][badge_laravel]][link_packagist]
-
 [![Stable Version][badge_stable]][link_packagist]
 [![Unstable Version][badge_unstable]][link_packagist]
 [![Total Downloads][badge_downloads]][link_packagist]
