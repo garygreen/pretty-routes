@@ -1,6 +1,6 @@
 <?php
 
-namespace PrettyRoutes\Http\Controllers;
+namespace PrettyRoutes\Http;
 
 use Closure;
 use Illuminate\Routing\Controller as BaseController;
