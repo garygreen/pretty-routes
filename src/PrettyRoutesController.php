@@ -1,33 +1,29 @@
-<?php namespace PrettyRoutes;
+<?php
 
-use Route;
+namespace PrettyRoutes;
+
 use Closure;
+use Illuminate\Routing\Controller as BaseController;
+use PrettyRoutes\Support\Routes;
 
-class PrettyRoutesController {
-
+class PrettyRoutesController extends BaseController
+{
     /**
      * Show pretty routes.
      *
+     * @param  \PrettyRoutes\Support\Routes  $routes
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Routes $routes)
     {
         $middlewareClosure = function ($middleware) {
             return $middleware instanceof Closure ? 'Closure' : $middleware;
         };
 
-        $routes = collect(Route::getRoutes());
-
-        foreach (config('pretty-routes.hide_matching') as $regex) {
-            $routes = $routes->filter(function ($value, $key) use ($regex) {
-                return !preg_match($regex, $value->uri());
-            });
-        }
-
         return view('pretty-routes::routes', [
-            'routes' => $routes,
+            'routes'            => $routes->get(),
             'middlewareClosure' => $middlewareClosure,
         ]);
     }
-
 }

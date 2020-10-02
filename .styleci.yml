@@ -1,0 +1,67 @@
+preset: psr12
+
+risky: true
+
+enabled:
+    - align_double_arrow
+    - align_equals
+    - align_phpdoc
+    - alpha_ordered_imports
+    - binary_operator_spaces
+    - blank_line_before_continue
+    - blank_line_before_declare
+    - blank_line_before_return
+    - blank_line_before_throw
+    - blank_line_before_try
+    - cast_spaces
+    - combine_consecutive_issets
+    - const_separation
+    - dir_constant
+    - fully_qualified_strict_types
+    - logical_operators
+    - method_separation
+    - no_alias_functions
+    - no_blank_lines_after_phpdoc
+    - no_blank_lines_between_traits
+    - no_empty_comment
+    - no_empty_phpdoc
+    - no_extra_block_blank_lines
+    - no_extra_consecutive_blank_lines
+    - no_short_bool_cast
+    - no_trailing_comma_in_singleline_array
+    - no_unneeded_control_parentheses
+    - no_unused_imports
+    - ordered_class_elements
+    - php_unit_construct
+    - php_unit_fqcn_annotation
+    - phpdoc_indent
+    - phpdoc_inline_tag
+    - phpdoc_link_to_see
+    - phpdoc_no_access
+    - phpdoc_no_empty_return
+    - phpdoc_no_package
+    - phpdoc_no_useless_inheritdoc
+    - phpdoc_order
+    - phpdoc_property
+    - phpdoc_return_self_reference
+    - phpdoc_scalar
+    - phpdoc_separation
+    - phpdoc_summary
+    - phpdoc_to_comment
+    - phpdoc_trim
+    - phpdoc_type_to_var
+    - phpdoc_types
+    - phpdoc_types_order
+    - phpdoc_var_without_name
+    - property_separation
+    - self_accessor
+    - short_array_syntax
+    - short_list_syntax
+    - single_line_class_definition
+    - single_line_throw
+    - single_quote
+    - space_after_semicolon
+    - standardize_not_equals
+    - ternary_to_null_coalescing
+    - trailing_comma_in_multiline_array
+    - trim_array_spaces
