@@ -29,6 +29,10 @@
             padding: 0.30em 0.8em;
         }
 
+        .strike {
+            text-decoration: line-through;
+        }
+
         table.hide-domains .domain {
             display: none;
         }
@@ -61,7 +65,7 @@
                     <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
                     <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}</td>
                     <td>{{ $route->getName() }}</td>
-                    <td>{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
+                    <td class="{{ \PrettyRoutes\Facades\Annotation::isDeprecated($route->getActionName()) ? 'strike' : '' }}">{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
                     <td>
                       @if (is_callable([$route, 'controllerMiddleware']))
                         {{ implode(', ', array_map($middlewareClosure, array_merge($route->middleware(), $route->controllerMiddleware()))) }}
