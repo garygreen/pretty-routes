@@ -1,6 +1,6 @@
 {
     "name": "andrey-helldar/pretty-routes",
-    "description": "Pretty routes for Laravel 6+",
+    "description": "Pretty routes for Laravel 5+",
     "require": {
         "php": "^7.2",
         "doctrine/annotations": "^1.0",
