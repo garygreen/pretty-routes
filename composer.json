@@ -1,5 +1,5 @@
 {
-    "name": "garygreen/pretty-routes",
+    "name": "andrey-helldar/pretty-routes",
     "description": "Pretty routes for Laravel 5+",
     "require": {
         "doctrine/annotations": "^1.0|^2.0",
@@ -10,6 +10,10 @@
         {
             "name": "Gary Green",
             "email": "holegary@gmail.com"
+        },
+        {
+        	"name": "Andrey Helldar",
+        	"email": "helldar@ai-rus.com"
         }
     ],
     "autoload": {
@@ -17,7 +21,7 @@
             "PrettyRoutes\\": "src"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "extra": {
         "laravel": {
             "providers": [

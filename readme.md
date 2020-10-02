@@ -8,7 +8,7 @@ Visualise your routes in pretty format.
 # Installation
 
 ```bash
-composer require garygreen/pretty-routes
+composer require andrey-helldar/pretty-routes
 ```
 
 If your using autodiscovery in Laravel, it should just work.
