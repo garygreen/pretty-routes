@@ -3,7 +3,9 @@
 Visualise your routes in pretty format.
 
 <p align="center">
-    <img src="/.github/home-page-images/screenshot.png?raw=true" alt="Pretty Routes"/>
+    <img src="/.github/home-page-images/light.png?raw=true" alt="Pretty RoutesLight Theme"/>
+    
+    <img src="/.github/home-page-images/dark.png?raw=true" alt="Pretty Routes Dark Theme"/>
 </p>
 
 [![StyleCI Status][badge_styleci]][link_styleci]
