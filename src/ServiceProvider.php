@@ -13,7 +13,7 @@ class ServiceProvider extends BaseServiceProvider
         }
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/pretty-routes.php',
+            $this->fullPath('config/pretty-routes.php'),
             'pretty-routes'
         );
     }
@@ -24,17 +24,27 @@ class ServiceProvider extends BaseServiceProvider
             return;
         }
 
-        $this->loadViewsFrom(realpath(__DIR__ . '/../resources/views'), 'pretty-routes');
+        $this->loadViewsFrom(
+            $this->fullPath('resources/views'),
+            'pretty-routes'
+        );
 
         $this->publishes([
-            __DIR__ . '/../config/pretty-routes.php' => config_path('pretty-routes.php'),
+            $this->fullPath('config/pretty-routes.php') => config_path('pretty-routes.php'),
         ]);
 
-        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+        $this->loadRoutesFrom(
+            $this->fullPath('routes/web.php')
+        );
     }
 
     protected function isDisabled(): bool
     {
-        return config('pretty-routes.debug_only', true) && empty(config('app.debug'));
+        return config('pretty-routes.debug_only', true) && ! config('app.debug');
+    }
+
+    protected function fullPath(string $path): string
+    {
+        return realpath(__DIR__ . '/../' . $path);
     }
 }
