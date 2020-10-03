@@ -34,6 +34,7 @@ return [
     'hide_matching' => [
         '#^_debugbar#',
         '#^_ignition#',
+        '#^telescope#',
         '#^routes$#',
     ],
 

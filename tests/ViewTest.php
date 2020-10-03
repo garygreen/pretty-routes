@@ -2,20 +2,35 @@
 
 namespace Tests;
 
-use PrettyRoutes\Support\Routes;
-
 class ViewTest extends TestCase
 {
-    public function testView()
+    public function testTexts()
     {
-        $service = new Routes();
+        $response = $this->get('/routes');
 
-        $view = $this->view('pretty-routes::routes', [
-            'routes' => $service->get(),
-        ]);
+        $response->assertSee('Routes list');
+        $response->assertSee('Laravel');
 
-        $view->assertSee('Routes list');
-        $view->assertSee('Laravel');
-        $view->assertDontSee('Foo Bar');
+        $response->assertDontSee('Foo Bar');
+    }
+
+    public function testHideMethods()
+    {
+        $response = $this->get('/routes');
+
+        $response->assertSee('foo');
+        $response->assertSee('baz');
+
+        $response->assertDontSee('bar');
+    }
+
+    public function testHideRoutes()
+    {
+        $response = $this->get('/routes');
+
+        $response->assertSee('baz');
+        $response->assertDontSee('_ignition');
+        $response->assertDontSee('telescope');
+        $response->assertDontSee('_debugbar');
     }
 }
