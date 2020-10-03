@@ -60,7 +60,7 @@ class Route implements Arrayable
             $middlewares = array_merge($middlewares, $this->route->controllerMiddleware());
         }
 
-        return $middlewares;
+        return array_values($middlewares);
     }
 
     public function getDeprecated(): bool
