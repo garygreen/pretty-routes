@@ -174,9 +174,7 @@
             },
 
             highlightMethod(value) {
-                return value === 'Closure'
-                    ? value
-                    : value.replace(/(@.*)$/gi, '<span class="orange--text text--darken-2">$&</span>');
+                return value.replace(/(@.*)$/gi, '<span class="orange--text text--darken-2">$&</span>');
             }
         }
     });
