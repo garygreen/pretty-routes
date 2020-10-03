@@ -8,6 +8,7 @@ class ViewTest extends TestCase
     {
         $response = $this->get('/routes');
 
+        $response->assertStatus(200);
         $response->assertSee('Routes list');
         $response->assertSee('Laravel');
 
@@ -18,6 +19,7 @@ class ViewTest extends TestCase
     {
         $response = $this->get('/routes');
 
+        $response->assertStatus(200);
         $response->assertDontSee('foo');
         $response->assertSee('bar');
     }
@@ -26,6 +28,7 @@ class ViewTest extends TestCase
     {
         $response = $this->get('/routes');
 
+        $response->assertStatus(200);
         $response->assertSee('bar');
         $response->assertDontSee('_ignition');
         $response->assertDontSee('telescope');
