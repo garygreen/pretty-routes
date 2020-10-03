@@ -8,10 +8,6 @@ class ServiceProvider extends BaseServiceProvider
 {
     public function register()
     {
-        if ($this->isDisabled()) {
-            return;
-        }
-
         $this->mergeConfigFrom(
             $this->fullPath('config/pretty-routes.php'),
             'pretty-routes'
