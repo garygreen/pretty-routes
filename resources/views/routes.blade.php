@@ -145,10 +145,6 @@
         },
 
         computed: {
-            isPresentDomain() {
-                return true;
-            },
-
             existDomains() {
                 for (let i = 0; i < this.routes.length; i++) {
                     if (this.routes[i].domain !== null) {
