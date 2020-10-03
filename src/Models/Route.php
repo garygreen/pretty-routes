@@ -26,7 +26,10 @@ class Route implements Arrayable
 
     public function getMethods(): array
     {
-        return array_diff($this->route->methods(), config('pretty-routes.hide_methods', []));
+        return array_values(array_diff(
+            $this->route->methods(),
+            config('pretty-routes.hide_methods', [])
+        ));
     }
 
     public function getDomain(): ?string
