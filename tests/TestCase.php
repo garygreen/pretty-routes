@@ -9,6 +9,7 @@ abstract class TestCase extends BaseTestCase
 {
     protected function getEnvironmentSetUp($app)
     {
+        $this->setConfig($app);
         $this->setRoutes($app);
     }
 
@@ -23,11 +24,7 @@ abstract class TestCase extends BaseTestCase
             //
         });
 
-        $app['router']->head('/bar', function () {
-            //
-        });
-
-        $app['router']->match(['PUT', 'PATCH'], '/baz', function () {
+        $app['router']->match(['PUT', 'PATCH'], '/bar', function () {
             //
         });
 
@@ -42,5 +39,10 @@ abstract class TestCase extends BaseTestCase
         $app['router']->get('/_debugbar/bae', function () {
             //
         });
+    }
+
+    protected function setConfig($app)
+    {
+        $app['config']->set('pretty-routes.hide_methods', ['HEAD', 'GET']);
     }
 }
