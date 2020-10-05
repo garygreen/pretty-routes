@@ -49,7 +49,7 @@ class Route implements Arrayable
 
     public function getAction(): string
     {
-        return $this->route->getActionName();
+        return ltrim($this->route->getActionName(), '\\');
     }
 
     public function getMiddlewares(): array
