@@ -151,6 +151,7 @@
         all: '@lang("All")',
         onlyDeprecated: '@lang("Only Deprecated")',
         withoutDeprecated: '@lang("Without Deprecated")',
+        without: '@lang("Without")',
         of: '@lang("of")'
     };
 
@@ -237,7 +238,8 @@
 
             filteredModules() {
                 let modules = [
-                    { key: 'all', value: trans.all }
+                    { key: 'all', value: trans.all },
+                    { key: 'without', value: trans.without }
                 ];
 
                 for (let i = 0; i < this.routes.length; i++) {
@@ -323,6 +325,10 @@
             },
 
             allowModule(route) {
+                if (this.modules.selected === 'without') {
+                    return route.module === null;
+                }
+
                 return route.module === this.modules.selected || this.modules.selected === 'all';
             },
 
