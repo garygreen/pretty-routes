@@ -33,8 +33,19 @@
                         >
                             <v-card-title>
                                 <h1 class="display-1">
-                                    <span v-text="trans('title')"></span> (<span v-text="routes.length"></span>)
+                                    <span v-text="trans('title')"></span> (<span v-text="countRoutes"></span>)
                                 </h1>
+
+                                <v-spacer></v-spacer>
+
+                                <v-select
+                                        v-model="filter.selected"
+                                        :label="trans('show')"
+                                        :items="filter.items"
+                                        item-value="key"
+                                        item-text="value"
+                                        single-line
+                                ></v-select>
 
                                 <v-spacer></v-spacer>
 
@@ -49,7 +60,7 @@
 
                             <v-data-table
                                     :headers="filteredHeaders"
-                                    :items="routes"
+                                    :items="filteredRoutes"
                                     :items-per-page="itemsPerPage"
                                     :search="search"
                                     :footer-props="{
@@ -121,7 +132,12 @@
         deprecated: '@lang("Deprecated")',
         itemsPerPageAllText: '@lang("All")',
         itemsPerPageText: '@lang("Routes per page:")',
-        pageText: '{0}-{1} @lang("of") {2}'
+        pageText: '{0}-{1} @lang("of") {2}',
+        show: '@lang("Show")',
+        all: '@lang("All")',
+        onlyDeprecated: '@lang("Only Deprecated")',
+        withoutDeprecated: '@lang("Without Deprecated")',
+        of: '@lang("of")'
     };
 
     const colorScheme = () => {
@@ -167,13 +183,39 @@
                 PATCH: 'cyan lighten-1',
                 DELETE: 'red darken-1',
                 OPTIONS: 'lime darken-1'
+            },
+
+            filter: {
+                selected: 'all',
+
+                items: [
+                    { key: 'all', value: trans.all },
+                    { key: 'onlyDeprecated', value: trans.onlyDeprecated },
+                    { key: 'withoutDeprecated', value: trans.withoutDeprecated }
+                ]
             }
         },
 
         computed: {
+            filteredRoutes() {
+                let filter = this.filter.selected;
+
+                return this.routes.filter(route => {
+                    if (filter === 'onlyDeprecated') {
+                        return route.deprecated === true;
+                    }
+
+                    if (filter === 'withoutDeprecated') {
+                        return route.deprecated === false;
+                    }
+
+                    return true;
+                });
+            },
+
             existDomains() {
-                for (let i = 0; i < this.routes.length; i++) {
-                    if (this.routes[i].domain !== null) {
+                for (let i = 0; i < this.filteredRoutes.length; i++) {
+                    if (this.filteredRoutes[i].domain !== null) {
                         return true;
                     }
                 }
@@ -187,6 +229,15 @@
 
                     return exist || (! exist && item.value !== 'domain');
                 });
+            },
+
+            countRoutes() {
+                let all = this.routes.length;
+                let filtered = this.filteredRoutes.length;
+
+                return all === filtered
+                    ? all
+                    : filtered + ' ' + this.trans('of') + ' ' + all;
             }
         },
 
