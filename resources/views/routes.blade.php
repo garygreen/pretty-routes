@@ -110,9 +110,7 @@
     };
 
     const colorScheme = () => {
-        let value = "{{ config('pretty-routes.color_scheme', 'auto') }}";
-
-        switch (value) {
+        switch (@json(config('pretty-routes.color_scheme', 'auto'))) {
             case 'dark':
                 return true;
             case 'light':
