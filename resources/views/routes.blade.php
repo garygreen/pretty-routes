@@ -36,9 +36,10 @@
                                     <span v-text="trans('title')"></span> (<span v-text="countRoutes"></span>)
                                 </h1>
 
-                                <v-spacer></v-spacer>
+                                <v-spacer v-if="allowDeprecatedFilter()"></v-spacer>
 
                                 <v-select
+                                    v-if="allowDeprecatedFilter()"
                                     v-model="filter.selected"
                                     :label="trans('show')"
                                     :items="filter.items"
@@ -241,6 +242,16 @@
         methods: {
             trans(key) {
                 return trans[key];
+            },
+
+            allowDeprecatedFilter() {
+                for (let i = 0; i < this.routes.length; i++) {
+                    if (this.routes[i].deprecated === true) {
+                        return true;
+                    }
+                }
+
+                return false;
             },
 
             highlight(value, regex, modifier) {
