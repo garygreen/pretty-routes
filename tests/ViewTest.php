@@ -20,8 +20,8 @@ class ViewTest extends TestCase
         $response = $this->get('/routes');
 
         $response->assertStatus(200);
-        $response->assertDontSee('foo');
-        $response->assertSee('bar');
+        $response->assertDontSee('"foo"', false);
+        $response->assertSee('"bar"', false);
     }
 
     public function testHideRoutes()
@@ -29,7 +29,7 @@ class ViewTest extends TestCase
         $response = $this->get('/routes');
 
         $response->assertStatus(200);
-        $response->assertSee('bar');
+        $response->assertSee('"bar"', false);
         $response->assertDontSee('_ignition');
         $response->assertDontSee('telescope');
         $response->assertDontSee('_debugbar');
