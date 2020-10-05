@@ -180,12 +180,16 @@
                 return trans[key];
             },
 
+            highlight(value, regex, modifier) {
+                return value.replace(regex, `<span class="orange--text text--darken-2">${ modifier }</span>`);
+            },
+
             highlightParameters(value) {
-                return value.replace(/({[^}]+})/gi, '<span class="orange--text text--darken-2">$1</span>');
+                return this.highlight(value, /({[^}]+})/gi, '$1');
             },
 
             highlightMethod(value) {
-                return value.replace(/(@.*)$/gi, '<span class="orange--text text--darken-2">$&</span>');
+                return this.highlight(value, /(@.*)$/gi, '$&');
             }
         }
     });
