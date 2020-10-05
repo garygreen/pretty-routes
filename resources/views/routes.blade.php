@@ -45,7 +45,17 @@
                                     :items="filter.items"
                                     item-value="key"
                                     item-text="value"
-                                    single-line
+                                ></v-select>
+
+                                <v-spacer v-if="hasModules()"></v-spacer>
+
+                                <v-select
+                                    v-if="hasModules()"
+                                    v-model="modules.selected"
+                                    :label="trans('module')"
+                                    :items="filteredModules"
+                                    item-value="key"
+                                    item-text="value"
                                 ></v-select>
 
                                 <v-spacer></v-spacer>
@@ -104,9 +114,7 @@
                                     <span v-else v-html="highlightMethod(item.action)"></span>
                                 </template>
 
-                                <template
-                                    v-slot:item.middlewares="{ item }"
-                                >
+                                <template v-slot:item.middlewares="{ item }">
                                     @{{ item.middlewares.join(', ') }}
                                 </template>
                             </v-data-table>
@@ -130,6 +138,7 @@
         domain: '@lang("Domain")',
         path: '@lang("Path")',
         name: '@lang("Name")',
+        module: '@lang("Module")',
         action: '@lang("Action")',
         middlewares: '@lang("Middlewares")',
         deprecated: '@lang("Deprecated")',
@@ -176,6 +185,7 @@
                 { text: trans.domain, sortable: true, value: 'domain' },
                 { text: trans.path, sortable: true, value: 'path' },
                 { text: trans.name, sortable: true, value: 'name' },
+                { text: trans.module, sortable: true, value: 'module' },
                 { text: trans.action, sortable: true, value: 'action' },
                 { text: trans.middlewares, sortable: true, value: 'middlewares' }
             ],
@@ -198,39 +208,50 @@
                     { key: 'onlyDeprecated', value: trans.onlyDeprecated },
                     { key: 'withoutDeprecated', value: trans.withoutDeprecated }
                 ]
+            },
+
+            modules: {
+                selected: 'all'
             }
         },
 
         computed: {
             filteredRoutes() {
                 return this.routes.filter(route => {
-                    switch (this.filter.selected) {
-                        case 'onlyDeprecated':
-                            return route.deprecated === true;
-                        case 'withoutDeprecated':
-                            return route.deprecated === false;
+                    return this.allowFilter(route) && this.allowModule(route);
+                });
+            },
+
+            filteredHeaders() {
+                return this.headers.filter(item => {
+                    switch (item.value) {
+                        case 'domain':
+                            return this.hasHeader('domain');
+                        case 'module':
+                            return this.hasHeader('module');
                         default:
                             return true;
                     }
                 });
             },
 
-            existDomains() {
-                for (let i = 0; i < this.filteredRoutes.length; i++) {
-                    if (this.filteredRoutes[i].domain !== null) {
-                        return true;
+            filteredModules() {
+                let modules = [
+                    { key: 'all', value: trans.all }
+                ];
+
+                for (let i = 0; i < this.routes.length; i++) {
+                    let name = this.routes[i].module;
+
+                    if (name !== null && ! this.inArray(modules, 'key', name)) {
+                        modules.push({
+                            key: this.routes[i].module,
+                            value: this.routes[i].module
+                        });
                     }
                 }
 
-                return false;
-            },
-
-            filteredHeaders() {
-                return this.headers.filter(item => {
-                    let exist = this.existDomains;
-
-                    return exist || (! exist && item.value !== 'domain');
-                });
+                return modules;
             },
 
             countRoutes() {
@@ -258,6 +279,26 @@
                 return false;
             },
 
+            hasModules() {
+                for (let i = 0; i < this.routes.length; i++) {
+                    if (this.routes[i].module !== null) {
+                        return true;
+                    }
+                }
+
+                return false;
+            },
+
+            hasHeader(key) {
+                for (let i = 0; i < this.filteredRoutes.length; i++) {
+                    if (this.filteredRoutes[i][key] !== null) {
+                        return true;
+                    }
+                }
+
+                return false;
+            },
+
             highlight(value, regex, modifier) {
                 return value.replace(regex, `<span class="orange--text text--darken-2">${ modifier }</span>`);
             },
@@ -268,6 +309,31 @@
 
             highlightMethod(value) {
                 return this.highlight(value, /(@.*)$/gi, '$&');
+            },
+
+            allowFilter(route) {
+                switch (this.filter.selected) {
+                    case 'onlyDeprecated':
+                        return route.deprecated === true;
+                    case 'withoutDeprecated':
+                        return route.deprecated === false;
+                    default:
+                        return true;
+                }
+            },
+
+            allowModule(route) {
+                return route.module === this.modules.selected || this.modules.selected === 'all';
+            },
+
+            inArray(array, key, value) {
+                for (let i = 0; i < array.length; i++) {
+                    if (array[key] === value) {
+                        return true;
+                    }
+                }
+
+                return false;
             }
         }
     });

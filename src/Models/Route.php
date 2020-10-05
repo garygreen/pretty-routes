@@ -4,6 +4,8 @@ namespace PrettyRoutes\Models;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Routing\Route as IlluminateRoute;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use PrettyRoutes\Facades\Annotation;
 
 class Route implements Arrayable
@@ -47,6 +49,20 @@ class Route implements Arrayable
         return $this->route->getName();
     }
 
+    public function getModule(): ?string
+    {
+        $namespace = config('modules.namespace');
+
+        if ($namespace && Str::startsWith($this->getAction(), $namespace)) {
+            $action   = Str::after($this->getAction(), $namespace);
+            $splitted = explode('\\', ltrim($action, '\\'));
+
+            return Arr::first($splitted);
+        }
+
+        return null;
+    }
+
     public function getAction(): string
     {
         return ltrim($this->route->getActionName(), '\\');
@@ -76,6 +92,7 @@ class Route implements Arrayable
             'domain'      => $this->getDomain(),
             'path'        => $this->getPath(),
             'name'        => $this->getName(),
+            'module'      => $this->getModule(),
             'action'      => $this->getAction(),
             'middlewares' => $this->getMiddlewares(),
             'deprecated'  => $this->getDeprecated(),
