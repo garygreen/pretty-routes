@@ -109,11 +109,24 @@
         deprecated: '@lang("Deprecated")'
     };
 
+    const colorScheme = () => {
+        let value = "{{ config('pretty-routes.color_scheme', 'auto') }}";
+
+        switch (value) {
+            case 'dark':
+                return true;
+            case 'light':
+                return false;
+            default:
+                return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        }
+    };
+
     new Vue({
         el: '#app',
         vuetify: new Vuetify({
             theme: {
-                dark: {{ config('pretty-routes.dark', false) ? 'true' : 'false' }}
+                dark: colorScheme()
             }
         }),
 

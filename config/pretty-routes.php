@@ -39,8 +39,15 @@ return [
     ],
 
     /*
-     * Set a dark theme.
+     * Set a light or dark themes.
+     *
+     * Available:
+     *   light  - always chooses a light theme.
+     *   dark   - always chooses a dark theme.
+     *   auto   - automatic theme detection from browser.
+     *
+     * By default, auto
      */
 
-    'dark' => false,
+    'color_scheme' => 'auto',
 ];
