@@ -52,6 +52,11 @@
                                     :items="routes"
                                     :items-per-page="itemsPerPage"
                                     :search="search"
+                                    :footer-props="{
+                                        itemsPerPageAllText: trans('itemsPerPageAllText'),
+                                        itemsPerPageText: trans('itemsPerPageText'),
+                                        pageText: trans('pageText')
+                                    }"
                                     multi-sort
                             >
                                 <template v-slot:item.methods="{ item }">
@@ -113,7 +118,10 @@
         name: '@lang("Name")',
         action: '@lang("Action")',
         middlewares: '@lang("Middlewares")',
-        deprecated: '@lang("Deprecated")'
+        deprecated: '@lang("Deprecated")',
+        itemsPerPageAllText: '@lang("All")',
+        itemsPerPageText: '@lang("Routes per page:")',
+        pageText: '{0}-{1} @lang("of") {2}'
     };
 
     const colorScheme = () => {
