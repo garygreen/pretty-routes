@@ -25,68 +25,75 @@
         <v-main>
             <v-container>
 
-                <v-card>
-                    <v-card-title>
-                        <h1 class="display-1">
-                            <span v-text="trans('title')"></span> (<span v-text="routes.length"></span>)
-                        </h1>
+                <v-hover>
+                    <template v-slot="{ hover }">
+                        <v-card
+                                :class="`elevation-${hover ? 24 : 6}`"
+                                class="transition-swing"
+                        >
+                            <v-card-title>
+                                <h1 class="display-1">
+                                    <span v-text="trans('title')"></span> (<span v-text="routes.length"></span>)
+                                </h1>
 
-                        <v-spacer></v-spacer>
+                                <v-spacer></v-spacer>
 
-                        <v-text-field
-                                v-model="search"
-                                :label="trans('search')"
-                                append-icon="mdi-magnify"
-                                single-line
-                                hide-details
-                        ></v-text-field>
-                    </v-card-title>
+                                <v-text-field
+                                        v-model="search"
+                                        :label="trans('search')"
+                                        append-icon="mdi-magnify"
+                                        single-line
+                                        hide-details
+                                ></v-text-field>
+                            </v-card-title>
 
-                    <v-data-table
-                            :headers="filteredHeaders"
-                            :items="routes"
-                            :items-per-page="itemsPerPage"
-                            :search="search"
-                            multi-sort
-                    >
-                        <template v-slot:item.methods="{ item }">
-                            <v-chip
-                                    v-for="badge in item.methods"
-                                    v-text="badge.toUpperCase()"
-                                    :color="badges[badge]"
-                                    text-color="white"
-                                    label
-                                    small
-                                    class="spaced"
-                            ></v-chip>
-                        </template>
+                            <v-data-table
+                                    :headers="filteredHeaders"
+                                    :items="routes"
+                                    :items-per-page="itemsPerPage"
+                                    :search="search"
+                                    multi-sort
+                            >
+                                <template v-slot:item.methods="{ item }">
+                                    <v-chip
+                                            v-for="badge in item.methods"
+                                            v-text="badge.toUpperCase()"
+                                            :color="badges[badge]"
+                                            text-color="white"
+                                            label
+                                            small
+                                            class="spaced"
+                                    ></v-chip>
+                                </template>
 
-                        <template v-slot:item.path="{ item }">
-                            <span v-html="highlightParameters(item.path)"></span>
-                        </template>
+                                <template v-slot:item.path="{ item }">
+                                    <span v-html="highlightParameters(item.path)"></span>
+                                </template>
 
-                        <template v-slot:item.action="{ item }">
-                            <v-tooltip top v-if="item.deprecated">
-                                <template v-slot:activator="{ on }">
+                                <template v-slot:item.action="{ item }">
+                                    <v-tooltip top v-if="item.deprecated">
+                                        <template v-slot:activator="{ on }">
                                 <span
                                         v-on="on"
                                         v-html="highlightMethod(item.action)"
                                         class="deprecated"
                                 ></span>
+                                        </template>
+                                        <span v-text="trans('deprecated')"></span>
+                                    </v-tooltip>
+
+                                    <span v-else v-html="highlightMethod(item.action)"></span>
                                 </template>
-                                <span v-text="trans('deprecated')"></span>
-                            </v-tooltip>
 
-                            <span v-else v-html="highlightMethod(item.action)"></span>
-                        </template>
-
-                        <template
-                                v-slot:item.middlewares="{ item }"
-                        >
-                            @{{ item.middlewares.join(', ') }}
-                        </template>
-                    </v-data-table>
-                </v-card>
+                                <template
+                                        v-slot:item.middlewares="{ item }"
+                                >
+                                    @{{ item.middlewares.join(', ') }}
+                                </template>
+                            </v-data-table>
+                        </v-card>
+                    </template>
+                </v-hover>
             </v-container>
         </v-main>
     </v-app>
