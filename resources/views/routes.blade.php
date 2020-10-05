@@ -64,6 +64,8 @@
                                 :items="filteredRoutes"
                                 :items-per-page="itemsPerPage"
                                 :search="search"
+                                :no-data-text="trans('noDataText')"
+                                :no-results-text="trans('noResultsText')"
                                 :footer-props="{
                                         itemsPerPageAllText: trans('itemsPerPageAllText'),
                                         itemsPerPageText: trans('itemsPerPageText'),
@@ -134,6 +136,8 @@
         itemsPerPageAllText: '@lang("All")',
         itemsPerPageText: '@lang("Routes per page:")',
         pageText: '{0}-{1} @lang("of") {2}',
+        noDataText: '@lang("No data available")',
+        noResultsText: '@lang("No matching records found")',
         show: '@lang("Show")',
         all: '@lang("All")',
         onlyDeprecated: '@lang("Only Deprecated")',
