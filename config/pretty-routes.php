@@ -46,7 +46,7 @@ return [
      *   dark   - always chooses a dark theme.
      *   auto   - automatic theme detection from browser.
      *
-     * By default, auto
+     * By default, auto.
      */
 
     'color_scheme' => 'auto',
