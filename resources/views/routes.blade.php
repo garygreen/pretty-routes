@@ -28,8 +28,8 @@
                 <v-hover>
                     <template v-slot="{ hover }">
                         <v-card
-                                :class="`elevation-${hover ? 24 : 6}`"
-                                class="transition-swing"
+                            :class="`elevation-${hover ? 24 : 6}`"
+                            class="transition-swing"
                         >
                             <v-card-title>
                                 <h1 class="display-1">
@@ -39,46 +39,46 @@
                                 <v-spacer></v-spacer>
 
                                 <v-select
-                                        v-model="filter.selected"
-                                        :label="trans('show')"
-                                        :items="filter.items"
-                                        item-value="key"
-                                        item-text="value"
-                                        single-line
+                                    v-model="filter.selected"
+                                    :label="trans('show')"
+                                    :items="filter.items"
+                                    item-value="key"
+                                    item-text="value"
+                                    single-line
                                 ></v-select>
 
                                 <v-spacer></v-spacer>
 
                                 <v-text-field
-                                        v-model="search"
-                                        :label="trans('search')"
-                                        append-icon="mdi-magnify"
-                                        single-line
-                                        hide-details
+                                    v-model="search"
+                                    :label="trans('search')"
+                                    append-icon="mdi-magnify"
+                                    single-line
+                                    hide-details
                                 ></v-text-field>
                             </v-card-title>
 
                             <v-data-table
-                                    :headers="filteredHeaders"
-                                    :items="filteredRoutes"
-                                    :items-per-page="itemsPerPage"
-                                    :search="search"
-                                    :footer-props="{
+                                :headers="filteredHeaders"
+                                :items="filteredRoutes"
+                                :items-per-page="itemsPerPage"
+                                :search="search"
+                                :footer-props="{
                                         itemsPerPageAllText: trans('itemsPerPageAllText'),
                                         itemsPerPageText: trans('itemsPerPageText'),
                                         pageText: trans('pageText')
                                     }"
-                                    multi-sort
+                                multi-sort
                             >
                                 <template v-slot:item.methods="{ item }">
                                     <v-chip
-                                            v-for="badge in item.methods"
-                                            v-text="badge.toUpperCase()"
-                                            :color="badges[badge]"
-                                            text-color="white"
-                                            label
-                                            small
-                                            class="spaced"
+                                        v-for="badge in item.methods"
+                                        v-text="badge.toUpperCase()"
+                                        :color="badges[badge]"
+                                        text-color="white"
+                                        label
+                                        small
+                                        class="spaced"
                                     ></v-chip>
                                 </template>
 
@@ -90,9 +90,9 @@
                                     <v-tooltip top v-if="item.deprecated">
                                         <template v-slot:activator="{ on }">
                                 <span
-                                        v-on="on"
-                                        v-html="highlightMethod(item.action)"
-                                        class="deprecated"
+                                    v-on="on"
+                                    v-html="highlightMethod(item.action)"
+                                    class="deprecated"
                                 ></span>
                                         </template>
                                         <span v-text="trans('deprecated')"></span>
@@ -102,7 +102,7 @@
                                 </template>
 
                                 <template
-                                        v-slot:item.middlewares="{ item }"
+                                    v-slot:item.middlewares="{ item }"
                                 >
                                     @{{ item.middlewares.join(', ') }}
                                 </template>
@@ -198,18 +198,15 @@
 
         computed: {
             filteredRoutes() {
-                let filter = this.filter.selected;
-
                 return this.routes.filter(route => {
-                    if (filter === 'onlyDeprecated') {
-                        return route.deprecated === true;
+                    switch (this.filter.selected) {
+                        case 'onlyDeprecated':
+                            return route.deprecated === true;
+                        case 'withoutDeprecated':
+                            return route.deprecated === false;
+                        default:
+                            return true;
                     }
-
-                    if (filter === 'withoutDeprecated') {
-                        return route.deprecated === false;
-                    }
-
-                    return true;
                 });
             },
 
