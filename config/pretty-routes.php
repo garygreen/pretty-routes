@@ -8,10 +8,22 @@ return [
     'url' => 'routes',
 
     /*
-     * The middleware(s) to apply before attempting to access routes page.
+     * The middleware(s) to apply before attempting to access routes pages (web + api).
      */
 
     'middlewares' => [],
+
+    /*
+     * The middleware(s) to apply before attempting to access WEB route page.
+     */
+
+    'web_middleware' => 'web',
+
+    /*
+     * The middleware(s) to apply before attempting to access API route.
+     */
+
+    'api_middleware' => 'api',
 
     /*
      * Indicates whether to enable pretty routes only when debug is enabled (APP_DEBUG).
@@ -35,7 +47,7 @@ return [
         '#^_debugbar#',
         '#^_ignition#',
         '#^telescope#',
-        '#^routes$#',
+        '#^routes#',
     ],
 
     /*
