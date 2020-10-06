@@ -35,7 +35,7 @@ return [
         '#^_debugbar#',
         '#^_ignition#',
         '#^telescope#',
-        '#^routes$#',
+        '#^routes#',
     ],
 
     /*
