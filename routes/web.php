@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::name('pretty-routes.show')
+Route::name('pretty-routes.')
     ->middleware(config('pretty-routes.middlewares'))
-    ->get(config('pretty-routes.url'), 'PrettyRoutes\Http\PrettyRoutesController@show');
+    ->prefix(config('pretty-routes.url'))
+    ->group(function () {
+
+        Route::get('/', 'PrettyRoutes\Http\PrettyRoutesController@show')->name('show');
+        Route::get('json', 'PrettyRoutes\Http\PrettyRoutesController@routes')->name('list');
+
+    });

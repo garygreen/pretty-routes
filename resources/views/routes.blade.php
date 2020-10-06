@@ -38,10 +38,10 @@
                                     <span v-text="trans('title')"></span> (<span v-text="countRoutes"></span>)
                                 </h1>
 
-                                <v-spacer v-if="allowDeprecatedFilter()"></v-spacer>
+                                <v-spacer v-if="allowDeprecatedFilter"></v-spacer>
 
                                 <v-select
-                                    v-if="allowDeprecatedFilter()"
+                                    v-if="allowDeprecatedFilter"
                                     v-model="filter.selected"
                                     :label="trans('show')"
                                     :items="filter.items"
@@ -49,10 +49,10 @@
                                     item-text="value"
                                 ></v-select>
 
-                                <v-spacer v-if="hasModules()"></v-spacer>
+                                <v-spacer v-if="hasModules"></v-spacer>
 
                                 <v-select
-                                    v-if="hasModules()"
+                                    v-if="hasModules"
                                     v-model="modules.selected"
                                     :label="trans('module')"
                                     :items="filteredModules"
@@ -76,6 +76,8 @@
                                 :items="filteredRoutes"
                                 :items-per-page="itemsPerPage"
                                 :search="search"
+                                :loading="loading"
+                                :loading-text="trans('loading')"
                                 :no-data-text="trans('noDataText')"
                                 :no-results-text="trans('noResultsText')"
                                 :footer-props="{
@@ -147,6 +149,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
     const trans = {
@@ -171,7 +174,8 @@
         onlyDeprecated: '@lang("Only Deprecated")',
         withoutDeprecated: '@lang("Without Deprecated")',
         without: '@lang("Without")',
-        of: '@lang("of")'
+        of: '@lang("of")',
+        loading: '@lang("Loading... Please wait...")'
     };
 
     const colorScheme = () => {
@@ -196,8 +200,11 @@
         data: {
             itemsPerPage: 15,
             search: null,
+            loading: true,
 
-            routes: @json($routes),
+            url: '{{ route("pretty-routes.list") }}',
+
+            routes: [],
 
             headers: [
                 { text: trans.priority, sortable: true, value: 'priority' },
@@ -282,12 +289,6 @@
                 return all === filtered
                     ? all
                     : filtered + ' ' + this.trans('of') + ' ' + all;
-            }
-        },
-
-        methods: {
-            trans(key) {
-                return trans[key];
             },
 
             allowDeprecatedFilter() {
@@ -308,16 +309,23 @@
                 }
 
                 return false;
+            }
+        },
+
+        mounted() {
+            this.getRoutes();
+        },
+
+        methods: {
+            getRoutes() {
+                axios.get(this.url)
+                    .then(response => this.routes = response.data)
+                    .catch(error => console.error(error))
+                    .finally(() => this.loading = false);
             },
 
-            hasHeader(key) {
-                for (let i = 0; i < this.filteredRoutes.length; i++) {
-                    if (this.filteredRoutes[i][key] !== null) {
-                        return true;
-                    }
-                }
-
-                return false;
+            trans(key) {
+                return trans[key];
             },
 
             highlight(value, regex, modifier) {
@@ -349,6 +357,16 @@
                 }
 
                 return route.module === this.modules.selected || this.modules.selected === 'all';
+            },
+
+            hasHeader(key) {
+                for (let i = 0; i < this.filteredRoutes.length; i++) {
+                    if (this.filteredRoutes[i][key] !== null) {
+                        return true;
+                    }
+                }
+
+                return false;
             },
 
             inArray(array, key, value) {
