@@ -16,6 +16,8 @@
         .spaced { margin: 2px; }
 
         .deprecated { text-decoration: line-through; }
+
+        .link:hover { text-decoration: underline; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -92,11 +94,23 @@
                                         label
                                         small
                                         class="spaced"
+                                        @click="setSearch(badge)"
                                     ></v-chip>
                                 </template>
 
                                 <template v-slot:item.path="{ item }">
                                     <span v-html="highlightParameters(item.path)"></span>
+                                </template>
+
+                                <template v-slot:item.module="{ item }">
+                                    <v-chip
+                                        v-if="item.module !== null"
+                                        v-text="item.module"
+                                        label
+                                        small
+                                        class="spaced"
+                                        @click="setModule(item.module)"
+                                    ></v-chip>
                                 </template>
 
                                 <template v-slot:item.action="{ item }">
@@ -115,7 +129,12 @@
                                 </template>
 
                                 <template v-slot:item.middlewares="{ item }">
-                                    @{{ item.middlewares.join(', ') }}
+                                    <span
+                                        v-for="(middleware, key) in item.middlewares"
+                                        v-text="`${middleware}${key !== item.middlewares.length - 1 ? ', ' : ''}`"
+                                        @click="setSearch(middleware)"
+                                        class="link"
+                                    ></span>
                                 </template>
                             </v-data-table>
                         </v-card>
@@ -340,6 +359,14 @@
                 }
 
                 return false;
+            },
+
+            setSearch(value) {
+                this.search = value;
+            },
+
+            setModule(value) {
+                this.modules.selected = value;
             }
         }
     });
