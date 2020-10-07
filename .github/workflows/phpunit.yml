@@ -9,10 +9,9 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                php: [ 7.3, 7.4 ]
-                laravel: [ 6.0, 7.0, 8.0 ]
+                laravel: [ 5.4, 5.5, 5.6, 5.7, 5.8, 6.0, 7.0, 8.0 ]
 
-        name: PHP ${{ matrix.php }} - ${{ matrix.laravel }}
+        name: Laravel ${{ matrix.laravel }}
 
         steps:
             -   name: Checkout code
@@ -21,7 +20,7 @@ jobs:
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v1
                 with:
-                    php-version: ${{ matrix.php }}
+                    php-version: 7.4
                     extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
                     coverage: xdebug
 
