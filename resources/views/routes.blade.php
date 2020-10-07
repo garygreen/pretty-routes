@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 
-    <title>@lang('Routes list') | {{ config('app.name') }}</title>
+    <title>{{ trans('Routes list') }} | {{ config('app.name') }}</title>
 
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
@@ -30,8 +30,8 @@
                 <v-hover>
                     <template v-slot="{ hover }">
                         <v-card
-                            :class="`elevation-${hover ? 24 : 6}`"
-                            class="transition-swing"
+                                :class="`elevation-${hover ? 24 : 6}`"
+                                class="transition-swing"
                         >
                             <v-card-title>
                                 <h1 class="display-1">
@@ -41,62 +41,62 @@
                                 <v-spacer v-if="allowDeprecatedFilter"></v-spacer>
 
                                 <v-select
-                                    v-if="allowDeprecatedFilter"
-                                    v-model="filter.selected"
-                                    :label="trans('show')"
-                                    :items="filter.items"
-                                    item-value="key"
-                                    item-text="value"
+                                        v-if="allowDeprecatedFilter"
+                                        v-model="filter.selected"
+                                        :label="trans('show')"
+                                        :items="filter.items"
+                                        item-value="key"
+                                        item-text="value"
                                 ></v-select>
 
                                 <v-spacer v-if="hasModules"></v-spacer>
 
                                 <v-select
-                                    v-if="hasModules"
-                                    v-model="modules.selected"
-                                    :label="trans('module')"
-                                    :items="filteredModules"
-                                    item-value="key"
-                                    item-text="value"
+                                        v-if="hasModules"
+                                        v-model="modules.selected"
+                                        :label="trans('module')"
+                                        :items="filteredModules"
+                                        item-value="key"
+                                        item-text="value"
                                 ></v-select>
 
                                 <v-spacer></v-spacer>
 
                                 <v-text-field
-                                    v-model="search"
-                                    :label="trans('search')"
-                                    append-icon="mdi-magnify"
-                                    single-line
-                                    hide-details
+                                        v-model="search"
+                                        :label="trans('search')"
+                                        append-icon="mdi-magnify"
+                                        single-line
+                                        hide-details
                                 ></v-text-field>
                             </v-card-title>
 
                             <v-data-table
-                                :headers="filteredHeaders"
-                                :items="filteredRoutes"
-                                :items-per-page="itemsPerPage"
-                                :search="search"
-                                :loading="loading"
-                                :loading-text="trans('loading')"
-                                :no-data-text="trans('noDataText')"
-                                :no-results-text="trans('noResultsText')"
-                                :footer-props="{
+                                    :headers="filteredHeaders"
+                                    :items="filteredRoutes"
+                                    :items-per-page="itemsPerPage"
+                                    :search="search"
+                                    :loading="loading"
+                                    :loading-text="trans('loading')"
+                                    :no-data-text="trans('noDataText')"
+                                    :no-results-text="trans('noResultsText')"
+                                    :footer-props="{
                                         itemsPerPageAllText: trans('itemsPerPageAllText'),
                                         itemsPerPageText: trans('itemsPerPageText'),
                                         pageText: trans('pageText')
                                     }"
-                                multi-sort
+                                    multi-sort
                             >
                                 <template v-slot:item.methods="{ item }">
                                     <v-chip
-                                        v-for="badge in item.methods"
-                                        v-text="badge.toUpperCase()"
-                                        :color="badges[badge]"
-                                        text-color="white"
-                                        label
-                                        small
-                                        class="spaced"
-                                        @click="setSearch(badge)"
+                                            v-for="badge in item.methods"
+                                            v-text="badge.toUpperCase()"
+                                            :color="badges[badge]"
+                                            text-color="white"
+                                            label
+                                            small
+                                            class="spaced"
+                                            @click="setSearch(badge)"
                                     ></v-chip>
                                 </template>
 
@@ -106,12 +106,12 @@
 
                                 <template v-slot:item.module="{ item }">
                                     <v-chip
-                                        v-if="item.module !== null"
-                                        v-text="item.module"
-                                        label
-                                        small
-                                        class="spaced"
-                                        @click="setModule(item.module)"
+                                            v-if="item.module !== null"
+                                            v-text="item.module"
+                                            label
+                                            small
+                                            class="spaced"
+                                            @click="setModule(item.module)"
                                     ></v-chip>
                                 </template>
 
@@ -119,9 +119,9 @@
                                     <v-tooltip top v-if="item.deprecated">
                                         <template v-slot:activator="{ on }">
                                 <span
-                                    v-on="on"
-                                    v-html="highlightMethod(item.action)"
-                                    class="deprecated"
+                                        v-on="on"
+                                        v-html="highlightMethod(item.action)"
+                                        class="deprecated"
                                 ></span>
                                         </template>
                                         <span v-text="trans('deprecated')"></span>
@@ -132,10 +132,10 @@
 
                                 <template v-slot:item.middlewares="{ item }">
                                     <span
-                                        v-for="(middleware, key) in item.middlewares"
-                                        v-text="`${middleware}${key !== item.middlewares.length - 1 ? ', ' : ''}`"
-                                        @click="setSearch(middleware)"
-                                        class="link"
+                                            v-for="(middleware, key) in item.middlewares"
+                                            v-text="`${middleware}${key !== item.middlewares.length - 1 ? ', ' : ''}`"
+                                            @click="setSearch(middleware)"
+                                            class="link"
                                     ></span>
                                 </template>
                             </v-data-table>
@@ -153,33 +153,33 @@
 
 <script>
     const trans = {
-        title: '@lang("Routes")',
-        search: '@lang("Search")',
-        priority: '@lang("Priority")',
-        methods: '@lang("Methods")',
-        domain: '@lang("Domain")',
-        path: '@lang("Path")',
-        name: '@lang("Name")',
-        module: '@lang("Module")',
-        action: '@lang("Action")',
-        middlewares: '@lang("Middlewares")',
-        deprecated: '@lang("Deprecated")',
-        itemsPerPageAllText: '@lang("All")',
-        itemsPerPageText: '@lang("Routes per page:")',
-        pageText: '{0}-{1} @lang("of") {2}',
-        noDataText: '@lang("No data available")',
-        noResultsText: '@lang("No matching records found")',
-        show: '@lang("Show")',
-        all: '@lang("All")',
-        onlyDeprecated: '@lang("Only Deprecated")',
-        withoutDeprecated: '@lang("Without Deprecated")',
-        without: '@lang("Without")',
-        of: '@lang("of")',
-        loading: '@lang("Loading... Please wait...")'
+        title: '{{ trans("Routes") }}',
+        search: '{{ trans("Search") }}',
+        priority: '{{ trans("Priority") }}',
+        methods: '{{ trans("Methods") }}',
+        domain: '{{ trans("Domain") }}',
+        path: '{{ trans("Path") }}',
+        name: '{{ trans("Name") }}',
+        module: '{{ trans("Module") }}',
+        action: '{{ trans("Action") }}',
+        middlewares: '{{ trans("Middlewares") }}',
+        deprecated: '{{ trans("Deprecated") }}',
+        itemsPerPageAllText: '{{ trans("All") }}',
+        itemsPerPageText: '{{ trans("Routes per page:") }}',
+        pageText: '{0}-{1} {{ trans("of") }} {2}',
+        noDataText: '{{ trans("No data available") }}',
+        noResultsText: '{{ trans("No matching records found") }}',
+        show: '{{ trans("Show") }}',
+        all: '{{ trans("All") }}',
+        onlyDeprecated: '{{ trans("Only Deprecated") }}',
+        withoutDeprecated: '{{ trans("Without Deprecated") }}',
+        without: '{{ trans("Without") }}',
+        of: '{{ trans("of") }}',
+        loading: '{{ trans("Loading... Please wait...") }}'
     };
 
     const colorScheme = () => {
-        switch (@json(config('pretty-routes.color_scheme', 'auto'))) {
+        switch ({{ json_encode(config('pretty-routes.color_scheme', 'auto')) }}) {
             case 'dark':
                 return true;
             case 'light':
