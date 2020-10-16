@@ -22,10 +22,12 @@ class PrettyRoutesController extends BaseController
      *
      * @param  \PrettyRoutes\Support\Routes  $routes
      *
-     * @return array
+     * @return \Illuminate\Http\JsonResponse
      */
     public function routes(Routes $routes)
     {
-        return $routes->get();
+        return response()->json(
+            $routes->get()
+        );
     }
 }
