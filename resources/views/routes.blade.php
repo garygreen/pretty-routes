@@ -283,6 +283,10 @@
             },
 
             countRoutes() {
+                if (this.loading === true) {
+                    return '...';
+                }
+
                 let all = this.routes.length;
                 let filtered = this.filteredRoutes.length;
 
