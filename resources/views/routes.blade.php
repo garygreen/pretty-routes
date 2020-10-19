@@ -24,126 +24,122 @@
 
 <div id="app">
     <v-app>
+        <v-app-bar app>
+            <v-toolbar-title>
+                <span v-text="trans('title')"></span> (<span v-text="countRoutes"></span>)
+            </v-toolbar-title>
+
+            <v-spacer v-if="hasDeprecated"></v-spacer>
+            <v-select
+                v-if="hasDeprecated"
+                v-model="filter.deprecated"
+                :label="trans('show')"
+                :items="items.deprecated"
+                item-value="key"
+                item-text="value"
+                hide-details="true"
+            ></v-select>
+
+            <v-spacer v-if="hasModules"></v-spacer>
+            <v-select
+                v-if="hasModules"
+                v-model="filter.modules"
+                :label="trans('module')"
+                :items="filteredModules"
+                item-value="key"
+                item-text="value"
+                hide-details="true"
+            ></v-select>
+
+            <v-spacer></v-spacer>
+            <v-text-field
+                v-model="filter.value"
+                :label="trans('search')"
+                append-icon="mdi-magnify"
+                hide-details
+                clearable
+            ></v-text-field>
+
+            <v-spacer></v-spacer>
+            <v-btn icon @click="openGitHubRepository">
+                <v-avatar size="36">
+                    <img
+                        :src="repository.icon"
+                        alt="Github Project Page"
+                    >
+                </v-avatar>
+            </v-btn>
+        </v-app-bar>
+
         <v-main>
-            <v-container>
+            <v-data-table
+                :headers="filteredHeaders"
+                :items="filteredRoutes"
+                :items-per-page="itemsPerPage"
+                :search="filter.value"
+                :loading="loading"
+                :loading-text="trans('loading')"
+                :no-data-text="trans('noDataText')"
+                :no-results-text="trans('noResultsText')"
+                :footer-props="{
+                    itemsPerPageAllText: trans('itemsPerPageAllText'),
+                    itemsPerPageText: trans('itemsPerPageText'),
+                    pageText: trans('pageText')
+                }"
+                multi-sort
+            >
+                <template v-slot:item.methods="{ item }">
+                    <v-chip
+                        v-for="badge in item.methods"
+                        v-text="badge.toUpperCase()"
+                        :color="badges[badge]"
+                        text-color="white"
+                        label
+                        small
+                        class="spaced"
+                        @click="setSearch(badge)"
+                    ></v-chip>
+                </template>
 
-                <v-hover>
-                    <template v-slot="{ hover }">
-                        <v-card
-                                :class="`elevation-${hover ? 24 : 6}`"
-                                class="transition-swing"
-                        >
-                            <v-card-title>
-                                <h1 class="display-1">
-                                    <span v-text="trans('title')"></span> (<span v-text="countRoutes"></span>)
-                                </h1>
+                <template v-slot:item.path="{ item }">
+                    <span v-html="highlightParameters(item.path)"></span>
+                </template>
 
-                                <v-spacer v-if="allowDeprecatedFilter"></v-spacer>
+                <template v-slot:item.module="{ item }">
+                    <v-chip
+                        v-if="item.module !== null"
+                        v-text="item.module"
+                        label
+                        small
+                        class="spaced"
+                        @click="setModule(item.module)"
+                    ></v-chip>
+                </template>
 
-                                <v-select
-                                        v-if="allowDeprecatedFilter"
-                                        v-model="filter.selected"
-                                        :label="trans('show')"
-                                        :items="filter.items"
-                                        item-value="key"
-                                        item-text="value"
-                                ></v-select>
-
-                                <v-spacer v-if="hasModules"></v-spacer>
-
-                                <v-select
-                                        v-if="hasModules"
-                                        v-model="modules.selected"
-                                        :label="trans('module')"
-                                        :items="filteredModules"
-                                        item-value="key"
-                                        item-text="value"
-                                ></v-select>
-
-                                <v-spacer></v-spacer>
-
-                                <v-text-field
-                                        v-model="search"
-                                        :label="trans('search')"
-                                        append-icon="mdi-magnify"
-                                        single-line
-                                        hide-details
-                                        clearable
-                                ></v-text-field>
-                            </v-card-title>
-
-                            <v-data-table
-                                    :headers="filteredHeaders"
-                                    :items="filteredRoutes"
-                                    :items-per-page="itemsPerPage"
-                                    :search="search"
-                                    :loading="loading"
-                                    :loading-text="trans('loading')"
-                                    :no-data-text="trans('noDataText')"
-                                    :no-results-text="trans('noResultsText')"
-                                    :footer-props="{
-                                        itemsPerPageAllText: trans('itemsPerPageAllText'),
-                                        itemsPerPageText: trans('itemsPerPageText'),
-                                        pageText: trans('pageText')
-                                    }"
-                                    multi-sort
-                            >
-                                <template v-slot:item.methods="{ item }">
-                                    <v-chip
-                                            v-for="badge in item.methods"
-                                            v-text="badge.toUpperCase()"
-                                            :color="badges[badge]"
-                                            text-color="white"
-                                            label
-                                            small
-                                            class="spaced"
-                                            @click="setSearch(badge)"
-                                    ></v-chip>
-                                </template>
-
-                                <template v-slot:item.path="{ item }">
-                                    <span v-html="highlightParameters(item.path)"></span>
-                                </template>
-
-                                <template v-slot:item.module="{ item }">
-                                    <v-chip
-                                            v-if="item.module !== null"
-                                            v-text="item.module"
-                                            label
-                                            small
-                                            class="spaced"
-                                            @click="setModule(item.module)"
-                                    ></v-chip>
-                                </template>
-
-                                <template v-slot:item.action="{ item }">
-                                    <v-tooltip top v-if="item.deprecated">
-                                        <template v-slot:activator="{ on }">
+                <template v-slot:item.action="{ item }">
+                    <v-tooltip top v-if="item.deprecated">
+                        <template v-slot:activator="{ on }">
                                 <span
-                                        v-on="on"
-                                        v-html="highlightMethod(item.action)"
-                                        class="deprecated"
+                                    v-on="on"
+                                    v-html="highlightMethod(item.action)"
+                                    class="deprecated"
                                 ></span>
-                                        </template>
-                                        <span v-text="trans('deprecated')"></span>
-                                    </v-tooltip>
+                        </template>
+                        <span v-text="trans('deprecated')"></span>
+                    </v-tooltip>
 
-                                    <span v-else v-html="highlightMethod(item.action)"></span>
-                                </template>
+                    <span v-else v-html="highlightMethod(item.action)"></span>
+                </template>
 
-                                <template v-slot:item.middlewares="{ item }">
-                                    <span
-                                            v-for="(middleware, key) in item.middlewares"
-                                            v-text="`${middleware}${key !== item.middlewares.length - 1 ? ', ' : ''}`"
-                                            @click="setSearch(middleware)"
-                                            class="link"
-                                    ></span>
-                                </template>
-                            </v-data-table>
-                        </v-card>
-                    </template>
-                </v-hover>
-            </v-container>
+                <template v-slot:item.middlewares="{ item }">
+                    <span
+                        v-for="(middleware, key) in item.middlewares"
+                        v-text="`${middleware}${key !== item.middlewares.length - 1 ? ', ' : ''}`"
+                        @click="setSearch(middleware)"
+                        class="link"
+                    ></span>
+                </template>
+            </v-data-table>
         </v-main>
     </v-app>
 </div>
@@ -200,10 +196,14 @@
 
         data: {
             itemsPerPage: 15,
-            search: null,
             loading: true,
 
             url: '{{ route("pretty-routes.list") }}',
+
+            repository: {
+                url: 'https://github.com/andrey-helldar/pretty-routes',
+                icon: 'https://github.com/fluidicon.png'
+            },
 
             routes: [],
 
@@ -229,24 +229,24 @@
             },
 
             filter: {
-                selected: 'all',
+                deprecated: 'all',
+                modules: 'all',
+                value: null
+            },
 
-                items: [
+            items: {
+                deprecated: [
                     { key: 'all', value: trans.all },
                     { key: 'onlyDeprecated', value: trans.onlyDeprecated },
                     { key: 'withoutDeprecated', value: trans.withoutDeprecated }
                 ]
-            },
-
-            modules: {
-                selected: 'all'
             }
         },
 
         computed: {
             filteredRoutes() {
                 return this.routes.filter(route => {
-                    return this.allowFilter(route) && this.allowModule(route);
+                    return this.allowDeprecated(route) && this.allowModule(route);
                 });
             },
 
@@ -296,7 +296,7 @@
                     : filtered + ' ' + this.trans('of') + ' ' + all;
             },
 
-            allowDeprecatedFilter() {
+            hasDeprecated() {
                 for (let i = 0; i < this.routes.length; i++) {
                     if (this.routes[i].deprecated === true) {
                         return true;
@@ -345,8 +345,8 @@
                 return this.highlight(value, /(@.*)$/gi, '$&');
             },
 
-            allowFilter(route) {
-                switch (this.filter.selected) {
+            allowDeprecated(route) {
+                switch (this.filter.deprecated) {
                     case 'onlyDeprecated':
                         return route.deprecated === true;
                     case 'withoutDeprecated':
@@ -357,11 +357,11 @@
             },
 
             allowModule(route) {
-                if (this.modules.selected === 'without') {
+                if (this.filter.modules === 'without') {
                     return route.module === null;
                 }
 
-                return route.module === this.modules.selected || this.modules.selected === 'all';
+                return this.filter.modules === 'all' || route.module === this.filter.modules;
             },
 
             hasHeader(key) {
@@ -385,11 +385,15 @@
             },
 
             setSearch(value) {
-                this.search = value;
+                this.filter.value = value;
             },
 
             setModule(value) {
-                this.modules.selected = value;
+                this.filter.modules = value;
+            },
+
+            openGitHubRepository() {
+                window.open(this.repository.url);
             }
         }
     });
