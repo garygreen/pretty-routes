@@ -68,6 +68,7 @@
                                         append-icon="mdi-magnify"
                                         single-line
                                         hide-details
+                                        clearable
                                 ></v-text-field>
                             </v-card-title>
 
