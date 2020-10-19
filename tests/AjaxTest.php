@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use Illuminate\Support\Facades\Validator;
+
 final class AjaxTest extends TestCase
 {
     public function testStructure()
@@ -23,6 +25,29 @@ final class AjaxTest extends TestCase
                 'deprecated',
             ],
         ]);
+    }
+
+    public function testValidateValues()
+    {
+        $response = $this->get('/routes/json');
+
+        $response->assertStatus(200);
+
+        $v = Validator::make($response->json(), [
+            '*.priority'      => ['required', 'integer'],
+            '*.methods'       => ['required', 'array'],
+            '*.methods.*'     => ['required', 'string'],
+            '*.domain'        => ['nullable', 'string'],
+            '*.path'          => ['required', 'string'],
+            '*.name'          => ['nullable', 'string'],
+            '*.module'        => ['nullable', 'string'],
+            '*.action'        => ['nullable', 'string'],
+            '*.middlewares'   => ['nullable', 'array'],
+            '*.middlewares.*' => ['nullable', 'string'],
+            '*.deprecated'    => ['boolean'],
+        ]);
+
+        $this->assertFalse($v->fails());
     }
 
     public function testHideMethods()
