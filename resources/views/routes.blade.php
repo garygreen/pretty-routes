@@ -26,7 +26,11 @@
     <v-app>
         <v-app-bar app>
             <v-toolbar-title>
-                <span v-text="trans('title')"></span> (<span v-text="countRoutes"></span>)
+                <span
+                    v-text="trans('title')"
+                    :class="{link: filterIsFull()}"
+                    @click="resetFilters"
+                ></span> (<span v-text="countRoutes"></span>)
             </v-toolbar-title>
 
             <v-spacer v-if="hasDeprecated"></v-spacer>
@@ -390,6 +394,18 @@
 
             setModule(value) {
                 this.filter.modules = value;
+            },
+
+            resetFilters() {
+                this.filter.deprecated = 'all';
+                this.filter.modules = 'all';
+                this.filter.value = null;
+            },
+
+            filterIsFull() {
+                return this.filter.deprecated !== 'all'
+                    || this.filter.modules !== 'all'
+                    || this.filter.value !== null;
             },
 
             openGitHubRepository() {
