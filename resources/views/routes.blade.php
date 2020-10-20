@@ -90,6 +90,7 @@
                     itemsPerPageText: trans('itemsPerPageText'),
                     pageText: trans('pageText')
                 }"
+                ref="routes"
                 multi-sort
             >
                 <template v-slot:item.methods="{ item }">
@@ -293,7 +294,7 @@
                 }
 
                 let all = this.routes.length;
-                let filtered = this.filteredRoutes.length;
+                let filtered = this.$refs.routes.$children[0].filteredItems.length;
 
                 return all === filtered
                     ? all
