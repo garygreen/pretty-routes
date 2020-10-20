@@ -53,7 +53,7 @@
         "laravel": {
             "providers": [
                 "PrettyRoutes\\BladeServiceProvider",
-                "PrettyRoutes\\AppServiceProvider"
+                "PrettyRoutes\\ServiceProvider"
             ]
         }
     }

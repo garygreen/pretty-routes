@@ -3,7 +3,7 @@
 namespace Tests;
 
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use PrettyRoutes\AppServiceProvider;
+use PrettyRoutes\ServiceProvider;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -15,7 +15,7 @@ abstract class TestCase extends BaseTestCase
 
     protected function getPackageProviders($app): array
     {
-        return [AppServiceProvider::class];
+        return [ServiceProvider::class];
     }
 
     protected function setRoutes($app)

@@ -4,7 +4,7 @@ namespace PrettyRoutes;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
-class AppServiceProvider extends BaseServiceProvider
+class ServiceProvider extends BaseServiceProvider
 {
     public function register()
     {
