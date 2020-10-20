@@ -14,7 +14,7 @@ class PrettyRoutesController extends BaseController
      */
     public function show()
     {
-        return view('pretty-routes::routes');
+        return view('pretty-routes::layout');
     }
 
     /**
