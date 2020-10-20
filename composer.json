@@ -52,7 +52,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "PrettyRoutes\\ServiceProvider"
+                "PrettyRoutes\\BladeServiceProvider",
+                "PrettyRoutes\\AppServiceProvider"
             ]
         }
     }
