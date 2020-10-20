@@ -149,8 +149,8 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios"></script>
 
 <script>
     const trans = {
