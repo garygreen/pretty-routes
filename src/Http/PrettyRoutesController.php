@@ -10,7 +10,7 @@ class PrettyRoutesController extends BaseController
     /**
      * Getting a template for routes.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function show()
     {
