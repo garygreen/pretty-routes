@@ -1,3 +1,13 @@
+@push('styles')
+    <style>
+        .spaced { margin: 2px; }
+
+        .deprecated { text-decoration: line-through; }
+
+        .link:hover { text-decoration: underline; cursor: pointer; }
+    </style>
+@endpush
+
 <v-app>
     <v-app-bar app>
         <v-toolbar-title>
