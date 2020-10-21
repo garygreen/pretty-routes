@@ -22,8 +22,7 @@
         noResultsText: '{{ trans("No matching records found") }}',
         show: '{{ trans("Show") }}',
         all: '{{ trans("All") }}',
-        onlyDeprecated: '{{ trans("Only Deprecated") }}',
-        withoutDeprecated: '{{ trans("Without Deprecated") }}',
+        only: '{{ trans("Only") }}',
         without: '{{ trans("Without") }}',
         of: '{{ trans("of") }}',
         loading: '{{ trans("Loading... Please wait...") }}'
@@ -84,28 +83,34 @@
 
             filter: {
                 deprecated: 'all',
-                modules: 'all',
+                module: 'all',
+                domain: 'all',
                 value: null
             },
 
             items: {
-                deprecated: [
-                    { key: 'all', value: trans.all },
-                    { key: 'onlyDeprecated', value: trans.onlyDeprecated },
-                    { key: 'withoutDeprecated', value: trans.withoutDeprecated }
-                ],
-
-                modules: [
+                base: [
                     { key: 'all', value: trans.all },
                     { key: 'without', value: trans.without }
-                ]
+                ],
+
+                deprecated: [
+                    { key: 'all', value: trans.all },
+                    { key: 'only', value: trans.only },
+                    { key: 'without', value: trans.without }
+                ],
+
+                domains: [],
+                modules: []
             }
         },
 
         computed: {
             filteredRoutes() {
                 return this.routes.filter(route => {
-                    return this.allowDeprecated(route) && this.allowModule(route);
+                    return this.allowDeprecated(route)
+                        && this.allow(route, 'domain')
+                        && this.allow(route, 'module');
                 });
             },
 
@@ -120,20 +125,6 @@
                             return true;
                     }
                 });
-            },
-
-            getModules() {
-                let modules = this.items.modules;
-
-                for (let i = 0; i < this.routes.length; i++) {
-                    let name = this.routes[i].module;
-
-                    if (name !== null && ! this.inArray(modules, 'key', name)) {
-                        modules.push({ key: name, value: name });
-                    }
-                }
-
-                return modules;
             },
 
             countRoutes() {
@@ -154,6 +145,10 @@
 
             hasModules() {
                 return this.hasRoute('module');
+            },
+
+            hasDomains() {
+                return this.hasRoute('domain');
             }
         },
 
@@ -164,71 +159,77 @@
         methods: {
             getRoutes() {
                 axios.get(this.url)
-                    .then(response => this.routes = response.data)
+                    .then(response => {
+                        this.routes = response.data;
+
+                        this.setDomains();
+                        this.setModules();
+                    })
                     .catch(error => console.error(error))
                     .finally(() => this.loading = false);
             },
 
-            highlight(value, regex, modifier) {
-                return value.replace(regex, `<span class="orange--text text--darken-2">${ modifier }</span>`);
+            getRoutesKey(key) {
+                let result = [...this.items.base];
+
+                for (let i = 0; i < this.routes.length; i++) {
+                    let name = this.routes[i][key];
+
+                    if (name !== null && ! this.inArray(result, 'key', name)) {
+                        result.push({ key: name, value: name });
+                    }
+                }
+
+                return result;
             },
 
-            highlightParameters(value) {
-                return this.highlight(value, /({[^}]+})/gi, '$1');
+            setDomains() {
+                this.items.domains = this.getRoutesKey('domain');
             },
 
-            highlightMethod(value) {
-                return this.highlight(value, /(@.*)$/gi, '$&');
+            setModules() {
+                this.items.modules = this.getRoutesKey('module');
+            },
+
+            setFilter(key, value) {
+                this.filter[key] = value;
             },
 
             allowDeprecated(route) {
                 switch (this.filter.deprecated) {
-                    case 'onlyDeprecated':
+                    case 'only':
                         return route.deprecated === true;
-                    case 'withoutDeprecated':
+                    case 'without':
                         return route.deprecated === false;
                     default:
                         return true;
                 }
             },
 
-            allowModule(route) {
-                return this.filter.modules !== 'without'
-                    ? this.filter.modules === 'all' || route.module === this.filter.modules
-                    : route.module === null;
+            allow(route, key) {
+                let filterValue = this.filter[key];
+                let routeValue = route[key];
+
+                return filterValue !== 'without'
+                    ? filterValue === 'all' || routeValue === filterValue
+                    : routeValue === null;
             },
 
             hasHeader(key) {
                 return this.has(this.filteredRoutes, key);
             },
 
-            inArray(array, key, value) {
-                for (let i = 0; i < array.length; i++) {
-                    if (array[key] === value) {
-                        return true;
-                    }
-                }
-
-                return false;
-            },
-
-            isFiltered() {
+            isDirty() {
                 return this.filter.deprecated !== 'all'
-                    || this.filter.modules !== 'all'
+                    || this.filter.domain !== 'all'
+                    || this.filter.module !== 'all'
                     || this.filter.value !== null;
-            },
-
-            setSearch(value) {
-                this.filter.value = value;
-            },
-
-            setModule(value) {
-                this.filter.modules = value;
             },
 
             resetFilters() {
                 this.filter.deprecated = 'all';
-                this.filter.modules = 'all';
+                this.filter.domain = 'all';
+                this.filter.module = 'all';
                 this.filter.value = null;
             },
 
@@ -244,6 +245,28 @@
                 }
 
                 return false;
+            },
+
+            inArray(array, key, value) {
+                for (let i = 0; i < array.length; i++) {
+                    if (array[key] === value) {
+                        return true;
+                    }
+                }
+
+                return false;
+            },
+
+            highlight(value, regex, modifier) {
+                return value.replace(regex, `<span class="orange--text text--darken-2">${ modifier }</span>`);
+            },
+
+            highlightParameters(value) {
+                return this.highlight(value, /({[^}]+})/gi, '$1');
+            },
+
+            highlightMethod(value) {
+                return this.highlight(value, /(@.*)$/gi, '$&');
             },
 
             trans(key) {
