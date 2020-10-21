@@ -193,21 +193,13 @@
             },
 
             allowModule(route) {
-                if (this.filter.modules === 'without') {
-                    return route.module === null;
-                }
-
-                return this.filter.modules === 'all' || route.module === this.filter.modules;
+                return this.filter.modules !== 'without'
+                    ? this.filter.modules === 'all' || route.module === this.filter.modules
+                    : route.module === null;
             },
 
             hasHeader(key) {
-                for (let i = 0; i < this.filteredRoutes.length; i++) {
-                    if (this.filteredRoutes[i][key] !== null) {
-                        return true;
-                    }
-                }
-
-                return false;
+                return this.has(this.filteredRoutes, key);
             },
 
             inArray(array, key, value) {
@@ -241,8 +233,12 @@
             },
 
             hasRoute(key) {
-                for (let i = 0; i < this.routes.length; i++) {
-                    if (this.routes[i][key] !== null) {
+                return this.has(this.routes, key);
+            },
+
+            has(items, key) {
+                for (let i = 0; i < items.length; i++) {
+                    if (items[i][key] !== null) {
                         return true;
                     }
                 }
