@@ -36,7 +36,7 @@
             case 'light':
                 return false;
             default:
-                return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         }
     };
 
