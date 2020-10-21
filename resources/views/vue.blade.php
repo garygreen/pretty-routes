@@ -1,11 +1,11 @@
 <v-app>
     <v-app-bar app>
         <v-toolbar-title>
-                <span
-                    v-text="trans('title')"
-                    :class="{link: filterIsFull()}"
-                    @click="resetFilters"
-                ></span> (<span v-text="countRoutes"></span>)
+            <span
+                v-text="trans('title')"
+                :class="{link: filterIsFull()}"
+                @click="resetFilters"
+            ></span> (<span v-text="countRoutes"></span>)
         </v-toolbar-title>
 
         <v-spacer v-if="hasDeprecated"></v-spacer>
@@ -99,11 +99,11 @@
             <template v-slot:item.action="{ item }">
                 <v-tooltip top v-if="item.deprecated">
                     <template v-slot:activator="{ on }">
-                                <span
-                                    v-on="on"
-                                    v-html="highlightMethod(item.action)"
-                                    class="deprecated"
-                                ></span>
+                        <span
+                            v-on="on"
+                            v-html="highlightMethod(item.action)"
+                            class="deprecated"
+                        ></span>
                     </template>
                     <span v-text="trans('deprecated')"></span>
                 </v-tooltip>
@@ -112,12 +112,12 @@
             </template>
 
             <template v-slot:item.middlewares="{ item }">
-                    <span
-                        v-for="(middleware, key) in item.middlewares"
-                        v-text="`${middleware}${key !== item.middlewares.length - 1 ? ', ' : ''}`"
-                        @click="setSearch(middleware)"
-                        class="link"
-                    ></span>
+                <span
+                    v-for="(middleware, key) in item.middlewares"
+                    v-text="`${middleware}${key !== item.middlewares.length - 1 ? ', ' : ''}`"
+                    @click="setSearch(middleware)"
+                    class="link"
+                ></span>
             </template>
         </v-data-table>
     </v-main>
