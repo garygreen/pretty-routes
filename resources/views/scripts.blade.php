@@ -117,7 +117,7 @@
                 });
             },
 
-            filteredModules() {
+            getModules() {
                 let modules = [
                     { key: 'all', value: trans.all },
                     { key: 'without', value: trans.without }
@@ -252,7 +252,7 @@
                 this.filter.value = null;
             },
 
-            filterIsFull() {
+            isFiltered() {
                 return this.filter.deprecated !== 'all'
                     || this.filter.modules !== 'all'
                     || this.filter.value !== null;

@@ -3,7 +3,7 @@
         <v-toolbar-title>
             <span
                 v-text="trans('title')"
-                :class="{link: filterIsFull()}"
+                :class="{link: isFiltered()}"
                 @click="resetFilters"
             ></span> (<span v-text="countRoutes"></span>)
         </v-toolbar-title>
@@ -24,7 +24,7 @@
             v-if="hasModules"
             v-model="filter.modules"
             :label="trans('module')"
-            :items="filteredModules"
+            :items="getModules"
             item-value="key"
             item-text="value"
             hide-details="true"
@@ -61,10 +61,10 @@
             :no-data-text="trans('noDataText')"
             :no-results-text="trans('noResultsText')"
             :footer-props="{
-                    itemsPerPageAllText: trans('itemsPerPageAllText'),
-                    itemsPerPageText: trans('itemsPerPageText'),
-                    pageText: trans('pageText')
-                }"
+                itemsPerPageAllText: trans('itemsPerPageAllText'),
+                itemsPerPageText: trans('itemsPerPageText'),
+                pageText: trans('pageText')
+            }"
             ref="routes"
             multi-sort
         >
