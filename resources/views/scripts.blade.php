@@ -194,7 +194,7 @@
                     this.filter.value = value;
                 } else {
                     if (! this.inArray(this.filter[key], value)) {
-                        this.filter[key].push(value);
+                        this.pushFilter(key, value);
                     }
                 }
             },
@@ -281,6 +281,12 @@
 
             highlightMethod(value) {
                 return this.highlight(value, /(@.*)$/gi, '$&');
+            },
+
+            pushFilter(key, value) {
+                this.isEmptyValue(this.filter[key])
+                    ? this.filter[key] = [value]
+                    : this.filter[key].push(value);
             },
 
             trans(key) {
