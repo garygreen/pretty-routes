@@ -17,6 +17,7 @@
             item-value="key"
             item-text="value"
             hide-details="true"
+            clearable
             multiple
             chips
         ></v-select>
@@ -30,6 +31,7 @@
             item-value="key"
             item-text="value"
             hide-details="true"
+            clearable
             multiple
             chips
         ></v-select>
@@ -43,6 +45,7 @@
             item-value="key"
             item-text="value"
             hide-details="true"
+            clearable
             multiple
             chips
         ></v-select>
