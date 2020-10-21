@@ -129,10 +129,7 @@
                     let name = this.routes[i].module;
 
                     if (name !== null && ! this.inArray(modules, 'key', name)) {
-                        modules.push({
-                            key: this.routes[i].module,
-                            value: this.routes[i].module
-                        });
+                        modules.push({ key: name, value: name });
                     }
                 }
 
@@ -152,23 +149,11 @@
             },
 
             hasDeprecated() {
-                for (let i = 0; i < this.routes.length; i++) {
-                    if (this.routes[i].deprecated === true) {
-                        return true;
-                    }
-                }
-
-                return false;
+                return this.hasRoute('deprecated');
             },
 
             hasModules() {
-                for (let i = 0; i < this.routes.length; i++) {
-                    if (this.routes[i].module !== null) {
-                        return true;
-                    }
-                }
-
-                return false;
+                return this.hasRoute('module');
             }
         },
 
@@ -182,10 +167,6 @@
                     .then(response => this.routes = response.data)
                     .catch(error => console.error(error))
                     .finally(() => this.loading = false);
-            },
-
-            trans(key) {
-                return trans[key];
             },
 
             highlight(value, regex, modifier) {
@@ -239,6 +220,12 @@
                 return false;
             },
 
+            isFiltered() {
+                return this.filter.deprecated !== 'all'
+                    || this.filter.modules !== 'all'
+                    || this.filter.value !== null;
+            },
+
             setSearch(value) {
                 this.filter.value = value;
             },
@@ -253,10 +240,18 @@
                 this.filter.value = null;
             },
 
-            isFiltered() {
-                return this.filter.deprecated !== 'all'
-                    || this.filter.modules !== 'all'
-                    || this.filter.value !== null;
+            hasRoute(key) {
+                for (let i = 0; i < this.routes.length; i++) {
+                    if (this.routes[i][key] !== null) {
+                        return true;
+                    }
+                }
+
+                return false;
+            },
+
+            trans(key) {
+                return trans[key];
             },
 
             openGitHubRepository() {
