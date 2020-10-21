@@ -146,9 +146,9 @@
 
                 let all = this.routes.length;
                 let filtered = this.$refs.routes.$children[0].filteredItems.length;
-                let of = this.trans('of');
+                let particle = this.trans('of');
 
-                return all === filtered ? all : `${ filtered } ${ of } ${ all }`;
+                return all === filtered ? all : `${ filtered } ${ particle } ${ all }`;
             },
 
             hasDeprecated() {
