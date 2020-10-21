@@ -202,22 +202,25 @@
             allowDeprecated(route) {
                 let values = this.filter.deprecated;
 
-                if (this.inArray(values, 'only'))
-                    return route.deprecated === true;
+                if (this.isEmptyValue(values)) {
+                    return true;
+                }
 
-                if (this.inArray(values, 'without'))
-                    return route.deprecated === false;
+                let only = this.inArray(values, 'only') ? route.deprecated === true : false;
+                let without = this.inArray(values, 'without') ? route.deprecated === false : false;
 
-                return true;
+                return only || without;
             },
 
             allow(route, key) {
                 let filters = this.filter[key];
                 let value = route[key];
 
-                return ! this.inArray(filters, 'without')
-                    ? this.isEmptyValue(filters) || this.inArray(filters, value)
-                    : value === null;
+                let all = this.isEmptyValue(filters);
+                let without = this.inArray(filters, 'without') ? value === null : false;
+                let search = this.inArray(filters, value);
+
+                return all || without || search;
             },
 
             hasHeader(key) {
