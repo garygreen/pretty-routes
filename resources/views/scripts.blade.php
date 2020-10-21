@@ -1,31 +1,31 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="https://cdn.jsdelivr.net/npm/vuetify"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash"></script>
 
 <script>
     const trans = {
-        title: '{{ trans("Routes") }}',
-        search: '{{ trans("Search") }}',
-        priority: '{{ trans("Priority") }}',
-        methods: '{{ trans("Methods") }}',
-        domain: '{{ trans("Domain") }}',
-        path: '{{ trans("Path") }}',
-        name: '{{ trans("Name") }}',
-        module: '{{ trans("Module") }}',
         action: '{{ trans("Action") }}',
-        middlewares: '{{ trans("Middlewares") }}',
         deprecated: '{{ trans("Deprecated") }}',
+        domain: '{{ trans("Domain") }}',
         itemsPerPageAllText: '{{ trans("All") }}',
         itemsPerPageText: '{{ trans("Routes per page:") }}',
-        pageText: '{0}-{1} {{ trans("of") }} {2}',
+        loading: '{{ trans("Loading... Please wait...") }}',
+        methods: '{{ trans("Methods") }}',
+        middlewares: '{{ trans("Middlewares") }}',
+        module: '{{ trans("Module") }}',
+        name: '{{ trans("Name") }}',
         noDataText: '{{ trans("No data available") }}',
         noResultsText: '{{ trans("No matching records found") }}',
-        show: '{{ trans("Show") }}',
-        all: '{{ trans("All") }}',
-        only: '{{ trans("Only") }}',
-        without: '{{ trans("Without") }}',
         of: '{{ trans("of") }}',
-        loading: '{{ trans("Loading... Please wait...") }}'
+        only: '{{ trans("Only") }}',
+        pageText: '{0}-{1} {{ trans("of") }} {2}',
+        path: '{{ trans("Path") }}',
+        priority: '{{ trans("Priority") }}',
+        search: '{{ trans("Search") }}',
+        show: '{{ trans("Show") }}',
+        title: '{{ trans("Routes") }}',
+        without: '{{ trans("Without") }}'
     };
 
     const colorScheme = () => {
@@ -82,20 +82,18 @@
             },
 
             filter: {
-                deprecated: 'all',
-                module: 'all',
-                domain: 'all',
+                deprecated: [],
+                module: [],
+                domain: [],
                 value: null
             },
 
             items: {
                 base: [
-                    { key: 'all', value: trans.all },
                     { key: 'without', value: trans.without }
                 ],
 
                 deprecated: [
-                    { key: 'all', value: trans.all },
                     { key: 'only', value: trans.only },
                     { key: 'without', value: trans.without }
                 ],
@@ -172,13 +170,13 @@
             getRoutesKey(key) {
                 let result = [...this.items.base];
 
-                for (let i = 0; i < this.routes.length; i++) {
-                    let name = this.routes[i][key];
+                _.each(this.routes, route => {
+                    let name = route[key];
 
-                    if (name !== null && ! this.inArray(result, 'key', name)) {
+                    if (name !== null && ! this.inArray(result, name, 'key')) {
                         result.push({ key: name, value: name });
                     }
-                }
+                });
 
                 return result;
             },
@@ -192,27 +190,34 @@
             },
 
             setFilter(key, value) {
-                this.filter[key] = value;
-            },
-
-            allowDeprecated(route) {
-                switch (this.filter.deprecated) {
-                    case 'only':
-                        return route.deprecated === true;
-                    case 'without':
-                        return route.deprecated === false;
-                    default:
-                        return true;
+                if (key === 'value') {
+                    this.filter.value = value;
+                } else {
+                    if (! this.inArray(this.filter[key], value)) {
+                        this.filter[key].push(value);
+                    }
                 }
             },
 
-            allow(route, key) {
-                let filterValue = this.filter[key];
-                let routeValue = route[key];
+            allowDeprecated(route) {
+                let values = this.filter.deprecated;
 
-                return filterValue !== 'without'
-                    ? filterValue === 'all' || routeValue === filterValue
-                    : routeValue === null;
+                if (this.inArray(values, 'only'))
+                    return route.deprecated === true;
+
+                if (this.inArray(values, 'without'))
+                    return route.deprecated === false;
+
+                return true;
+            },
+
+            allow(route, key) {
+                let filters = this.filter[key];
+                let value = route[key];
+
+                return ! this.inArray(filters, 'without')
+                    ? this.isEmptyValue(filters) || this.inArray(filters, value)
+                    : value === null;
             },
 
             hasHeader(key) {
@@ -220,16 +225,24 @@
             },
 
             isDirty() {
-                return this.filter.deprecated !== 'all'
-                    || this.filter.domain !== 'all'
-                    || this.filter.module !== 'all'
-                    || this.filter.value !== null;
+                return this.isDoesntEmptyValue(this.filter.deprecated)
+                    || this.isDoesntEmptyValue(this.filter.domain)
+                    || this.isDoesntEmptyValue(this.filter.module)
+                    || this.isDoesntEmptyValue(this.filter.value);
+            },
+
+            isEmptyValue(value) {
+                return _.isEmpty(value);
+            },
+
+            isDoesntEmptyValue(value) {
+                return ! this.isEmptyValue(value);
             },
 
             resetFilters() {
-                this.filter.deprecated = 'all';
-                this.filter.domain = 'all';
-                this.filter.module = 'all';
+                this.filter.deprecated = null;
+                this.filter.domain = null;
+                this.filter.module = null;
                 this.filter.value = null;
             },
 
@@ -238,23 +251,21 @@
             },
 
             has(items, key) {
-                for (let i = 0; i < items.length; i++) {
-                    if (items[i][key] !== null) {
-                        return true;
-                    }
-                }
-
-                return false;
+                return _.filter(items, item => item[key] !== null).length > 0;
             },
 
-            inArray(array, key, value) {
-                for (let i = 0; i < array.length; i++) {
-                    if (array[key] === value) {
-                        return true;
+            inArray(array, value, key = null) {
+                return _.filter(array, (val, index) => {
+                    if (key !== null) {
+                        if (index === key && val === value)
+                            return true;
+                    } else {
+                        if (val === value)
+                            return true;
                     }
-                }
 
-                return false;
+                    return false;
+                }).length > 0;
             },
 
             highlight(value, regex, modifier) {

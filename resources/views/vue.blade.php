@@ -17,6 +17,8 @@
             item-value="key"
             item-text="value"
             hide-details="true"
+            multiple
+            chips
         ></v-select>
 
         <v-spacer v-if="hasModules"></v-spacer>
@@ -28,6 +30,8 @@
             item-value="key"
             item-text="value"
             hide-details="true"
+            multiple
+            chips
         ></v-select>
 
         <v-spacer v-if="hasDeprecated"></v-spacer>
@@ -39,6 +43,8 @@
             item-value="key"
             item-text="value"
             hide-details="true"
+            multiple
+            chips
         ></v-select>
 
         <v-spacer></v-spacer>
