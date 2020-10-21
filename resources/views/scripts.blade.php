@@ -93,6 +93,11 @@
                     { key: 'all', value: trans.all },
                     { key: 'onlyDeprecated', value: trans.onlyDeprecated },
                     { key: 'withoutDeprecated', value: trans.withoutDeprecated }
+                ],
+
+                modules: [
+                    { key: 'all', value: trans.all },
+                    { key: 'without', value: trans.without }
                 ]
             }
         },
@@ -118,10 +123,7 @@
             },
 
             getModules() {
-                let modules = [
-                    { key: 'all', value: trans.all },
-                    { key: 'without', value: trans.without }
-                ];
+                let modules = this.items.modules;
 
                 for (let i = 0; i < this.routes.length; i++) {
                     let name = this.routes[i].module;
@@ -144,10 +146,9 @@
 
                 let all = this.routes.length;
                 let filtered = this.$refs.routes.$children[0].filteredItems.length;
+                let of = this.trans('of');
 
-                return all === filtered
-                    ? all
-                    : filtered + ' ' + this.trans('of') + ' ' + all;
+                return all === filtered ? all : `${ filtered } ${ of } ${ all }`;
             },
 
             hasDeprecated() {
