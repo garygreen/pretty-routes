@@ -15,7 +15,7 @@ return [
     'noResultsText'       => 'Элементы не найдены',
     'of'                  => 'из',
     'only'                => 'Только',
-    'openGtHiub'          => 'Открыть страницу проекта в GitHub',
+    'openGitHub'          => 'Открыть страницу проекта в GitHub',
     'pageText'            => '{0}-{1} из {2}',
     'path'                => 'URI',
     'priority'            => 'Приоритет',

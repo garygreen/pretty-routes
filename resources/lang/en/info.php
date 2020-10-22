@@ -15,7 +15,7 @@ return [
     'noResultsText'       => 'No matching records found',
     'of'                  => 'of',
     'only'                => 'Only',
-    'openGtHiub'          => 'Open the project page on GitHub',
+    'openGitHub'          => 'Open the project page on GitHub',
     'pageText'            => '{0}-{1} of {2}',
     'path'                => 'Path',
     'priority'            => 'Priority',
