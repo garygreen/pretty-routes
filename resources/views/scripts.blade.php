@@ -138,7 +138,7 @@
             },
 
             hasDeprecated() {
-                return this.hasRoute('deprecated');
+                return _.filter(this.routes, item => item.deprecated === true).length > 0;
             },
 
             hasModules() {
