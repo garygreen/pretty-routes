@@ -41,6 +41,6 @@ class ServiceProvider extends BaseServiceProvider
 
     protected function fullPath(string $path): string
     {
-        return realpath(__DIR__ . '/../' . $path);
+        return realpath(__DIR__ . '/../' . ltrim($path, '/'));
     }
 }

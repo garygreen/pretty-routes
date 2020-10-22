@@ -72,4 +72,14 @@ return [
      */
 
     'domain_force' => false,
+
+    /*
+     * In the case when you need to use a specific localization, set its name to the value.
+     *
+     * For example "de".
+     *
+     * Otherwise, leave the value "false".
+     */
+
+    'locale_force' => false,
 ];

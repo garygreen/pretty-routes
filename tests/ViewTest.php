@@ -9,8 +9,8 @@ class ViewTest extends TestCase
         $response = $this->get('/routes');
 
         $response->assertStatus(200);
-        $response->assertSee('Routes list');
-        $response->assertSee('Laravel');
+        $response->assertSee('<!DOCTYPE html>', false);
+        $response->assertSee('<div id="app">', false);
 
         $response->assertDontSee('Foo Bar');
     }

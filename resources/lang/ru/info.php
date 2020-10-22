@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'action'              => 'Экшены',
+    'deprecated'          => 'Устаревшие',
+    'domain'              => 'Домен',
+    'itemsPerPageAllText' => 'Все',
+    'itemsPerPageText'    => 'Записей на странице',
+    'loading'             => 'Загрузка... Пожалуйста, подождите...',
+    'methods'             => 'Методы',
+    'middlewares'         => 'Мидлвари',
+    'module'              => 'Модуль',
+    'name'                => 'Название',
+    'noDataText'          => 'Данные отсутствуют',
+    'noResultsText'       => 'Элементы не найдены',
+    'of'                  => 'из',
+    'only'                => 'Только',
+    'openGtHiub'          => 'Открыть страницу проекта в GitHub',
+    'pageText'            => '{0}-{1} из {2}',
+    'path'                => 'URI',
+    'priority'            => 'Приоритет',
+    'refreshRoutes'       => 'Обновить список маршрутов',
+    'search'              => 'Поиск',
+    'show'                => 'Показать',
+    'title'               => 'Маршруты',
+    'without'             => 'Не указано',
+];

@@ -4,31 +4,7 @@
 <script src="https://cdn.jsdelivr.net/npm/lodash"></script>
 
 <script>
-    const trans = {
-        action: '{{ trans("Action") }}',
-        deprecated: '{{ trans("Deprecated") }}',
-        domain: '{{ trans("Domain") }}',
-        itemsPerPageAllText: '{{ trans("All") }}',
-        itemsPerPageText: '{{ trans("Routes per page:") }}',
-        loading: '{{ trans("Loading... Please wait...") }}',
-        methods: '{{ trans("Methods") }}',
-        middlewares: '{{ trans("Middlewares") }}',
-        module: '{{ trans("Module") }}',
-        name: '{{ trans("Name") }}',
-        noDataText: '{{ trans("No data available") }}',
-        noResultsText: '{{ trans("No matching records found") }}',
-        of: '{{ trans("of") }}',
-        only: '{{ trans("Only") }}',
-        openGitHub: '{{ trans('Open the project page on GitHub') }}',
-        pageText: '{0}-{1} {{ trans("of") }} {2}',
-        path: '{{ trans("Path") }}',
-        priority: '{{ trans("Priority") }}',
-        refreshRoutes: '{{ trans("Refresh the list of routes") }}',
-        search: '{{ trans("Search") }}',
-        show: '{{ trans("Show") }}',
-        title: '{{ trans("Routes") }}',
-        without: '{{ trans("Without") }}'
-    };
+    const trans = {!! json_encode(\PrettyRoutes\Facades\Trans::all(), JSON_UNESCAPED_UNICODE) !!};
 
     const colorScheme = () => {
         switch ('{{ config('pretty-routes.color_scheme', 'auto') }}') {
