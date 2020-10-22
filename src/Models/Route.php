@@ -2,6 +2,7 @@
 
 namespace PrettyRoutes\Models;
 
+use Helldar\Support\Facades\Http;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Routing\Route as IlluminateRoute;
 use Illuminate\Support\Arr;
@@ -36,7 +37,13 @@ class Route implements Arrayable
 
     public function getDomain(): ?string
     {
-        return $this->route->domain() ?: null;
+        if ($domain = $this->route->domain()) {
+            return $domain;
+        }
+
+        return config('pretty-routes.domain_force')
+            ? Http::domain(config('app.url'))
+            : null;
     }
 
     public function getPath(): string

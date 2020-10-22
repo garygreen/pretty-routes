@@ -62,4 +62,14 @@ return [
      */
 
     'color_scheme' => 'auto',
+
+    /*
+     * If routes are not separated by a domain, this column is hidden from display by default.
+     *
+     * If you want to always show the column with the domain name, set the value to "true".
+     *
+     * By default, false.
+     */
+
+    'domain_force' => false,
 ];

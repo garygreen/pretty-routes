@@ -21,6 +21,7 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
+        "andrey-helldar/support": "^1.22",
         "doctrine/annotations": "^1.0",
         "illuminate/contracts": "^5.0|^6.0|^7.0|^8.0",
         "illuminate/http": "^5.0|^6.0|^7.0|^8.0",
