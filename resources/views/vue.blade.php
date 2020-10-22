@@ -3,7 +3,7 @@
         <v-toolbar-title>
             <span
                 v-text="trans('title')"
-                :class="{link: isDirty()}"
+                :class="{ link: isDirty() }"
                 @click="resetFilters"
             ></span> (<span v-text="countRoutes"></span>)
         </v-toolbar-title>
@@ -60,6 +60,15 @@
         ></v-text-field>
 
         <v-spacer></v-spacer>
+        <v-btn
+            :class="{ rotate: loading }"
+            :disabled="loading"
+            icon
+            @click="getRoutes"
+        >
+            <v-icon>mdi-refresh</v-icon>
+        </v-btn>
+
         <v-btn icon @click="openGitHubRepository">
             <v-avatar size="36">
                 <img

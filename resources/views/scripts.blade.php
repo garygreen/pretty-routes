@@ -49,7 +49,7 @@
 
         data: {
             itemsPerPage: 15,
-            loading: true,
+            loading: false,
 
             url: '{{ route("pretty-routes.list") }}',
 
@@ -126,7 +126,7 @@
             },
 
             countRoutes() {
-                if (this.loading === true) {
+                if (this.loading === true || this.$refs.routes === undefined) {
                     return '...';
                 }
 
@@ -156,6 +156,12 @@
 
         methods: {
             getRoutes() {
+                if (this.loading === true) {
+                    return;
+                }
+
+                this.loading = true;
+
                 axios.get(this.url)
                     .then(response => {
                         this.routes = response.data;
