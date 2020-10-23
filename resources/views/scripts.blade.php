@@ -223,11 +223,9 @@
             },
 
             getColor(index) {
-                if (this.colors[index] === undefined) {
-                    index = Math.floor(Math.random() * this.colors.length);
-                }
-
-                return this.colors[index];
+                return this.colors[index] === undefined
+                    ? this.colors[0]
+                    : this.colors[index];
             },
 
             setDomains() {
