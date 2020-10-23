@@ -78,7 +78,25 @@
 
                 domains: [],
                 modules: []
-            }
+            },
+
+            colors: [
+                'white--text amber darken-4',
+                'white--text blue darken-2',
+                'white--text cyan darken-1',
+                'white--text deep-orange darken-3',
+                'white--text deep-purple darken-1',
+                'white--text green darken-2',
+                'white--text indigo darken-1',
+                'white--text light-blue darken-1',
+                'white--text light-green darken-3',
+                'white--text lime darken-4',
+                'white--text orange darken-4',
+                'white--text pink darken-4',
+                'white--text purple darken-3',
+                'white--text teal darken-1',
+                'white--text yellow darken-3'
+            ]
         },
 
         computed: {
@@ -188,11 +206,21 @@
                     let name = route[key];
 
                     if (name !== null && ! this.inArray(result, name, 'key')) {
-                        result.push({ key: name, value: name });
+                        let color = this.getColor(result.length);
+
+                        result.push({ key: name, value: name, color: color });
                     }
                 });
 
                 return result;
+            },
+
+            getColor(index) {
+                if (this.colors[index] === undefined) {
+                    index = Math.floor(Math.random() * this.colors.length);
+                }
+
+                return this.colors[index];
             },
 
             setDomains() {
@@ -211,6 +239,10 @@
                         this.pushFilter(key, value);
                     }
                 }
+            },
+
+            unselectFilter(key, value) {
+                this.filter[key] = _.filter(this.filter[key], val => val.toLowerCase() !== value.toLowerCase());
             },
 
             allowDeprecated(route) {

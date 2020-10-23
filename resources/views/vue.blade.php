@@ -19,8 +19,17 @@
             hide-details="true"
             clearable
             multiple
-            chips
-        ></v-select>
+        >
+            <template v-slot:selection="{ item }">
+                <v-chip
+                    :class="item.color"
+                    close
+                    @click:close="unselectFilter('domain', item.value)"
+                >
+                    <span v-text="item.value"></span>
+                </v-chip>
+            </template>
+        </v-select>
 
         <v-spacer v-if="hasModules"></v-spacer>
         <v-select
@@ -33,8 +42,17 @@
             hide-details="true"
             clearable
             multiple
-            chips
-        ></v-select>
+        >
+            <template v-slot:selection="{ item }">
+                <v-chip
+                    :class="item.color"
+                    close
+                    @click:close="unselectFilter('module', item.value)"
+                >
+                    <span v-text="item.value"></span>
+                </v-chip>
+            </template>
+        </v-select>
 
         <v-spacer v-if="hasDeprecated"></v-spacer>
         <v-select
@@ -47,8 +65,16 @@
             hide-details="true"
             clearable
             multiple
-            chips
-        ></v-select>
+        >
+            <template v-slot:selection="{ item }">
+                <v-chip
+                    close
+                    @click:close="unselectFilter('deprecated', item.value)"
+                >
+                    <span v-text="item.value"></span>
+                </v-chip>
+            </template>
+        </v-select>
 
         <v-spacer></v-spacer>
         <v-text-field
