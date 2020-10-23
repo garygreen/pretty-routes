@@ -68,12 +68,12 @@
 
             items: {
                 base: [
-                    { key: 'without', value: trans.without }
+                    { key: 'without', value: trans.without, color: 'grey lighten-2' }
                 ],
 
                 deprecated: [
                     { key: 'only', value: trans.only },
-                    { key: 'without', value: trans.without }
+                    { key: 'without', value: trans.without, color: 'grey lighten-2' }
                 ],
 
                 domains: [],
@@ -205,13 +205,21 @@
                     let name = route[key];
 
                     if (name !== null && ! this.inArray(result, name, 'key')) {
-                        let color = this.getColor(result.length);
-
-                        result.push({ key: name, value: name, color: color });
+                        result.push({ key: name, value: name });
                     }
                 });
 
-                return result;
+                return _.map(result, (item, index) => {
+                    if (item.color !== undefined) {
+                        return item;
+                    }
+
+                    let color = this.getColor(index);
+
+                    _.set(item, 'color', color);
+
+                    return item;
+                });
             },
 
             getColor(index) {
