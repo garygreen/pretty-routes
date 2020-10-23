@@ -11,7 +11,7 @@
         <v-spacer v-if="hasDomains"></v-spacer>
         <v-select
             v-if="hasDomains"
-            v-model="filter.domain"
+            v-model="sortedDomains"
             :label="trans('domain')"
             :items="items.domains"
             item-value="key"
@@ -25,7 +25,7 @@
         <v-spacer v-if="hasModules"></v-spacer>
         <v-select
             v-if="hasModules"
-            v-model="filter.module"
+            v-model="sortedModules"
             :label="trans('module')"
             :items="items.modules"
             item-value="key"
@@ -39,7 +39,7 @@
         <v-spacer v-if="hasDeprecated"></v-spacer>
         <v-select
             v-if="hasDeprecated"
-            v-model="filter.deprecated"
+            v-model="sortedDeprecated"
             :label="trans('deprecated')"
             :items="items.deprecated"
             item-value="key"

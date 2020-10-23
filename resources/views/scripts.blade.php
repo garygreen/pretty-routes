@@ -125,6 +125,36 @@
 
             hasDomains() {
                 return this.hasRoute('domain');
+            },
+
+            sortedDomains: {
+                get: function () {
+                    return this.filter.domain;
+                },
+
+                set: function (items) {
+                    this.filter.domain = this.sortFilter('domain', items);
+                }
+            },
+
+            sortedModules: {
+                get: function () {
+                    return this.filter.module;
+                },
+
+                set: function (items) {
+                    this.filter.module = this.sortFilter('module', items);
+                }
+            },
+
+            sortedDeprecated: {
+                get: function () {
+                    return this.filter.deprecated;
+                },
+
+                set: function (items) {
+                    this.filter.deprecated = this.sortFilter('deprecated', items);
+                }
             }
         },
 
@@ -207,10 +237,6 @@
                 return all || without || search;
             },
 
-            hasHeader(key) {
-                return this.has(this.filteredRoutes, key);
-            },
-
             isDirty() {
                 return this.isDoesntEmptyValue(this.filter.deprecated)
                     || this.isDoesntEmptyValue(this.filter.domain)
@@ -231,6 +257,14 @@
                 this.filter.domain = null;
                 this.filter.module = null;
                 this.filter.value = null;
+            },
+
+            sortFilter(key, items) {
+                return this.filter[key] = items.sort();
+            },
+
+            hasHeader(key) {
+                return this.has(this.filteredRoutes, key);
             },
 
             hasRoute(key) {
