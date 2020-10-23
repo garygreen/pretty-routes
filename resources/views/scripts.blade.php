@@ -83,7 +83,6 @@
             colors: [
                 'white--text amber darken-4',
                 'white--text blue darken-2',
-                'white--text cyan darken-1',
                 'white--text deep-orange darken-3',
                 'white--text deep-purple darken-1',
                 'white--text green darken-2',
