@@ -55,6 +55,16 @@
             "providers": [
                 "PrettyRoutes\\ServiceProvider"
             ]
-        }
+        },
+        "thanks": [
+            {
+                "name": "andrey-helldar/laravel-routes-core",
+                "url": "https://github.com/andrey-helldar/laravel-routes-core"
+            },
+            {
+                "name": "andrey-helldar/support",
+                "url": "https://github.com/andrey-helldar/support"
+            }
+        ]
     }
 }
