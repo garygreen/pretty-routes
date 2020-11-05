@@ -2,8 +2,8 @@
 
 namespace PrettyRoutes\Http;
 
+use Helldar\LaravelRoutesCore\Support\Routes;
 use Illuminate\Routing\Controller as BaseController;
-use PrettyRoutes\Support\Routes;
 
 class PrettyRoutesController extends BaseController
 {
@@ -20,14 +20,17 @@ class PrettyRoutesController extends BaseController
     /**
      * Getting a list of routes.
      *
-     * @param  \PrettyRoutes\Support\Routes  $routes
+     * @param  \Helldar\LaravelRoutesCore\Support\Routes  $routes
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function routes(Routes $routes)
     {
-        return response()->json(
-            $routes->get()
-        );
+        $content = $routes
+            ->hideMethods(config('pretty-routes.hide_methods', []))
+            ->hideMatching(config('pretty-routes.hide_matching', []))
+            ->get();
+
+        return response()->json($content);
     }
 }
