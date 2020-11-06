@@ -27,8 +27,11 @@ class PrettyRoutesController extends BaseController
     public function routes(Routes $routes)
     {
         $content = $routes
-            ->hideMethods(config('pretty-routes.hide_methods', []))
-            ->hideMatching(config('pretty-routes.hide_matching', []))
+            ->setHideMethods(config('pretty-routes.hide_methods', []))
+            ->setHideMatching(config('pretty-routes.hide_matching', []))
+            ->setDomainForce(config('pretty-routes.domain_force', false))
+            ->setUrl(config('app.url'))
+            ->setNamespace(config('modules.namespace'))
             ->get();
 
         return response()->json($content);
