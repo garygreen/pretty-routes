@@ -15,12 +15,16 @@ return [
 
     /*
      * The middleware(s) to apply before attempting to access WEB route page.
+     *
+     * Also routes for WEB will be determined by this value.
      */
 
     'web_middleware' => 'web',
 
     /*
      * The middleware(s) to apply before attempting to access API route.
+     *
+     * Also routes for API will be determined by this value.
      */
 
     'api_middleware' => 'api',

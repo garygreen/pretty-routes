@@ -21,7 +21,7 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
-        "andrey-helldar/laravel-routes-core": "^1.2",
+        "andrey-helldar/laravel-routes-core": "^1.6",
         "andrey-helldar/support": "^1.22",
         "illuminate/contracts": "^5.0|^6.0|^7.0|^8.0",
         "illuminate/http": "^5.0|^6.0|^7.0|^8.0",

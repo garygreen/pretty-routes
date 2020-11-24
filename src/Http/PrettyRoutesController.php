@@ -27,6 +27,8 @@ class PrettyRoutesController extends BaseController
     public function routes(Routes $routes)
     {
         $content = $routes
+            ->setApiMiddlewares((array) config('pretty-routes.api_middleware'))
+            ->setWebMiddlewares((array) config('pretty-routes.web_middleware'))
             ->setHideMethods(config('pretty-routes.hide_methods', []))
             ->setHideMatching(config('pretty-routes.hide_matching', []))
             ->setDomainForce(config('pretty-routes.domain_force', false))
