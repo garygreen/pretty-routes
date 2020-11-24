@@ -6,12 +6,12 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Andrey Helldar",
-            "email": "helldar@ai-rus.com"
-        },
-        {
             "name": "Gary Green",
             "email": "holegary@gmail.com"
+        },
+        {
+            "name": "Andrey Helldar",
+            "email": "helldar@ai-rus.com"
         }
     ],
     "support": {
