@@ -3,11 +3,13 @@
 .github/workflows export-ignore
 .github/ISSUE_TEMPLATE.md
 
-tests/ export-ignore
+dist export-ignore
+tests export-ignore
 
 .codecov.yml export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
 .styleci.yml export-ignore
+
 phpunit.php export-ignore
 phpunit.xml export-ignore
