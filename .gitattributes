@@ -3,7 +3,6 @@
 .github/workflows export-ignore
 .github/ISSUE_TEMPLATE.md
 
-dist export-ignore
 tests export-ignore
 
 .codecov.yml export-ignore
