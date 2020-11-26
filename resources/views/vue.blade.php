@@ -76,6 +76,17 @@
             </template>
         </v-select>
 
+        <v-spacer v-if="hasTypes"></v-spacer>
+        <v-select
+            v-if="hasTypes"
+            v-model="sortedTypes"
+            :label="trans('types')"
+            :items="items.types"
+            item-value="key"
+            item-text="value"
+            hide-details="true"
+        ></v-select>
+
         <v-spacer></v-spacer>
         <v-text-field
             v-model="filter.value"

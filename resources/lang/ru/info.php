@@ -2,6 +2,8 @@
 
 return [
     'action'              => 'Экшены',
+    'all'                 => 'Все',
+    'api'                 => 'Api',
     'deprecated'          => 'Устаревшие',
     'domain'              => 'Домен',
     'itemsPerPageAllText' => 'Все',
@@ -23,5 +25,7 @@ return [
     'search'              => 'Поиск',
     'show'                => 'Показать',
     'title'               => 'Маршруты',
+    'types'               => 'Типы маршрутов',
+    'web'                 => 'Web',
     'without'             => 'Не указано',
 ];

@@ -2,6 +2,8 @@
 
 return [
     'action'              => 'Action',
+    'all'                 => 'All',
+    'api'                 => 'Api',
     'deprecated'          => 'Deprecated',
     'domain'              => 'Domain',
     'itemsPerPageAllText' => 'All',
@@ -23,5 +25,7 @@ return [
     'search'              => 'Search',
     'show'                => 'Show',
     'title'               => 'Routes',
+    'types'               => 'Route types',
+    'web'                 => 'Web',
     'without'             => 'Without',
 ];

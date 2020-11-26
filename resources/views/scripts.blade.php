@@ -61,6 +61,7 @@
 
             filter: {
                 deprecated: [],
+                types: 'all',
                 module: [],
                 domain: [],
                 value: null
@@ -74,6 +75,12 @@
                 deprecated: [
                     { key: 'only', value: trans.only },
                     { key: 'without', value: trans.without, color: 'grey lighten-2' }
+                ],
+
+                types: [
+                    { key: 'all', value: trans.all },
+                    { key: 'api', value: trans.api },
+                    { key: 'web', value: trans.web }
                 ],
 
                 domains: [],
@@ -102,6 +109,7 @@
             filteredRoutes() {
                 return this.routes.filter(route => {
                     return this.allowDeprecated(route)
+                        && this.allowTypes(route)
                         && this.allow(route, 'domain')
                         && this.allow(route, 'module');
                 });
@@ -132,16 +140,20 @@
                 return all === filtered ? all : `${ filtered } ${ particle } ${ all }`;
             },
 
-            hasDeprecated() {
-                return _.filter(this.routes, item => item.deprecated === true).length > 0;
-            },
-
             hasModules() {
                 return this.hasRoute('module');
             },
 
             hasDomains() {
                 return this.hasRoute('domain');
+            },
+
+            hasDeprecated() {
+                return _.filter(this.routes, item => item.deprecated === true).length > 0;
+            },
+
+            hasTypes() {
+                return _.filter(this.routes, item => item.is_api === true || item.is_web === true).length > 0;
             },
 
             sortedDomains: {
@@ -171,6 +183,16 @@
 
                 set: function (items) {
                     this.filter.deprecated = this.sortFilter('deprecated', items);
+                }
+            },
+
+            sortedTypes: {
+                get: function () {
+                    return this.filter.types;
+                },
+
+                set: function (value) {
+                    this.filter.types = value;
                 }
             }
         },
@@ -263,6 +285,17 @@
                 return only || without;
             },
 
+            allowTypes(route) {
+                switch (this.filter.types) {
+                    case 'api':
+                        return route.is_api === true;
+                    case 'web':
+                        return route.is_web === true;
+                    default:
+                        return true;
+                }
+            },
+
             allow(route, key) {
                 let filters = this.filter[key];
                 let value = route[key];
@@ -276,6 +309,7 @@
 
             isDirty() {
                 return this.isDoesntEmptyValue(this.filter.deprecated)
+                    || this.isDoesntEmptyValue(this.filter.types)
                     || this.isDoesntEmptyValue(this.filter.domain)
                     || this.isDoesntEmptyValue(this.filter.module)
                     || this.isDoesntEmptyValue(this.filter.value);
@@ -291,6 +325,7 @@
 
             resetFilters() {
                 this.filter.deprecated = null;
+                this.filter.types = null;
                 this.filter.domain = null;
                 this.filter.module = null;
                 this.filter.value = null;
