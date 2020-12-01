@@ -19,7 +19,7 @@
         "source": "https://github.com/andrey-helldar/pretty-routes"
     },
     "require": {
-        "php": "^7.2",
+        "php": "^7.2|^8.0",
         "ext-json": "*",
         "andrey-helldar/laravel-routes-core": "^1.6",
         "andrey-helldar/support": "^1.22",
