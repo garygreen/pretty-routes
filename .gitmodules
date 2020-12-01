@@ -1,4 +1,0 @@
-[submodule "frontend"]
-	path = frontend
-	url = git@github.com:andrey-helldar/pretty-routes-frontend.git
-	branch = master
