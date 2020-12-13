@@ -11,7 +11,7 @@ jobs:
                 php: [ "7.2", "7.3", "7.4" ]
                 laravel: [ "5.4" ]
 
-        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
         steps:
             -   name: Checkout code
@@ -46,7 +46,7 @@ jobs:
                 php: [ "7.2", "7.3", "7.4" ]
                 laravel: [ "5.5" ]
 
-        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
         steps:
             -   name: Checkout code
@@ -81,7 +81,7 @@ jobs:
                 php: [ "7.2", "7.3", "7.4" ]
                 laravel: [ "5.6" ]
 
-        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
         steps:
             -   name: Checkout code
@@ -116,7 +116,7 @@ jobs:
                 php: [ "7.2", "7.3", "7.4" ]
                 laravel: [ "5.7" ]
 
-        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
         steps:
             -   name: Checkout code
@@ -151,7 +151,7 @@ jobs:
                 php: [ "7.2", "7.3", "7.4" ]
                 laravel: [ "5.8" ]
 
-        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
         steps:
             -   name: Checkout code
@@ -186,7 +186,7 @@ jobs:
                 php: [ "7.2", "7.3", "7.4", "8.0" ]
                 laravel: [ "6.0" ]
 
-        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
         steps:
             -   name: Checkout code
@@ -221,7 +221,7 @@ jobs:
                 php: [ "7.2", "7.3", "7.4", "8.0" ]
                 laravel: [ "7.0" ]
 
-        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
         steps:
             -   name: Checkout code
@@ -256,7 +256,7 @@ jobs:
                 php: [ "7.3", "7.4", "8.0" ]
                 laravel: [ "8.0" ]
 
-        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
         steps:
             -   name: Checkout code
