@@ -8,10 +8,10 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                laravel: [ "5.4" ]
                 php: [ "7.2", "7.3", "7.4" ]
+                laravel: [ "5.4" ]
 
-        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
 
         steps:
             -   name: Checkout code
@@ -43,10 +43,10 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                laravel: [ "5.5" ]
                 php: [ "7.2", "7.3", "7.4" ]
+                laravel: [ "5.5" ]
 
-        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
 
         steps:
             -   name: Checkout code
@@ -78,10 +78,10 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                laravel: [ "5.6" ]
                 php: [ "7.2", "7.3", "7.4" ]
+                laravel: [ "5.6" ]
 
-        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
 
         steps:
             -   name: Checkout code
@@ -113,10 +113,10 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                laravel: [ "5.7" ]
                 php: [ "7.2", "7.3", "7.4" ]
+                laravel: [ "5.7" ]
 
-        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
 
         steps:
             -   name: Checkout code
@@ -148,10 +148,10 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                laravel: [ "5.8" ]
                 php: [ "7.2", "7.3", "7.4" ]
+                laravel: [ "5.8" ]
 
-        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
 
         steps:
             -   name: Checkout code
@@ -183,10 +183,10 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                laravel: [ "6.0" ]
                 php: [ "7.2", "7.3", "7.4", "8.0" ]
+                laravel: [ "6.0" ]
 
-        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
 
         steps:
             -   name: Checkout code
@@ -218,10 +218,10 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                laravel: [ "7.0" ]
                 php: [ "7.2", "7.3", "7.4", "8.0" ]
+                laravel: [ "7.0" ]
 
-        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
 
         steps:
             -   name: Checkout code
@@ -253,10 +253,10 @@ jobs:
         strategy:
             fail-fast: true
             matrix:
-                laravel: [ "8.0" ]
                 php: [ "7.3", "7.4", "8.0" ]
+                laravel: [ "8.0" ]
 
-        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+        name: PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }}
 
         steps:
             -   name: Checkout code
