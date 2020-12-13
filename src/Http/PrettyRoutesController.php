@@ -47,7 +47,7 @@ class PrettyRoutesController extends BaseController
      */
     public function clear()
     {
-        if (config('app.env') !== 'production' && config('app.debug') === true) {
+        if (config('app.env') !== 'production' && (bool) config('app.debug') === true) {
             Artisan::call('route:clear');
 
             return response()->json('ok');

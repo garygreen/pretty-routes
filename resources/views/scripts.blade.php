@@ -5,7 +5,7 @@
 
 <script>
     const trans = {!! json_encode(\PrettyRoutes\Facades\Trans::all(), JSON_UNESCAPED_UNICODE) !!};
-    const isEnabledCleanup = {{ config('app.env') !== 'production' && config('app.debug') === true ? 'true' : 'false' }};
+    const isEnabledCleanup = {{ config('app.env') !== 'production' && (bool) config('app.debug') === true ? 'true' : 'false' }};
 
     const colorScheme = () => {
         switch ('{{ config('pretty-routes.color_scheme', 'auto') }}') {
