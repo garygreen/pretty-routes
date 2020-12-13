@@ -1,0 +1,283 @@
+name: phpunit
+on: [ push ]
+
+jobs:
+    laravel_54:
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: true
+            matrix:
+                laravel: [ "5.4" ]
+                php: [ "7.2", "7.3", "7.4" ]
+
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
+                    coverage: xdebug
+
+            -   name: Composer self update
+                run: composer self-update
+
+            -   name: Install dependencies
+                run: |
+                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer update --prefer-stable --prefer-dist --no-progress --no-interaction
+
+            -   name: Execute tests
+                run: |
+                    mkdir -p build/logs
+                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+    laravel_55:
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: true
+            matrix:
+                laravel: [ "5.5" ]
+                php: [ "7.2", "7.3", "7.4" ]
+
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
+                    coverage: xdebug
+
+            -   name: Composer self update
+                run: composer self-update
+
+            -   name: Install dependencies
+                run: |
+                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer update --prefer-stable --prefer-dist --no-progress --no-interaction
+
+            -   name: Execute tests
+                run: |
+                    mkdir -p build/logs
+                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+    laravel_56:
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: true
+            matrix:
+                laravel: [ "5.6" ]
+                php: [ "7.2", "7.3", "7.4" ]
+
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
+                    coverage: xdebug
+
+            -   name: Composer self update
+                run: composer self-update
+
+            -   name: Install dependencies
+                run: |
+                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer update --prefer-stable --prefer-dist --no-progress --no-interaction
+
+            -   name: Execute tests
+                run: |
+                    mkdir -p build/logs
+                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+    laravel_57:
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: true
+            matrix:
+                laravel: [ "5.7" ]
+                php: [ "7.2", "7.3", "7.4" ]
+
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
+                    coverage: xdebug
+
+            -   name: Composer self update
+                run: composer self-update
+
+            -   name: Install dependencies
+                run: |
+                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer update --prefer-stable --prefer-dist --no-progress --no-interaction
+
+            -   name: Execute tests
+                run: |
+                    mkdir -p build/logs
+                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+    laravel_58:
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: true
+            matrix:
+                laravel: [ "5.8" ]
+                php: [ "7.2", "7.3", "7.4" ]
+
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
+                    coverage: xdebug
+
+            -   name: Composer self update
+                run: composer self-update
+
+            -   name: Install dependencies
+                run: |
+                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer update --prefer-stable --prefer-dist --no-progress --no-interaction
+
+            -   name: Execute tests
+                run: |
+                    mkdir -p build/logs
+                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+    laravel_6x:
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: true
+            matrix:
+                laravel: [ "6.0" ]
+                php: [ "7.2", "7.3", "7.4", "8.0" ]
+
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
+                    coverage: xdebug
+
+            -   name: Composer self update
+                run: composer self-update
+
+            -   name: Install dependencies
+                run: |
+                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer update --prefer-stable --prefer-dist --no-progress --no-interaction
+
+            -   name: Execute tests
+                run: |
+                    mkdir -p build/logs
+                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+    laravel_7x:
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: true
+            matrix:
+                laravel: [ "7.0" ]
+                php: [ "7.2", "7.3", "7.4", "8.0" ]
+
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
+                    coverage: xdebug
+
+            -   name: Composer self update
+                run: composer self-update
+
+            -   name: Install dependencies
+                run: |
+                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer update --prefer-stable --prefer-dist --no-progress --no-interaction
+
+            -   name: Execute tests
+                run: |
+                    mkdir -p build/logs
+                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+    laravel_8x:
+        runs-on: ubuntu-latest
+
+        strategy:
+            fail-fast: true
+            matrix:
+                laravel: [ "8.0" ]
+                php: [ "7.3", "7.4", "8.0" ]
+
+        name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
+                    coverage: xdebug
+
+            -   name: Composer self update
+                run: composer self-update
+
+            -   name: Install dependencies
+                run: |
+                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer update --prefer-stable --prefer-dist --no-progress --no-interaction
+
+            -   name: Execute tests
+                run: |
+                    mkdir -p build/logs
+                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover

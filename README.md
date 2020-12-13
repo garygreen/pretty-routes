@@ -49,6 +49,20 @@ By default, pretty routes only enables itself when `APP_DEBUG` env is true. You 
 2. Run the command `composer update`.
 3. Profit!
 
+## Compatibility table
+
+| Laravel | PHP |
+|:---|:---|
+| 5.4 | 7.2, 7.3, 7.4 |
+| 5.5 | 7.2, 7.3, 7.4 |
+| 5.6 | 7.2, 7.3, 7.4 |
+| 5.7 | 7.2, 7.3, 7.4 |
+| 5.8 | 7.2, 7.3, 7.4 |
+| 6.x | 7.2, 7.3, 7.4, 8.0 |
+| 7.0 | 7.2, 7.3, 7.4, 8.0 |
+| 8.0 | 7.3, 7.4, 8.0 |
+
+
 [badge_styleci]:    https://styleci.io/repos/130698068/shield
 [badge_build]:      https://img.shields.io/github/workflow/status/andrey-helldar/pretty-routes/phpunit?style=flat-square
 [badge_laravel]:    https://img.shields.io/badge/Laravel-5.x%20%7C%206.x%20%7C%207.x%20%7C%208.x-orange.svg?style=flat-square
