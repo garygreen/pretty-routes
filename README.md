@@ -51,16 +51,16 @@ By default, pretty routes only enables itself when `APP_DEBUG` env is true. You 
 
 ## Compatibility table
 
-| Laravel | PHP |
-|:---|:---|
-| 5.4 | 7.2, 7.3, 7.4 |
-| 5.5 | 7.2, 7.3, 7.4 |
-| 5.6 | 7.2, 7.3, 7.4 |
-| 5.7 | 7.2, 7.3, 7.4 |
-| 5.8 | 7.2, 7.3, 7.4 |
-| 6.x | 7.2, 7.3, 7.4, 8.0 |
-| 7.0 | 7.2, 7.3, 7.4, 8.0 |
-| 8.0 | 7.3, 7.4, 8.0 |
+| Laravel \ PHP | 7.2 | 7.3 | 7.4 | 8.0 |
+|:---:|:---:|:---:|:---:|:---:|
+| 5.4 | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x: |
+| 5.5 | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x: |
+| 5.6 | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x: |
+| 5.7 | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x: |
+| 5.8 | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x: |
+| 6.x | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| 7.x | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| 8.x | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 
 [badge_styleci]:    https://styleci.io/repos/130698068/shield
