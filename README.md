@@ -53,7 +53,7 @@ By default, pretty routes only enables itself when `APP_DEBUG` env is true. You 
 [badge_build]:      https://img.shields.io/github/workflow/status/andrey-helldar/pretty-routes/phpunit?style=flat-square
 [badge_laravel]:    https://img.shields.io/badge/Laravel-5.x%20%7C%206.x%20%7C%207.x%20%7C%208.x-orange.svg?style=flat-square
 [badge_stable]:     https://img.shields.io/github/v/release/andrey-helldar/pretty-routes?label=stable&style=flat-square
-[badge_unstable]:   https://img.shields.io/badge/unstable-dev--master-orange?style=flat-square
+[badge_unstable]:   https://img.shields.io/badge/unstable-dev--main-orange?style=flat-square
 [badge_downloads]:  https://img.shields.io/packagist/dt/andrey-helldar/pretty-routes.svg?style=flat-square
 [badge_license]:    https://img.shields.io/packagist/l/andrey-helldar/pretty-routes.svg?style=flat-square
 
