@@ -5,6 +5,7 @@
 
 <script>
     const trans = {!! json_encode(\PrettyRoutes\Facades\Trans::all(), JSON_UNESCAPED_UNICODE) !!};
+    const isEnabledCleanup = {{ config('app.env') !== 'production' && config('app.debug') === true ? 'true' : 'false' }};
 
     const colorScheme = () => {
         switch ('{{ config('pretty-routes.color_scheme', 'auto') }}') {
@@ -29,7 +30,10 @@
             itemsPerPage: 15,
             loading: false,
 
-            url: '{{ route("pretty-routes.list") }}',
+            url: {
+                routes: '{{ route("pretty-routes.list") }}',
+                clean: '{{ route("pretty-routes.clear") }}'
+            },
 
             repository: {
                 url: 'https://github.com/andrey-helldar/pretty-routes',
@@ -202,19 +206,34 @@
         },
 
         methods: {
-            getRoutes() {
+            getRoutes(force = false) {
+                if (this.loading === true && force === false) {
+                    return;
+                }
+
+                this.loading = true;
+
+                axios.get(this.url.routes)
+                    .then(response => {
+                        this.routes = response.data;
+
+                        this.setDomains();
+                        this.setModules();
+                    })
+                    .catch(error => console.error(error))
+                    .finally(() => this.loading = false);
+            },
+
+            clearRoutes() {
                 if (this.loading === true) {
                     return;
                 }
 
                 this.loading = true;
 
-                axios.get(this.url)
+                axios.post(this.url.clean)
                     .then(response => {
-                        this.routes = response.data;
-
-                        this.setDomains();
-                        this.setModules();
+                        this.getRoutes(true);
                     })
                     .catch(error => console.error(error))
                     .finally(() => this.loading = false);
@@ -377,6 +396,10 @@
                 this.isEmptyValue(this.filter[key])
                     ? this.filter[key] = [value]
                     : this.filter[key].push(value);
+            },
+
+            isEnabledCleanup() {
+                return window.isEnabledCleanup;
             },
 
             trans(key) {

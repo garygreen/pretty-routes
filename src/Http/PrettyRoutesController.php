@@ -4,6 +4,7 @@ namespace PrettyRoutes\Http;
 
 use Helldar\LaravelRoutesCore\Support\Routes;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Artisan;
 
 class PrettyRoutesController extends BaseController
 {
@@ -37,5 +38,21 @@ class PrettyRoutesController extends BaseController
             ->get();
 
         return response()->json($content);
+    }
+
+    /**
+     * Clearing cached routes.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function clear()
+    {
+        if (config('app.env') !== 'production' && config('app.debug') === true) {
+            Artisan::call('route:clear');
+
+            return response()->json('ok');
+        }
+
+        return response()->json('disabled', 400);
     }
 }

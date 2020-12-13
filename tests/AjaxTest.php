@@ -70,4 +70,13 @@ final class AjaxTest extends TestCase
         $response->assertDontSee('telescope');
         $response->assertDontSee('_debugbar');
     }
+
+    public function testClearRoutes()
+    {
+        $response = $this->post('/routes/clear');
+
+        $response->assertStatus(200);
+        $response->assertSee('ok');
+        $response->assertDontSee('data');
+    }
 }

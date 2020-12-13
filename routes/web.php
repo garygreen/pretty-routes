@@ -13,4 +13,8 @@ Route::name('pretty-routes.')
         Route::middleware(config('pretty-routes.api_middleware'))
             ->get('json', 'PrettyRoutes\Http\PrettyRoutesController@routes')
             ->name('list');
+
+        Route::middleware(config('pretty-routes.api_middleware'))
+            ->post('clear', 'PrettyRoutes\Http\PrettyRoutesController@clear')
+            ->name('clear');
     });

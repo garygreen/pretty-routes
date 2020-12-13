@@ -113,6 +113,22 @@
             <span v-text="trans('refreshRoutes')"></span>
         </v-tooltip>
 
+        <v-spacer v-if="isEnabledCleanup"></v-spacer>
+        <v-tooltip bottom v-if="isEnabledCleanup">
+            <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                    v-bind="attrs"
+                    v-on="on"
+                    :disabled="loading"
+                    icon
+                    @click="clearRoutes"
+                >
+                    <v-icon>mdi-delete</v-icon>
+                </v-btn>
+            </template>
+            <span v-text="trans('cleaningRoutes')"></span>
+        </v-tooltip>
+
         <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
