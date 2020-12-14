@@ -4,6 +4,7 @@ return [
     'action'              => 'Action',
     'all'                 => 'All',
     'api'                 => 'Api',
+    'cleaningRoutes'      => 'Clear route cache',
     'deprecated'          => 'Deprecated',
     'domain'              => 'Domain',
     'itemsPerPageAllText' => 'All',

@@ -4,6 +4,7 @@ return [
     'action'              => 'Экшены',
     'all'                 => 'Все',
     'api'                 => 'Api',
+    'cleaningRoutes'      => 'Очистить кэш роутов',
     'deprecated'          => 'Устаревшие',
     'domain'              => 'Домен',
     'itemsPerPageAllText' => 'Все',
