@@ -113,7 +113,6 @@
             <span v-text="trans('refreshRoutes')"></span>
         </v-tooltip>
 
-        <v-spacer v-if="isEnabledCleanup"></v-spacer>
         <v-tooltip bottom v-if="isEnabledCleanup">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
