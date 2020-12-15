@@ -7,7 +7,6 @@ Route::group([
     'middleware' => config('pretty-routes.middlewares'),
     'prefix'     => config('pretty-routes.url'),
 ], static function () {
-
     Route::get('/', [
         'middleware' => config('pretty-routes.web_middleware'),
         'uses'       => 'PrettyRoutes\Http\PrettyRoutesController@show',
