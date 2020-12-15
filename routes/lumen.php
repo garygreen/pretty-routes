@@ -19,7 +19,7 @@ Route::group([
         'as'         => 'list',
     ]);
 
-    Route::get('clear', [
+    Route::post('clear', [
         'middleware' => config('pretty-routes.api_middleware'),
         'uses'       => 'PrettyRoutes\Http\PrettyRoutesController@clear',
         'as'         => 'clear',
