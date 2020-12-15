@@ -1,7 +1,6 @@
 * text=auto
 
-.github/workflows export-ignore
-.github/ISSUE_TEMPLATE.md
+.github export-ignore
 
 frontend export-ignore
 tests export-ignore
