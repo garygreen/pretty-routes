@@ -5,6 +5,7 @@ namespace PrettyRoutes\Http;
 use Helldar\LaravelRoutesCore\Support\Routes;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route as RouteFacade;
 
 class PrettyRoutesController extends BaseController
 {

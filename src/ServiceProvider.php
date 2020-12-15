@@ -2,6 +2,8 @@
 
 namespace PrettyRoutes;
 
+use Helldar\LaravelSupport\Facades\App;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 class ServiceProvider extends BaseServiceProvider
@@ -26,21 +28,28 @@ class ServiceProvider extends BaseServiceProvider
         );
 
         $this->publishes([
-            $this->fullPath('config/pretty-routes.php') => config_path('pretty-routes.php'),
+            $this->fullPath('config/pretty-routes.php') => $this->app->configPath('pretty-routes.php'),
         ]);
 
         $this->loadRoutesFrom(
-            $this->fullPath('routes/web.php')
+            $this->routesPath()
         );
     }
 
     protected function isDisabled(): bool
     {
-        return config('pretty-routes.debug_only', true) && ! config('app.debug');
+        return Config::get('pretty-routes.debug_only', true) && ! Config::get('app.debug');
     }
 
     protected function fullPath(string $path): string
     {
         return realpath(__DIR__ . '/../' . ltrim($path, '/'));
+    }
+
+    protected function routesPath(): string
+    {
+        return App::isLaravel()
+            ? $this->fullPath('routes/laravel.php')
+            : $this->fullPath('routes/lumen.php');
     }
 }
