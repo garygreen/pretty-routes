@@ -22,6 +22,8 @@ jobs:
                 with:
                     php-version: ${{ matrix.php }}
                     extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
+                    coverage: xdebug
+                    ini-values: xdebug.mode=develop
 
             -   name: Composer self update
                 run: composer self-update
