@@ -22,7 +22,7 @@ jobs:
                 with:
                     php-version: ${{ matrix.php }}
                     extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
-                    ini-values: xdebug.mode=coverage
+                    ini-values: xdebug.mode=develop
 
             -   name: Composer self update
                 run: composer self-update
@@ -33,9 +33,7 @@ jobs:
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
-                run: |
-                    mkdir -p build/logs
-                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+                run: vendor/bin/phpunit
 
     laravel_55:
         runs-on: ubuntu-latest
@@ -68,9 +66,7 @@ jobs:
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
-                run: |
-                    mkdir -p build/logs
-                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+                run: vendor/bin/phpunit
 
     laravel_56:
         runs-on: ubuntu-latest
@@ -103,9 +99,7 @@ jobs:
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
-                run: |
-                    mkdir -p build/logs
-                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+                run: vendor/bin/phpunit
 
     laravel_57:
         runs-on: ubuntu-latest
@@ -138,9 +132,7 @@ jobs:
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
-                run: |
-                    mkdir -p build/logs
-                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+                run: vendor/bin/phpunit
 
     laravel_58:
         runs-on: ubuntu-latest
@@ -173,9 +165,7 @@ jobs:
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
-                run: |
-                    mkdir -p build/logs
-                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+                run: vendor/bin/phpunit
 
     laravel_6x:
         runs-on: ubuntu-latest
@@ -208,9 +198,7 @@ jobs:
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
-                run: |
-                    mkdir -p build/logs
-                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+                run: vendor/bin/phpunit
 
     laravel_7x:
         runs-on: ubuntu-latest
@@ -243,9 +231,7 @@ jobs:
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
-                run: |
-                    mkdir -p build/logs
-                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+                run: vendor/bin/phpunit
 
     laravel_8x:
         runs-on: ubuntu-latest
@@ -275,6 +261,32 @@ jobs:
             -   name: Install dependencies
                 run: |
                     composer require laravel/framework:${{ matrix.laravel }}
+                    composer update --prefer-stable --prefer-dist --no-progress --no-interaction
+
+            -   name: Execute tests
+                run: vendor/bin/phpunit
+
+    coverage:
+        runs-on: ubuntu-latest
+
+        name: Coverage
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.0
+                    extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
+                    coverage: xdebug
+
+            -   name: Composer self update
+                run: composer self-update
+
+            -   name: Install dependencies
+                run: |
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
