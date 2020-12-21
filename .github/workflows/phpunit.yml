@@ -29,7 +29,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require laravel/framework:${{ matrix.laravel }}
+                    composer require laravel/framework:${{ matrix.laravel }} phpunit/phpunit:~5.7
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
@@ -64,7 +64,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require laravel/framework:${{ matrix.laravel }}
+                    composer require laravel/framework:${{ matrix.laravel }} phpunit/phpunit:~6.0
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
@@ -99,7 +99,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require laravel/framework:${{ matrix.laravel }}
+                    composer require laravel/framework:${{ matrix.laravel }} phpunit/phpunit:~7.0
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
@@ -134,7 +134,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require laravel/framework:${{ matrix.laravel }}
+                    composer require laravel/framework:${{ matrix.laravel }} phpunit/phpunit:~7.0
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
@@ -169,7 +169,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require laravel/framework:${{ matrix.laravel }}
+                    composer require laravel/framework:${{ matrix.laravel }} phpunit/phpunit:^8.0
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
@@ -204,7 +204,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require laravel/framework:${{ matrix.laravel }}
+                    composer require laravel/framework:${{ matrix.laravel }} phpunit/phpunit:^8.3
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
