@@ -9,7 +9,7 @@ jobs:
             fail-fast: true
             matrix:
                 php: [ "7.2", "7.3", "7.4" ]
-                laravel: [ "5.4" ]
+                laravel: [ "5.4.*" ]
 
         name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
@@ -29,7 +29,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer require laravel/framework:${{ matrix.laravel }}
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
@@ -44,7 +44,7 @@ jobs:
             fail-fast: true
             matrix:
                 php: [ "7.2", "7.3", "7.4" ]
-                laravel: [ "5.5" ]
+                laravel: [ "5.5.*" ]
 
         name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
@@ -64,7 +64,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer require laravel/framework:${{ matrix.laravel }}
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
@@ -79,7 +79,7 @@ jobs:
             fail-fast: true
             matrix:
                 php: [ "7.2", "7.3", "7.4" ]
-                laravel: [ "5.6" ]
+                laravel: [ "5.6.*" ]
 
         name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
@@ -99,7 +99,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer require laravel/framework:${{ matrix.laravel }}
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
@@ -114,7 +114,7 @@ jobs:
             fail-fast: true
             matrix:
                 php: [ "7.2", "7.3", "7.4" ]
-                laravel: [ "5.7" ]
+                laravel: [ "5.7.*" ]
 
         name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
@@ -134,7 +134,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer require laravel/framework:${{ matrix.laravel }}
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
@@ -149,7 +149,7 @@ jobs:
             fail-fast: true
             matrix:
                 php: [ "7.2", "7.3", "7.4" ]
-                laravel: [ "5.8" ]
+                laravel: [ "5.8.*" ]
 
         name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
@@ -169,7 +169,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer require laravel/framework:${{ matrix.laravel }}
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
@@ -184,7 +184,7 @@ jobs:
             fail-fast: true
             matrix:
                 php: [ "7.2", "7.3", "7.4", "8.0" ]
-                laravel: [ "6.0" ]
+                laravel: [ "^6.0" ]
 
         name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
@@ -204,7 +204,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer require laravel/framework:${{ matrix.laravel }}
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
@@ -219,7 +219,7 @@ jobs:
             fail-fast: true
             matrix:
                 php: [ "7.2", "7.3", "7.4", "8.0" ]
-                laravel: [ "7.0" ]
+                laravel: [ "^7.0" ]
 
         name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
@@ -239,7 +239,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer require laravel/framework:${{ matrix.laravel }}
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
@@ -254,7 +254,7 @@ jobs:
             fail-fast: true
             matrix:
                 php: [ "7.3", "7.4", "8.0" ]
-                laravel: [ "8.0" ]
+                laravel: [ "^8.0" ]
 
         name: Laravel ${{ matrix.laravel }}, PHP ${{ matrix.php }}
 
@@ -274,7 +274,7 @@ jobs:
 
             -   name: Install dependencies
                 run: |
-                    composer require laravel/framework:^${{ matrix.laravel }}
+                    composer require laravel/framework:${{ matrix.laravel }}
                     composer update --prefer-stable --prefer-dist --no-progress --no-interaction
 
             -   name: Execute tests
