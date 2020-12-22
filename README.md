@@ -70,12 +70,12 @@ php artisan vendor:publish --provider="PrettyRoutes\ServiceProvider"
 
 ## Compatibility table
 
-| PHP \ Laravel, Lumen | 5.4 | 5.5 | 5.6 | 5.7 | 5.8 | 6.x | 7.x | 8.x |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| 7.2 | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x: |
-| 7.3 | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| 7.4 | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| 8.0 | :x: | :x: | :x: | :x: | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| PHP \ Laravel, Lumen | 5.0-5.3 | 5.4 | 5.5 | 5.6 | 5.7 | 5.8 | 6.x | 7.x | 8.x |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| 7.2 | Supported, not tested | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x: |
+| 7.3 | Supported, not tested | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| 7.4 | Supported, not tested | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
+| 8.0 | Supported, not tested | :x: | :x: | :x: | :x: | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
 [badge_styleci]:    https://styleci.io/repos/130698068/shield
 
