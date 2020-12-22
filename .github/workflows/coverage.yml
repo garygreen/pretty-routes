@@ -31,7 +31,7 @@ jobs:
             -   name: Execute tests
                 run: |
                     mkdir -p build/logs
-                    vendor/bin/phpunit --coverage-clover=coverage.clover
+                    vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
 
             -   name: Export
                 run: |
