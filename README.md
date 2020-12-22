@@ -103,6 +103,6 @@ php artisan vendor:publish --provider="PrettyRoutes\ServiceProvider"
 
 [link_packagist]:   https://packagist.org/packages/andrey-helldar/pretty-routes
 
-[link_scrutinizer]: https://scrutinizer-ci.com/g/andrey-helldar/pretty-routes/?branch=coverage
+[link_scrutinizer]: https://scrutinizer-ci.com/g/andrey-helldar/pretty-routes
 
 [link_styleci]:     https://github.styleci.io/repos/130698068
