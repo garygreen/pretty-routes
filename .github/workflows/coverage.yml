@@ -1,4 +1,4 @@
-name: phpunit
+name: coverage
 on:
     push:
         branches:
