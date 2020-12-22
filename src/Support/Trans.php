@@ -41,11 +41,12 @@ final class Trans
     {
         $locale = $this->isForce() ? $this->getForceLocale() : $this->appLocale();
 
-        $exploded = explode(',', $locale);
+        $current = explode(',', $locale);
+        $app     = explode(',', $this->appLocale());
 
         return $this->getCorrectedLocale(
-            reset($exploded),
-            $this->appLocale()
+            reset($current),
+            reset($app)
         );
     }
 
