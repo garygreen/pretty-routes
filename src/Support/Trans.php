@@ -21,7 +21,7 @@ final class Trans
         $locale = $this->getLocale();
 
         if (! isset(static::$translations[$locale])) {
-            static::$translations[$locale] = require $this->getCorrectedPath($locale);
+            static::$translations[$locale] = require $this->path($locale);
         }
 
         return static::$translations[$locale];
@@ -43,7 +43,19 @@ final class Trans
 
         $exploded = explode(',', $locale);
 
-        return reset($exploded);
+        return $this->getCorrectedLocale(
+            reset($exploded),
+            $this->appLocale()
+        );
+    }
+
+    protected function getCorrectedLocale(string $locale, string $default): string
+    {
+        if ($this->exist($locale)) {
+            return $locale;
+        }
+
+        return $this->exist($default) ? $default : self::DEFAULT_LOCALE;
     }
 
     protected function getForceLocale()
@@ -59,12 +71,5 @@ final class Trans
     protected function path(string $locale): string
     {
         return realpath(__DIR__ . '/../../resources/lang/' . $locale . '/info.php');
-    }
-
-    protected function getCorrectedPath(string $locale): string
-    {
-        return $this->exist($locale)
-            ? $this->path($locale)
-            : $this->path(static::DEFAULT_LOCALE);
     }
 }
