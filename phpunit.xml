@@ -2,7 +2,6 @@
 <phpunit
         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        backupGlobals="false"
         backupStaticAttributes="false"
         bootstrap="phpunit.php"
         colors="true"

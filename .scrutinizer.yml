@@ -1,7 +1,5 @@
 filter:
-    excluded_paths:
-        - tests/*
-        - vendor/*
+    excluded_paths: [ tests/*, vendor/* ]
 
 checks:
     php:
@@ -23,14 +21,13 @@ checks:
 
 tools:
     external_code_coverage:
-        timeout: 300
+        timeout: 600
     php_code_sniffer:
         enabled: true
         config:
             standard: PSR12
         filter:
-            paths:
-                - src
+            paths: [ 'src' ]
     php_loc:
         enabled: true
     php_cpd:
