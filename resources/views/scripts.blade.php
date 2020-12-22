@@ -232,11 +232,12 @@
                 this.loading = true;
 
                 axios.post(this.url.clean)
-                    .then(response => {
-                        this.getRoutes(true);
-                    })
-                    .catch(error => console.error(error))
-                    .finally(() => this.loading = false);
+                    .then(response => this.getRoutes(true))
+                    .catch(error => {
+                        console.error(error);
+
+                        this.loading = false;
+                    });
             },
 
             getRoutesKey(key) {
