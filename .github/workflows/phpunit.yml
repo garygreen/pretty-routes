@@ -265,3 +265,30 @@ jobs:
 
             -   name: Execute tests
                 run: vendor/bin/phpunit
+
+    scrutinizer:
+        runs-on: ubuntu-latest
+
+        name: Coverage
+
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v2
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 7.4
+                    extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
+                    coverage: xdebug
+
+            -   name: Composer self update
+                run: composer self-update
+
+            -   name: Install dependencies
+                run: composer update --prefer-stable --prefer-dist --no-progress --no-interaction
+
+            -   name: Execute tests
+                run: |
+                    mkdir -p build/logs
+                    vendor/bin/phpunit --coverage-text
