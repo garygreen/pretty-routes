@@ -3,8 +3,11 @@
 namespace PrettyRoutes\Http;
 
 use Helldar\LaravelRoutesCore\Support\Routes;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Artisan;
+use PrettyRoutes\Facades\Cache;
+use PrettyRoutes\Support\Config;
 
 class PrettyRoutesController extends BaseController
 {
@@ -13,7 +16,7 @@ class PrettyRoutesController extends BaseController
      *
      * @return \Illuminate\Contracts\View\View
      */
-    public function show()
+    public function show(): View
     {
         return view('pretty-routes::layout');
     }
@@ -22,22 +25,17 @@ class PrettyRoutesController extends BaseController
      * Getting a list of routes.
      *
      * @param  \Helldar\LaravelRoutesCore\Support\Routes  $routes
+     * @param  \PrettyRoutes\Support\Config  $config
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function routes(Routes $routes)
+    public function routes(Routes $routes, Config $config): JsonResponse
     {
-        $content = $routes
-            ->setApiMiddlewares((array) config('pretty-routes.api_middleware'))
-            ->setWebMiddlewares((array) config('pretty-routes.web_middleware'))
-            ->setHideMethods(config('pretty-routes.hide_methods', []))
-            ->setHideMatching(config('pretty-routes.hide_matching', []))
-            ->setDomainForce(config('pretty-routes.domain_force', false))
-            ->setUrl(config('app.url'))
-            ->setNamespace(config('modules.namespace'))
-            ->get();
+        $routes->setFromConfig($config);
 
-        return response()->json($content);
+        return response()->json(
+            $routes->get()
+        );
     }
 
     /**
@@ -45,14 +43,15 @@ class PrettyRoutesController extends BaseController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function clear()
+    public function clear(): JsonResponse
     {
-        if (config('app.env') !== 'production' && (bool) config('app.debug') === true) {
-            Artisan::call('route:clear');
+        return Cache::when($this->allow())->routeClear()
+            ? response()->json('ok')
+            : response()->json('disabled', 400);
+    }
 
-            return response()->json('ok');
-        }
-
-        return response()->json('disabled', 400);
+    protected function allow(): bool
+    {
+        return config('app.env') !== 'production' && (bool) config('app.debug') === true;
     }
 }
