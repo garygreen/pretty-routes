@@ -4,7 +4,7 @@ return [
     'action'              => 'Action',
     'all'                 => 'Tout',
     'api'                 => 'Api',
-    'cleaningRoutes'      => "Effacer le cache des routes",
+    'cleaningRoutes'      => 'Effacer le cache des routes',
     'deprecated'          => 'Obsolète',
     'domain'              => 'Domaine',
     'itemsPerPageAllText' => 'Tout',
