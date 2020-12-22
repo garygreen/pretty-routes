@@ -39,9 +39,7 @@ final class Trans
 
     protected function getLocale(): string
     {
-        $locale = $this->isForce() ? $this->getForceLocale() : $this->appLocale();
-
-        $current = explode(',', $locale);
+        $current = explode(',', $this->isForce() ? $this->getForceLocale() : $this->appLocale());
         $app     = explode(',', $this->appLocale());
 
         return $this->getCorrectedLocale(
