@@ -6,4 +6,6 @@ vendor/
 *.clover
 *.orig
 
+ocular.phar
+
 composer.lock
