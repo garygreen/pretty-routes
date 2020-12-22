@@ -12,6 +12,8 @@ Visualise your routes in pretty format.
 
 [![StyleCI Status][badge_styleci]][link_styleci]
 [![Github Workflow Status][badge_build]][link_build]
+[![Coverage Status][badge_coverage]][link_scrutinizer]
+[![Scrutinizer Code Quality][badge_quality]][link_scrutinizer]
 [![For Laravel][badge_laravel]][link_packagist]
 
 [![Stable Version][badge_stable]][link_packagist]
@@ -77,24 +79,30 @@ php artisan vendor:publish --provider="PrettyRoutes\ServiceProvider"
 | 7.4 | Supported, not tested | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | 8.0 | Not supported, not tested | :x: | :x: | :x: | :x: | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
-[badge_styleci]:    https://styleci.io/repos/130698068/shield
-
 [badge_build]:      https://img.shields.io/github/workflow/status/andrey-helldar/pretty-routes/phpunit?style=flat-square
 
-[badge_laravel]:    https://img.shields.io/badge/Laravel-5.x%20%7C%206.x%20%7C%207.x%20%7C%208.x-orange.svg?style=flat-square
-
-[badge_stable]:     https://img.shields.io/github/v/release/andrey-helldar/pretty-routes?label=stable&style=flat-square
-
-[badge_unstable]:   https://img.shields.io/badge/unstable-dev--main-orange?style=flat-square
+[badge_coverage]:   https://img.shields.io/scrutinizer/coverage/g/andrey-helldar/pretty-routes.svg?style=flat-square
 
 [badge_downloads]:  https://img.shields.io/packagist/dt/andrey-helldar/pretty-routes.svg?style=flat-square
 
+[badge_laravel]:    https://img.shields.io/badge/Laravel-5.x%20%7C%206.x%20%7C%207.x%20%7C%208.x-orange.svg?style=flat-square
+
 [badge_license]:    https://img.shields.io/packagist/l/andrey-helldar/pretty-routes.svg?style=flat-square
 
-[link_styleci]:     https://github.styleci.io/repos/130698068
+[badge_quality]:    https://img.shields.io/scrutinizer/g/andrey-helldar/pretty-routes.svg?style=flat-square
+
+[badge_stable]:     https://img.shields.io/github/v/release/andrey-helldar/pretty-routes?label=stable&style=flat-square
+
+[badge_styleci]:    https://styleci.io/repos/130698068/shield
+
+[badge_unstable]:   https://img.shields.io/badge/unstable-dev--main-orange?style=flat-square
 
 [link_build]:       https://github.com/andrey-helldar/pretty-routes/actions
 
+[link_license]:     LICENSE
+
 [link_packagist]:   https://packagist.org/packages/andrey-helldar/pretty-routes
 
-[link_license]:     LICENSE
+[link_scrutinizer]: https://scrutinizer-ci.com/g/andrey-helldar/pretty-routes/?branch=coverage
+
+[link_styleci]:     https://github.styleci.io/repos/130698068
