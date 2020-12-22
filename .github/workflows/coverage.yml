@@ -18,7 +18,7 @@ jobs:
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 8.0
+                    php-version: 7.4
                     extensions: curl, mbstring, zip, pcntl, pdo, pdo_sqlite, iconv
                     coverage: xdebug
 
@@ -36,3 +36,4 @@ jobs:
             -   name: Export
                 run: |
                     wget https://scrutinizer-ci.com/ocular.phar
+                    php ocular.phar code-coverage:upload --format=php-clover coverage.clover
