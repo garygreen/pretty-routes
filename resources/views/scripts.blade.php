@@ -1,7 +1,7 @@
-<script src="https://cdn.jsdelivr.net/npm/vue"></script>
-<script src="https://cdn.jsdelivr.net/npm/vuetify"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios"></script>
-<script src="https://cdn.jsdelivr.net/npm/lodash"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@v0.21"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4"></script>
 
 <script>
     const trans = {!! json_encode(\PrettyRoutes\Facades\Trans::all(), JSON_UNESCAPED_UNICODE) !!};
