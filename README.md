@@ -66,7 +66,7 @@ php artisan vendor:publish --provider="PrettyRoutes\ServiceProvider"
 
 ## Upgrade from `garygreen/pretty-routes`
 
-1. In your `composer.json` file, replace `"garygreen/pretty-routes"` with `"andrey-helldar/pretty-routes"`.
+1. In your `composer.json` file, replace `"garygreen/pretty-routes": "^1.0"` with `"andrey-helldar/pretty-routes": "^2.0"`.
 2. Run the command `composer update`.
 3. Profit!
 
