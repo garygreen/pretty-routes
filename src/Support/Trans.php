@@ -2,7 +2,7 @@
 
 namespace PrettyRoutes\Support;
 
-use Helldar\Support\Facades\Arr;
+use Helldar\Support\Facades\Helpers\Arr;
 use Illuminate\Support\Facades\App;
 
 final class Trans
