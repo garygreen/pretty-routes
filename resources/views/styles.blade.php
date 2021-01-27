@@ -31,4 +31,8 @@
             transform: rotate(360deg);
         }
     }
+
+    .text-decoration-none{
+        text-decoration: none;
+    }
 </style>

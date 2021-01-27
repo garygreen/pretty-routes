@@ -88,4 +88,25 @@ return [
      */
 
     'locale_force' => false,
+
+    /*
+     * Enable open link in new tab.
+     *
+     * Useful for manual testing or visual checks.
+     *
+     * This option related with "dummy_variable_prefix"
+     */
+    'show_path_link' => true,
+
+    /*
+     * Laravel stores variable names with curly bracktes, this option replaces "prefix" and "variable name".
+     * So we can prevent url encode when browsing and we can get readable urls
+     *
+     * For example
+     * before admin/line/lines/{line_id} => admin/line/lines/%7Bline_id%7D
+     * after: admin/line/lines/{line_id} => admin/line/lines/param_line_id
+     *
+     * This option depends to "show_path_link"
+     */
+    'dummy_variable_prefix' => 'param_',
 ];

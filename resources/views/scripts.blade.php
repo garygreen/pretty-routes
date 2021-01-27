@@ -6,6 +6,7 @@
 <script>
     const trans = {!! json_encode(\PrettyRoutes\Facades\Trans::all(), JSON_UNESCAPED_UNICODE) !!};
     const isEnabledCleanup = {{ config('app.env') !== 'production' && (bool) config('app.debug') === true ? 'true' : 'false' }};
+    const dummyVariablePrefix = '{{ config("pretty-routes.dummy_variable_prefix") }}';
 
     const colorScheme = () => {
         switch ('{{ config('pretty-routes.color_scheme', 'auto') }}') {
@@ -460,6 +461,14 @@
                 } else {
                     this.setDialog({}, false);
                 }
+            }
+
+            getDummyPath(path){
+                if (path && dummyVariablePrefix.length){
+                    return path.replace(/{([^}]+)}/gi, `${dummyVariablePrefix}_$1`);
+                }
+
+                return path;
             }
         }
     });
