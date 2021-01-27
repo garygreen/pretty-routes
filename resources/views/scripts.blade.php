@@ -27,6 +27,18 @@
         }),
 
         data: {
+            dialog: {
+                isOpen: false,
+                title: '',
+                message: '',
+                messageVisible: true,
+                dataDump: null,
+                dataDumpVisible: false,
+                printDataButton: trans.print_data,
+                dismissButton: trans.dismiss,
+                refreshButton: trans.reload
+            },
+
             itemsPerPage: 15,
             loading: false,
 
@@ -206,6 +218,23 @@
         },
 
         methods: {
+            setDialog(dialogContent, isDump = false){
+                if (!dialogContent){
+                    dialogContent = {
+                        isOpen: false
+                    };
+                } else {
+                    dialogContent = Object.assign(dialogContent, {
+                        isOpen: true,
+                        messageVisible: !isDump,
+                        dataDumpVisible: isDump,
+                        printDataButton: isDump ? trans.show_message : trans.print_data
+                    });
+                }
+
+                this.dialog = Object.assign(this.dialog, dialogContent);
+            },
+
             getRoutes(force = false) {
                 if (this.loading === true && force === false) {
                     return;
@@ -219,8 +248,22 @@
 
                         this.setDomains();
                         this.setModules();
+
+                        this.setDialog(false);
                     })
-                    .catch(error => console.error(error))
+                    .catch(error => {
+                        console.error(error);
+
+                        let data = error.response.data;
+
+                        this.setDialog({
+                            title: error.message ? error.message : trans.error,
+                            message: data.message ? data.message : data, // show message or data
+                            messageVisible: true,
+                            dataDump: data.message ? data : null, // show data or null
+                            dataDumpVisible: false
+                        });
+                    })
                     .finally(() => this.loading = false);
             },
 
@@ -409,6 +452,14 @@
 
             openGitHubRepository() {
                 window.open(this.repository.url);
+            },
+
+            showDialogData() {
+                if (this.dialog.dataDump && !this.dialog.dataDumpVisible){
+                    this.setDialog({}, true);
+                } else {
+                    this.setDialog({}, false);
+                }
             }
         }
     });

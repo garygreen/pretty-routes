@@ -29,4 +29,11 @@ return [
     'types'               => 'Types de routes',
     'web'                 => 'Web',
     'without'             => 'Sans',
+
+    // route fetch dialog
+    'print_data'          => 'Print Data',
+    'show_message'        => 'Show Message',
+    'dismiss'             => 'Dismiss',
+    'reload'              => 'Reload',
+    'error'               => 'Error',
 ];

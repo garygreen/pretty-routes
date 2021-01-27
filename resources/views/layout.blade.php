@@ -15,6 +15,8 @@
 
 <div id="app">
     @include('pretty-routes::vue')
+
+    @include('pretty-routes::components.dialog')
 </div>
 
 @include('pretty-routes::scripts')
