@@ -36,4 +36,8 @@ return [
     'dismiss'             => 'Dismiss',
     'reload'              => 'Reload',
     'error'               => 'Error',
+
+    // copy text
+    'text_copied'         => 'Text copied',
+    'text_not_copy'       => 'Text not copy',
 ];

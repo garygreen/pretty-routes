@@ -2,6 +2,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios@v0.21"></script>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-clipboard2@0.3.1/dist/vue-clipboard.min.js"></script>
 
 <script>
     const trans = {!! json_encode(\PrettyRoutes\Facades\Trans::all(), JSON_UNESCAPED_UNICODE) !!};
@@ -38,6 +39,12 @@
                 printDataButton: trans.print_data,
                 dismissButton: trans.dismiss,
                 refreshButton: trans.reload
+            },
+
+            snackbar: {
+                isOpen: false,
+                message: '',
+                timeout: 3000
             },
 
             itemsPerPage: 15,
@@ -469,6 +476,21 @@
                 }
 
                 return path;
+            },
+
+            copyText(text){
+                this.$copyText(text).then(e => {
+                    this.snackbar.isOpen = true;
+                    this.snackbar.message = trans.text_copied + ' : ' + (text.length >= 30 ? text.substring(0, 30) + '...' : text);
+
+                    console.log(e);
+                },
+                e => {
+                    this.snackbar.isOpen = true;
+                    this.snackbar.message = trans.text_not_copy;
+
+                    console.log(e);
+                });
             }
         }
     });

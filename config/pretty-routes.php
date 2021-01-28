@@ -109,4 +109,16 @@ return [
      * This option depends to "show_path_link"
      */
     'dummy_variable_prefix' => 'param_',
+    
+    /*
+     * Click and copy to clipboard "path" and "name" text.
+     */
+    'click_and_copy' => true,
+
+    /*
+     * Double click and copy to clipboard "path" and "name" text.
+     *
+     * This option overwrites "click_and_copy" option.
+     */
+    'double_click_and_copy' => true,
 ];
