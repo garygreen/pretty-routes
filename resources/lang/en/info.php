@@ -40,4 +40,7 @@ return [
     // copy text
     'text_copied'         => 'Text copied',
     'text_not_copy'       => 'Text not copy',
+
+    // idle/active
+    'loaded_on_active'    => 'Reloaded after idle',
 ];

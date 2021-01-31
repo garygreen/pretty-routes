@@ -2,14 +2,18 @@
 <script src="https://cdn.jsdelivr.net/npm/vuetify@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios@v0.21"></script>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/vue-clipboard2@0.3.1/dist/vue-clipboard.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/idle-js@1.2.0"></script>
 
 <script>
     const trans = {!! json_encode(\PrettyRoutes\Facades\Trans::all(), JSON_UNESCAPED_UNICODE) !!};
     const isEnabledCleanup = {{ config('app.env') !== 'production' && (bool) config('app.debug') === true ? 'true' : 'false' }};
     const dummyVariablePrefix = '{{ config("pretty-routes.dummy_variable_prefix") }}';
+    const tableIdleTime = {{ config('pretty-routes.table_reload_idle_time', '0') }};
+    const colorScheme = '{{ config('pretty-routes.color_scheme', 'auto') }}';
 
-    const colorScheme = () => {
+    const isDarkTheme = () => {
         switch ('{{ config('pretty-routes.color_scheme', 'auto') }}') {
             case 'dark':
                 return true;
@@ -24,7 +28,7 @@
         el: '#app',
         vuetify: new Vuetify({
             theme: {
-                dark: colorScheme()
+                dark: isDarkTheme()
             }
         }),
 
@@ -126,7 +130,11 @@
                 'white--text purple darken-3',
                 'white--text teal darken-1',
                 'white--text yellow darken-3'
-            ]
+            ],
+
+            idleThemeManager: null,
+
+            idleRouteManager: null
         },
 
         computed: {
@@ -223,6 +231,47 @@
 
         mounted() {
             this.getRoutes();
+            
+            // on idle/active theme switch
+            if (colorScheme == 'auto') {
+                this.idleThemeManager = new IdleJs({
+                    idle: {{ config('pretty-routes.color_scheme_idle_time', '1000') }},
+                    events: ['mousemove', 'keydown', 'mousedown', 'touchstart'],
+                    onIdle: () => {
+                        this.applyTheme();
+                    },
+                    onActive: () => {
+                        this.applyTheme();
+                    },
+                    onHide: () => {},
+                    onShow: () => {},
+                    keepTracking: true,
+                    startAtIdle: false
+                });
+
+                this.idleThemeManager.start();
+            }
+
+            // on idle/active content reload
+            if (tableIdleTime > 0){
+                this.idleRouteManager = new IdleJs({
+                    idle: tableIdleTime,
+                    events: ['mousemove', 'keydown', 'mousedown', 'touchstart'],
+                    onIdle: () => {},
+                    onActive: () => {
+                        this.getRoutes();
+
+                        this.snackbar.isOpen = true;
+                        this.snackbar.message = trans.loaded_on_active;
+                    },
+                    onHide: () => {},
+                    onShow: () => {},
+                    keepTracking: true,
+                    startAtIdle: false
+                });
+
+                this.idleRouteManager.start();
+            }
         },
 
         methods: {
@@ -491,6 +540,10 @@
 
                     console.log(e);
                 });
+            },
+            
+            applyTheme(){
+                this.$vuetify.theme.dark = isDarkTheme();
             }
         }
     });
