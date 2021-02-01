@@ -137,7 +137,7 @@ return [
      */
 
     'dummy_variable_prefix' => 'param_',
-    
+
     /*
      * Click and copy to clipboard "path" and "name" text.
      */
@@ -149,6 +149,6 @@ return [
      *
      * This option overwrites "click_and_copy" option.
      */
-    
+
     'double_click_and_copy' => true,
 ];
