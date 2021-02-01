@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'action'              => 'Eylem',
+    'action'              => 'Aksiyon',
     'all'                 => 'Hepsi',
     'api'                 => 'API',
     'cleaningRoutes'      => 'Rota önbelleğini temizle ',
