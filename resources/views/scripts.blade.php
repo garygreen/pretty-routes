@@ -240,12 +240,8 @@
                 this.idleThemeManager = new IdleJs({
                     idle: themeIdleTime,
                     events: ['mousemove', 'keydown', 'mousedown', 'touchstart'],
-                    onIdle: () => {
-                        this.applyTheme();
-                    },
-                    onActive: () => {
-                        this.applyTheme();
-                    },
+                    onIdle: () => this.applyTheme(),
+                    onActive: () => this.applyTheme(),
                     onHide: () => {},
                     onShow: () => {},
                     keepTracking: true,
@@ -278,14 +274,14 @@
 
         methods: {
             setDialog(dialogContent, isDump = false){
-                if (!dialogContent){
+                if (! dialogContent){
                     dialogContent = {
                         isOpen: false
                     };
                 } else {
                     dialogContent = Object.assign(dialogContent, {
                         isOpen: true,
-                        messageVisible: !isDump,
+                        messageVisible: ! isDump,
                         dataDumpVisible: isDump,
                         printDataButton: isDump ? trans.showMessage : trans.printData
                     });
@@ -514,7 +510,7 @@
             },
 
             showDialogData() {
-                if (this.dialog.dataDump && !this.dialog.dataDumpVisible){
+                if (this.dialog.dataDump && ! this.dialog.dataDumpVisible){
                     this.setDialog({}, true);
                 } else {
                     this.setDialog({}, false);
