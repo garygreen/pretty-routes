@@ -179,9 +179,7 @@
                 ></v-chip>
             </template>
 
-            <!-- Route Path -->
             <template v-slot:item.path="{ item }">
-                {{-- Open Link in New Tab --}}
                 @if (config('pretty-routes.show_path_link', false))
                     <a v-bind:href="'{{url('/')}}/' + getDummyPath(item.path)" target="_blank" class="text-decoration-none">
                         <v-icon dense="true" style="margin-right: 5px">mdi-open-in-new</v-icon>
@@ -195,7 +193,6 @@
                     @endif
                     ></span>
                 @else
-                    {{-- Plain Text --}}
                     <span v-html="highlightParameters(item.path)"
                     @if (config('pretty-routes.double_click_and_copy', false))
                         @dblclick="copyText(item.path)"
@@ -206,7 +203,6 @@
                 @endif
             </template>
 
-            <!-- Route Name -->
             <template v-slot:item.name="{ item }">
                 <span v-text="item.name"
                 @if (config('pretty-routes.double_click_and_copy', false))

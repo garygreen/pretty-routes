@@ -232,7 +232,6 @@
         mounted() {
             this.getRoutes();
             
-            // on idle/active theme switch
             if (colorScheme == 'auto') {
                 this.idleThemeManager = new IdleJs({
                     idle: {{ config('pretty-routes.color_scheme_idle_time', '1000') }},
@@ -252,7 +251,6 @@
                 this.idleThemeManager.start();
             }
 
-            // on idle/active content reload
             if (tableIdleTime > 0){
                 this.idleRouteManager = new IdleJs({
                     idle: tableIdleTime,
@@ -315,9 +313,9 @@
 
                         this.setDialog({
                             title: error.message ? error.message : trans.error,
-                            message: data.message ? data.message : data, // show message or data
+                            message: data.message ? data.message : data,
                             messageVisible: true,
-                            dataDump: data.message ? data : null, // show data or null
+                            dataDump: data.message ? data : null,
                             dataDumpVisible: false
                         });
                     })
