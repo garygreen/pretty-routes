@@ -12,15 +12,15 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="light-blue darken-3" text @click="showDialogData" v-if="dialog.dataDump">
-                        <v-icon dense="true" style="margin-right: 10px;">mdi-database-search</v-icon>
+                        <v-icon dense style="margin-right: 10px;">mdi-database-search</v-icon>
                         <span v-text="dialog.printDataButton"></span>
                     </v-btn>
                     <v-btn color="teal darken-1" text @click="getRoutes">
-                        <v-icon dense="true" style="margin-right: 10px;">mdi-refresh</v-icon>
+                        <v-icon dense style="margin-right: 10px;">mdi-refresh</v-icon>
                         <span v-text="dialog.refreshButton"></span>
                     </v-btn>
                     <v-btn color="red lighten-1" text @click="dialog.isOpen = false">
-                        <v-icon dense="true" style="margin-right: 10px;">mdi-close</v-icon>
+                        <v-icon dense style="margin-right: 10px;">mdi-close</v-icon>
                         <span v-text="dialog.dismissButton"></span>
                     </v-btn>
                 </v-card-actions>
