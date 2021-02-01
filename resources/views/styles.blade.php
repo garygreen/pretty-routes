@@ -35,4 +35,8 @@
     .text-decoration-none{
         text-decoration: none;
     }
+
+    .mr-5px{
+        margin-right: 5px;
+    }
 </style>

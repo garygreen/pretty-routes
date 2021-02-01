@@ -180,36 +180,28 @@
             </template>
 
             <template v-slot:item.path="{ item }">
-                @if (config('pretty-routes.show_path_link', false))
+                <template v-if="showPathLink">
                     <a v-bind:href="'{{url('/')}}/' + getDummyPath(item.path)" target="_blank" class="text-decoration-none">
-                        <v-icon dense="true" style="margin-right: 5px">mdi-open-in-new</v-icon>
+                        <v-icon dense="true" class="mr-5px">mdi-open-in-new</v-icon>
                     </a>
 
                     <span v-html="highlightParameters(item.path)"
-                    @if (config('pretty-routes.double_click_and_copy', false))
-                        @dblclick="copyText('{{url('/')}}/' + getDummyPath(item.path))"
-                    @elseif (config('pretty-routes.click_and_copy', false))
-                        @click="copyText('{{url('/')}}/' + getDummyPath(item.path))"
-                    @endif
+                        @click="clickAndCopy ? copyText('{{url('/')}}/' + getDummyPath(item.path)) : null"
+                        @dblclick="doubleClickAndCopy ? copyText('{{url('/')}}/' + getDummyPath(item.path)) : null"
                     ></span>
-                @else
+                </template>
+                <template v-else>
                     <span v-html="highlightParameters(item.path)"
-                    @if (config('pretty-routes.double_click_and_copy', false))
-                        @dblclick="copyText(item.path)"
-                    @elseif (config('pretty-routes.click_and_copy', false))
-                        @click="copyText(item.path)"
-                    @endif
+                        @click="clickAndCopy ? copyText(item.path) : null"
+                        @dblclick="doubleClickAndCopy ? copyText(item.path) : null"
                     ></span>
-                @endif
+                </template>
             </template>
 
             <template v-slot:item.name="{ item }">
                 <span v-text="item.name"
-                @if (config('pretty-routes.double_click_and_copy', false))
-                    @dblclick="copyText(item.name)"
-                @elseif (config('pretty-routes.click_and_copy', false))
-                    @click="copyText(item.name)"
-                @endif
+                    @click="clickAndCopy ? copyText(item.name) : null"
+                    @dblclick="doubleClickAndCopy ? copyText(item.name) : null"
                 ></span>
             </template>
 

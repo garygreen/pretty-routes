@@ -9,9 +9,12 @@
 <script>
     const trans = {!! json_encode(\PrettyRoutes\Facades\Trans::all(), JSON_UNESCAPED_UNICODE) !!};
     const isEnabledCleanup = {{ config('app.env') !== 'production' && (bool) config('app.debug') === true ? 'true' : 'false' }};
-    const dummyVariablePrefix = '{{ config("pretty-routes.dummy_variable_prefix") }}';
-    const tableIdleTime = {{ config('pretty-routes.table_reload_idle_time', '0') }};
+    const dummyVariablePrefix = '{{ config('pretty-routes.dummy_variable_prefix') }}';
+    const tableIdleTime = {{ config('pretty-routes.table_reload_idle_time', 0) }};
     const colorScheme = '{{ config('pretty-routes.color_scheme', 'auto') }}';
+    const showPathLink = {{ (bool) config('pretty-routes.show_path_link', false) === true ? 'true' : 'false'}};
+    const clickAndCopy = {{ (bool) config('pretty-routes.click_and_copy', false) === true ? 'true' : 'false'}};
+    const doubleClickAndCopy = {{ (bool) config('pretty-routes.double_click_and_copy', false) === true ? 'true' : 'false'}};
 
     const isDarkTheme = () => {
         switch ('{{ config('pretty-routes.color_scheme', 'auto') }}') {
