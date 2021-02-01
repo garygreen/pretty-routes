@@ -10,6 +10,7 @@
     const trans = {!! json_encode(\PrettyRoutes\Facades\Trans::all(), JSON_UNESCAPED_UNICODE) !!};
     const isEnabledCleanup = {{ config('app.env') !== 'production' && (bool) config('app.debug') === true ? 'true' : 'false' }};
     const dummyVariablePrefix = '{{ config('pretty-routes.dummy_variable_prefix') }}';
+    const themeIdleTime = {{ config('pretty-routes.color_scheme_idle_time', 1000) }};
     const tableIdleTime = {{ config('pretty-routes.table_reload_idle_time', 0) }};
     const colorScheme = '{{ config('pretty-routes.color_scheme', 'auto') }}';
     const showPathLink = {{ (bool) config('pretty-routes.show_path_link', false) === true ? 'true' : 'false'}};
@@ -235,9 +236,9 @@
         mounted() {
             this.getRoutes();
             
-            if (colorScheme == 'auto') {
+            if (colorScheme === 'auto') {
                 this.idleThemeManager = new IdleJs({
-                    idle: {{ config('pretty-routes.color_scheme_idle_time', '1000') }},
+                    idle: themeIdleTime,
                     events: ['mousemove', 'keydown', 'mousedown', 'touchstart'],
                     onIdle: () => {
                         this.applyTheme();
