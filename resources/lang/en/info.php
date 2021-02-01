@@ -6,9 +6,12 @@ return [
     'api'                 => 'Api',
     'cleaningRoutes'      => 'Clear route cache',
     'deprecated'          => 'Deprecated',
+    'dismiss'             => 'Dismiss',
     'domain'              => 'Domain',
+    'error'               => 'Error',
     'itemsPerPageAllText' => 'All',
     'itemsPerPageText'    => 'Routes per page',
+    'loadedOnActive'      => 'Reloaded after idle',
     'loading'             => 'Loading... Please wait...',
     'methods'             => 'Methods',
     'middlewares'         => 'Middlewares',
@@ -21,26 +24,17 @@ return [
     'openGitHub'          => 'Open the project page on GitHub',
     'pageText'            => '{0}-{1} of {2}',
     'path'                => 'Path',
+    'printData'           => 'Print Data',
     'priority'            => 'Priority',
     'refreshRoutes'       => 'Refresh the list of routes',
+    'reload'              => 'Reload',
     'search'              => 'Search',
     'show'                => 'Show',
+    'showMessage'         => 'Show Message',
+    'textCopied'          => 'Text copied',
+    'textNotCopy'         => 'Text not copy',
     'title'               => 'Routes',
     'types'               => 'Route types',
     'web'                 => 'Web',
     'without'             => 'Without',
-
-    // route fetch dialog
-    'print_data'          => 'Print Data',
-    'show_message'        => 'Show Message',
-    'dismiss'             => 'Dismiss',
-    'reload'              => 'Reload',
-    'error'               => 'Error',
-
-    // copy text
-    'text_copied'         => 'Text copied',
-    'text_not_copy'       => 'Text not copy',
-
-    // idle/active
-    'loaded_on_active'    => 'Reloaded after idle',
 ];

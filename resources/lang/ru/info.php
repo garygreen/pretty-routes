@@ -6,9 +6,12 @@ return [
     'api'                 => 'Api',
     'cleaningRoutes'      => 'Очистить кэш роутов',
     'deprecated'          => 'Устаревшие',
+    'dismiss'             => 'Dismiss',
     'domain'              => 'Домен',
+    'error'               => 'Error',
     'itemsPerPageAllText' => 'Все',
     'itemsPerPageText'    => 'Записей на странице',
+    'loadedOnActive'      => 'Reloaded after idle',
     'loading'             => 'Загрузка... Пожалуйста, подождите...',
     'methods'             => 'Методы',
     'middlewares'         => 'Мидлвари',
@@ -21,26 +24,17 @@ return [
     'openGitHub'          => 'Открыть страницу проекта в GitHub',
     'pageText'            => '{0}-{1} из {2}',
     'path'                => 'URI',
+    'printData'           => 'Print Data',
     'priority'            => 'Приоритет',
     'refreshRoutes'       => 'Обновить список маршрутов',
+    'reload'              => 'Reload',
     'search'              => 'Поиск',
     'show'                => 'Показать',
+    'showMessage'         => 'Show Message',
+    'textCopied'          => 'Text copied',
+    'textNotCopy'         => 'Text not copy',
     'title'               => 'Маршруты',
     'types'               => 'Типы маршрутов',
     'web'                 => 'Web',
     'without'             => 'Не указано',
-
-    // route fetch dialog
-    'print_data'          => 'Print Data',
-    'show_message'        => 'Show Message',
-    'dismiss'             => 'Dismiss',
-    'reload'              => 'Reload',
-    'error'               => 'Error',
-
-    // copy text
-    'text_copied'         => 'Text copied',
-    'text_not_copy'       => 'Text not copy',
-    
-    // idle/active
-    'loaded_on_active'    => 'Reloaded after idle',
 ];

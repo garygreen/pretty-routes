@@ -40,7 +40,7 @@
                 messageVisible: true,
                 dataDump: null,
                 dataDumpVisible: false,
-                printDataButton: trans.print_data,
+                printDataButton: trans.printData,
                 dismissButton: trans.dismiss,
                 refreshButton: trans.reload
             },
@@ -262,7 +262,7 @@
                         this.getRoutes();
 
                         this.snackbar.isOpen = true;
-                        this.snackbar.message = trans.loaded_on_active;
+                        this.snackbar.message = trans.loadedOnActive;
                     },
                     onHide: () => {},
                     onShow: () => {},
@@ -285,7 +285,7 @@
                         isOpen: true,
                         messageVisible: !isDump,
                         dataDumpVisible: isDump,
-                        printDataButton: isDump ? trans.show_message : trans.print_data
+                        printDataButton: isDump ? trans.showMessage : trans.printData
                     });
                 }
 
@@ -517,7 +517,7 @@
                 } else {
                     this.setDialog({}, false);
                 }
-            }
+            },
 
             getDummyPath(path){
                 if (path && dummyVariablePrefix.length){
@@ -530,13 +530,13 @@
             copyText(text){
                 this.$copyText(text).then(e => {
                     this.snackbar.isOpen = true;
-                    this.snackbar.message = trans.text_copied + ' : ' + (text.length >= 30 ? text.substring(0, 30) + '...' : text);
+                    this.snackbar.message = trans.textCopied + ' : ' + (text.length >= 30 ? text.substring(0, 30) + '...' : text);
 
                     console.log(e);
                 },
                 e => {
                     this.snackbar.isOpen = true;
-                    this.snackbar.message = trans.text_not_copy;
+                    this.snackbar.message = trans.textNotCopy;
 
                     console.log(e);
                 });
