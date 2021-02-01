@@ -312,8 +312,8 @@
                         let data = error.response.data;
 
                         this.setDialog({
-                            title: error.message ? error.message : trans.error,
-                            message: data.message ? data.message : data,
+                            title: error.message || trans.error,
+                            message: data.message || data,
                             messageVisible: true,
                             dataDump: data.message ? data : null,
                             dataDumpVisible: false
@@ -510,11 +510,9 @@
             },
 
             showDialogData() {
-                if (this.dialog.dataDump && ! this.dialog.dataDumpVisible){
-                    this.setDialog({}, true);
-                } else {
-                    this.setDialog({}, false);
-                }
+                let isShow = this.dialog.dataDump && ! this.dialog.dataDumpVisible;
+
+                this.setDialog({}, isShow);
             },
 
             getDummyPath(path){

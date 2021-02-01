@@ -182,7 +182,7 @@
             <template v-slot:item.path="{ item }">
                 <template v-if="showPathLink">
                     <a v-bind:href="'{{url('/')}}/' + getDummyPath(item.path)" target="_blank" class="text-decoration-none">
-                        <v-icon dense="true" class="mr-5px">mdi-open-in-new</v-icon>
+                        <v-icon dense class="mr-5px">mdi-open-in-new</v-icon>
                     </a>
 
                     <span v-html="highlightParameters(item.path)"
