@@ -5,8 +5,8 @@
                 <v-card-title class="headline" v-text="dialog.title"></v-card-title>
 
                 <v-card-text>
-                    <p v-html="dialog.message" v-if="dialog.messageVisible"></p>
-                    <pre v-html="dialog.dataDump" v-if="dialog.dataDumpVisible"></pre>
+                    <p v-text="dialog.message" v-if="dialog.messageVisible"></p>
+                    <pre v-text="dialog.dataDump" v-if="dialog.dataDumpVisible"></pre>
                 </v-card-text>
 
                 <v-card-actions>
