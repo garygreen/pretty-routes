@@ -11,7 +11,7 @@ return [
     'error'               => 'Ошибка',
     'itemsPerPageAllText' => 'Все',
     'itemsPerPageText'    => 'Записей на странице',
-    'loadedOnActive'      => 'Перезагружено после простоя',
+    'loadedOnActive'      => 'Обновление роутов после простоя',
     'loading'             => 'Загрузка... Пожалуйста, подождите...',
     'methods'             => 'Методы',
     'middlewares'         => 'Мидлвари',
