@@ -78,7 +78,7 @@ return [
      *
      * This option depends to "color_scheme" and works only with "auto"
      *
-     * By default, 1000 and accecpts only integer values.
+     * By default, 1000 and accepts only integer values.
      */
 
     'color_scheme_idle_time' => 1000,
@@ -90,7 +90,7 @@ return [
      *
      * 0 = disabled
      *
-     * By default, 10000 and accecpts only integer values.
+     * By default, 10000 and accepts only integer values.
      */
 
     'table_reload_idle_time' => 10000,
