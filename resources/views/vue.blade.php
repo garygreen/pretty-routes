@@ -180,7 +180,29 @@
             </template>
 
             <template v-slot:item.path="{ item }">
-                <span v-html="highlightParameters(item.path)"></span>
+                <template v-if="showPathLink">
+                    <a v-bind:href="'{{url('/')}}/' + getDummyPath(item.path)" target="_blank" class="text-decoration-none">
+                        <v-icon dense class="mr-5px">mdi-open-in-new</v-icon>
+                    </a>
+
+                    <span v-html="highlightParameters(item.path)"
+                        @click="clickAndCopy ? copyText('{{url('/')}}/' + getDummyPath(item.path)) : null"
+                        @dblclick="doubleClickAndCopy ? copyText('{{url('/')}}/' + getDummyPath(item.path)) : null"
+                    ></span>
+                </template>
+                <template v-else>
+                    <span v-html="highlightParameters(item.path)"
+                        @click="clickAndCopy ? copyText(item.path) : null"
+                        @dblclick="doubleClickAndCopy ? copyText(item.path) : null"
+                    ></span>
+                </template>
+            </template>
+
+            <template v-slot:item.name="{ item }">
+                <span v-text="item.name"
+                    @click="clickAndCopy ? copyText(item.name) : null"
+                    @dblclick="doubleClickAndCopy ? copyText(item.name) : null"
+                ></span>
             </template>
 
             <template v-slot:item.domain="{ item }">

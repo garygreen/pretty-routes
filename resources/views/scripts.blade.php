@@ -3,11 +3,21 @@
 <script src="https://cdn.jsdelivr.net/npm/axios@v0.21"></script>
 <script src="https://cdn.jsdelivr.net/npm/lodash@4"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/vue-clipboard2@0.3.1/dist/vue-clipboard.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/idle-js@1.2.0"></script>
+
 <script>
     const trans = {!! json_encode(\PrettyRoutes\Facades\Trans::all(), JSON_UNESCAPED_UNICODE) !!};
     const isEnabledCleanup = {{ config('app.env') !== 'production' && (bool) config('app.debug') === true ? 'true' : 'false' }};
+    const dummyVariablePrefix = '{{ config('pretty-routes.dummy_variable_prefix') }}';
+    const themeIdleTime = {{ config('pretty-routes.color_scheme_idle_time', 1000) }};
+    const tableIdleTime = {{ config('pretty-routes.table_reload_idle_time', 0) }};
+    const colorScheme = '{{ config('pretty-routes.color_scheme', 'auto') }}';
+    const showPathLink = {{ (bool) config('pretty-routes.show_path_link', false) === true ? 'true' : 'false'}};
+    const clickAndCopy = {{ (bool) config('pretty-routes.click_and_copy', false) === true ? 'true' : 'false'}};
+    const doubleClickAndCopy = {{ (bool) config('pretty-routes.double_click_and_copy', false) === true ? 'true' : 'false'}};
 
-    const colorScheme = () => {
+    const isDarkTheme = () => {
         switch ('{{ config('pretty-routes.color_scheme', 'auto') }}') {
             case 'dark':
                 return true;
@@ -22,11 +32,29 @@
         el: '#app',
         vuetify: new Vuetify({
             theme: {
-                dark: colorScheme()
+                dark: isDarkTheme()
             }
         }),
 
         data: {
+            dialog: {
+                isOpen: false,
+                title: '',
+                message: '',
+                messageVisible: true,
+                dataDump: null,
+                dataDumpVisible: false,
+                printDataButton: trans.printData,
+                dismissButton: trans.dismiss,
+                refreshButton: trans.reload
+            },
+
+            snackbar: {
+                isOpen: false,
+                message: '',
+                timeout: 3000
+            },
+
             itemsPerPage: 15,
             loading: false,
 
@@ -106,7 +134,11 @@
                 'white--text purple darken-3',
                 'white--text teal darken-1',
                 'white--text yellow darken-3'
-            ]
+            ],
+
+            idleThemeManager: null,
+
+            idleRouteManager: null
         },
 
         computed: {
@@ -203,9 +235,61 @@
 
         mounted() {
             this.getRoutes();
+            
+            if (colorScheme === 'auto') {
+                this.idleThemeManager = new IdleJs({
+                    idle: themeIdleTime,
+                    events: ['mousemove', 'keydown', 'mousedown', 'touchstart'],
+                    onIdle: () => this.applyTheme(),
+                    onActive: () => this.applyTheme(),
+                    onHide: () => {},
+                    onShow: () => {},
+                    keepTracking: true,
+                    startAtIdle: false
+                });
+
+                this.idleThemeManager.start();
+            }
+
+            if (tableIdleTime > 0){
+                this.idleRouteManager = new IdleJs({
+                    idle: tableIdleTime,
+                    events: ['mousemove', 'keydown', 'mousedown', 'touchstart'],
+                    onIdle: () => {},
+                    onActive: () => {
+                        this.getRoutes();
+
+                        this.snackbar.isOpen = true;
+                        this.snackbar.message = trans.loadedOnActive;
+                    },
+                    onHide: () => {},
+                    onShow: () => {},
+                    keepTracking: true,
+                    startAtIdle: false
+                });
+
+                this.idleRouteManager.start();
+            }
         },
 
         methods: {
+            setDialog(dialogContent, isDump = false){
+                if (! dialogContent){
+                    dialogContent = {
+                        isOpen: false
+                    };
+                } else {
+                    dialogContent = Object.assign(dialogContent, {
+                        isOpen: true,
+                        messageVisible: ! isDump,
+                        dataDumpVisible: isDump,
+                        printDataButton: isDump ? trans.showMessage : trans.printData
+                    });
+                }
+
+                this.dialog = Object.assign(this.dialog, dialogContent);
+            },
+
             getRoutes(force = false) {
                 if (this.loading === true && force === false) {
                     return;
@@ -219,8 +303,22 @@
 
                         this.setDomains();
                         this.setModules();
+
+                        this.setDialog(false);
                     })
-                    .catch(error => console.error(error))
+                    .catch(error => {
+                        console.error(error);
+
+                        let data = error.response.data;
+
+                        this.setDialog({
+                            title: error.message || trans.error,
+                            message: data.message || data,
+                            messageVisible: true,
+                            dataDump: data.message ? data : null,
+                            dataDumpVisible: false
+                        });
+                    })
                     .finally(() => this.loading = false);
             },
 
@@ -409,6 +507,39 @@
 
             openGitHubRepository() {
                 window.open(this.repository.url);
+            },
+
+            showDialogData() {
+                let isShow = this.dialog.dataDump && ! this.dialog.dataDumpVisible;
+
+                this.setDialog({}, isShow);
+            },
+
+            getDummyPath(path){
+                if (path && dummyVariablePrefix.length){
+                    return path.replace(/{([^}]+)}/gi, `${dummyVariablePrefix}_$1`);
+                }
+
+                return path;
+            },
+
+            copyText(text){
+                this.$copyText(text).then(e => {
+                    this.snackbar.isOpen = true;
+                    this.snackbar.message = trans.textCopied + ' : ' + (text.length >= 30 ? text.substring(0, 30) + '...' : text);
+
+                    console.log(e);
+                },
+                e => {
+                    this.snackbar.isOpen = true;
+                    this.snackbar.message = trans.textNotCopy;
+
+                    console.log(e);
+                });
+            },
+            
+            applyTheme(){
+                this.$vuetify.theme.dark = isDarkTheme();
             }
         }
     });

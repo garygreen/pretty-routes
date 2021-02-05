@@ -70,6 +70,32 @@ return [
     'color_scheme' => 'auto',
 
     /*
+     * Apply color theme when idle time or active.
+     *
+     * If your browser theme following any specific condition (os, time etc.) helps to auto theme switch.
+     *
+     * 1000 ms = 1 seconds
+     *
+     * This option depends to "color_scheme" and works only with "auto"
+     *
+     * By default, 1000 and accepts only integer values.
+     */
+
+    'color_scheme_idle_time' => 1000,
+
+    /*
+     * Auto reload table contents when return back.
+     *
+     * 1000 ms = 1 seconds
+     *
+     * 0 = disabled
+     *
+     * By default, 10000 and accepts only integer values.
+     */
+
+    'table_reload_idle_time' => 10000,
+
+    /*
      * If routes are not separated by a domain, this column is hidden from display by default.
      *
      * If you want to always show the column with the domain name, set the value to "true".
@@ -88,4 +114,41 @@ return [
      */
 
     'locale_force' => false,
+
+    /*
+     * Enable open link in new tab.
+     *
+     * Useful for manual testing or visual checks.
+     *
+     * This option related with "dummy_variable_prefix"
+     */
+
+    'show_path_link' => true,
+
+    /*
+     * Laravel stores variable names with curly bracktes, this option replaces "prefix" and "variable name".
+     * So we can prevent url encode when browsing and we can get readable urls
+     *
+     * For example
+     * before admin/line/lines/{line_id} => admin/line/lines/%7Bline_id%7D
+     * after: admin/line/lines/{line_id} => admin/line/lines/param_line_id
+     *
+     * This option depends to "show_path_link"
+     */
+
+    'dummy_variable_prefix' => 'param_',
+
+    /*
+     * Click and copy to clipboard "path" and "name" text.
+     */
+
+    'click_and_copy' => true,
+
+    /*
+     * Double click and copy to clipboard "path" and "name" text.
+     *
+     * This option overwrites "click_and_copy" option.
+     */
+
+    'double_click_and_copy' => true,
 ];
