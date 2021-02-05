@@ -27,7 +27,7 @@ return [
     'printData'           => 'Veriyi Yazdır',
     'priority'            => 'Öncelik',
     'refreshRoutes'       => 'Rota listesini güncelle',
-    'reload'              => 'Reload',
+    'reload'              => 'Yeniden Yükle',
     'search'              => 'Ara',
     'show'                => 'Göster',
     'showMessage'         => 'Mesajı Göster',
