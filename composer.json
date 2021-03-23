@@ -22,7 +22,7 @@
         "php": "^7.2|^8.0",
         "ext-json": "*",
         "andrey-helldar/laravel-routes-core": "^2.0",
-        "andrey-helldar/support": "^2.0",
+        "andrey-helldar/support": "^2.0|^3.0",
         "illuminate/contracts": "^5.0|^6.0|^7.0|^8.0",
         "illuminate/http": "^5.0|^6.0|^7.0|^8.0",
         "illuminate/routing": "^5.0|^6.0|^7.0|^8.0",
