@@ -37,5 +37,4 @@ return [
     'types'               => 'Tipos de Ruta',
     'web'                 => 'Web',
     'without'             => 'Sin Dominio',
-
 ];
