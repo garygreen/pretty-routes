@@ -79,6 +79,17 @@ php artisan vendor:publish --provider="PrettyRoutes\ServiceProvider"
 | 7.4 | Supported, not tested | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | 8.0 | Not supported, not tested | :x: | :x: | :x: | :x: | :x: | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 
+## License
+
+This package is licensed under the [MIT License](LICENSE).
+
+## For Enterprise
+
+Available as part of the Tidelift Subscription.
+
+The maintainers of `andrey-helldar/pretty-routes` and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more](https://tidelift.com/subscription/pkg/packagist-andrey-helldar-pretty-routes?utm_source=packagist-andrey-helldar-pretty-routes&utm_medium=referral&utm_campaign=enterprise&utm_term=repo).
+
+
 [badge_build]:      https://img.shields.io/github/workflow/status/andrey-helldar/pretty-routes/phpunit?style=flat-square
 
 [badge_coverage]:   https://img.shields.io/scrutinizer/coverage/g/andrey-helldar/pretty-routes.svg?style=flat-square
