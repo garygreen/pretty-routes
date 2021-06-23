@@ -32,11 +32,21 @@
         table.hide-domains .domain {
             display: none;
         }
+
+        .float-right {
+            float: right;
+        }
     </style>
 </head>
 <body>
 
     <h1 class="display-4">Routes ({{ count($routes) }})</h1>
+    @if(request('search') != null)
+        <a href="?search=">x</a>
+    @endif
+    <form action="">
+        <input type="text" name="search" placeholder="Search">
+    </form>
 
     <table class="table table-sm table-hover" style="visibility: hidden;">
         <thead>
