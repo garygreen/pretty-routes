@@ -60,7 +60,7 @@
                     </td>
                     <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
                     <td>
-                        @if ($method=='GET')
+                        @if ($method=='GET' && ! strpos($route->uri, "{"))
                             {!! "<a href='".url($route->uri())."' target='_blank'>$route->uri</a>" !!}
                         @else
                             {!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}
