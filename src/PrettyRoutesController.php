@@ -1,10 +1,12 @@
-<?php namespace PrettyRoutes;
+<?php
 
-use Route;
+namespace PrettyRoutes;
+
 use Closure;
+use PrettyRoutes\Utils\RouteUtils;
 
-class PrettyRoutesController {
-
+class PrettyRoutesController
+{
     /**
      * Show pretty routes.
      *
@@ -12,11 +14,17 @@ class PrettyRoutesController {
      */
     public function show()
     {
+        $search = request('search');
+
         $middlewareClosure = function ($middleware) {
             return $middleware instanceof Closure ? 'Closure' : $middleware;
         };
 
-        $routes = collect(Route::getRoutes());
+        if ($search) {
+            $routes = collect(RouteUtils::filter($search));
+        } else {
+            $routes = collect(RouteUtils::get());
+        }
 
         foreach (config('pretty-routes.hide_matching') as $regex) {
             $routes = $routes->filter(function ($value, $key) use ($regex) {
@@ -29,5 +37,4 @@ class PrettyRoutesController {
             'middlewareClosure' => $middlewareClosure,
         ]);
     }
-
 }
