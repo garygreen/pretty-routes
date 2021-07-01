@@ -48,7 +48,7 @@
     <h1 class="display-4">Routes ({{ count($routes) }})</h1>
     
     <form action="">
-        <input type="text" name="search" placeholder="Search">
+        <input type="text" name="search" placeholder="Search" value="{{ request('search') != null ? request('search') : "" }}">
         @if(request('search') != null)
         <a class="clear-search" href="?search=">x</a>
         @endif
