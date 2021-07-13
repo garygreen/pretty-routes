@@ -12,9 +12,43 @@
             background-color: rgba(0,0,0,.015);
         }
 
-        .table td, .table th {
+        @if (config('pretty-routes.dark'))
+            body {
+                background-color: #0d1117;
+            }
+
+            .display-4 {
+                color: #aab2b9;
+            }
+
+            table {
+                border-collapse: collapse;
+            }
+            tr {
+                border-bottom: solid 1px;
+            }
+
+            tr:first-child {
+                border-top: none;
+            }
+            tr:last-child {
+                border-bottom: none;
+            }
+
+            .table tbody tr:nth-of-type(odd){
+                background-color: #161b22;
+            }
+
+            .table tbody tr:hover{
+                background-color: #232e3f;
+            }
+        @endif
+
+        .table td,
+        .table th {
             border-top: none;
             font-size: 14px;
+            @if (config('pretty-routes.dark'))color: #c9d1d9; @endif;
         }
 
         .table thead th {
@@ -32,8 +66,10 @@
         table.hide-domains .domain {
             display: none;
         }
+
     </style>
 </head>
+
 <body>
 
     <h1 class="display-4">Routes ({{ count($routes) }})</h1>
@@ -50,7 +86,8 @@
             </tr>
         </thead>
         <tbody>
-            <?php $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'OPTIONS' => 'default', 'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger']; ?>
+            <?php $methodColours = ['GET' => 'success', 'HEAD' => 'default', 'OPTIONS' => 'default',
+            'POST' => 'primary', 'PUT' => 'warning', 'PATCH' => 'info', 'DELETE' => 'danger']; ?>
             @foreach ($routes as $route)
                 <tr>
                     <td>
@@ -58,16 +95,17 @@
                             <span class="tag tag-{{ $methodColours[$method] }}">{{ $method }}</span>
                         @endforeach
                     </td>
-                    <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">{{ $route->domain() }}</td>
+                    <td class="domain{{ strlen($route->domain()) == 0 ? ' domain-empty' : '' }}">
+                        {{ $route->domain() }}</td>
                     <td>{!! preg_replace('#({[^}]+})#', '<span class="text-warning">$1</span>', $route->uri()) !!}</td>
                     <td>{{ $route->getName() }}</td>
                     <td>{!! preg_replace('#(@.*)$#', '<span class="text-warning">$1</span>', $route->getActionName()) !!}</td>
                     <td>
-                      @if (is_callable([$route, 'controllerMiddleware']))
-                        {{ implode(', ', array_map($middlewareClosure, array_merge($route->middleware(), $route->controllerMiddleware()))) }}
-                      @else
-                        {{ implode(', ', $route->middleware()) }}
-                      @endif
+                        @if (is_callable([$route, 'controllerMiddleware']))
+                            {{ implode(', ', array_map($middlewareClosure, array_merge($route->middleware(), $route->controllerMiddleware()))) }}
+                        @else
+                            {{ implode(', ', $route->middleware()) }}
+                        @endif
                     </td>
                 </tr>
             @endforeach
@@ -87,7 +125,9 @@
         }
 
         hideEmptyDomainColumn();
+
     </script>
 
 </body>
+
 </html>

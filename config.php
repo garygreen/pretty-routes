@@ -33,4 +33,9 @@ return [
         '#^routes$#'
     ],
 
+    /**
+     * Toggle dark mode
+     */
+    'dark' => true,
+
 ];
