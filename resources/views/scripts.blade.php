@@ -64,7 +64,7 @@
             },
 
             repository: {
-                url: 'https://github.com/andrey-helldar/pretty-routes',
+                url: 'https://github.com/TheDragonCode/pretty-routes',
                 icon: 'https://github.com/fluidicon.png'
             },
 
