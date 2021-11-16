@@ -20,7 +20,7 @@ namespace PrettyRoutes\Support;
 use Helldar\Support\Facades\Helpers\Arr;
 use Illuminate\Support\Facades\App;
 
-final class Trans
+class Trans
 {
     public const DEFAULT_LOCALE = 'en';
 

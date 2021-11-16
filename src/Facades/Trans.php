@@ -24,7 +24,7 @@ use PrettyRoutes\Support\Trans as Support;
  * @method static array all()
  * @method static string get(string $key)
  */
-final class Trans extends Facade
+class Trans extends Facade
 {
     protected static function getFacadeAccessor()
     {

@@ -19,7 +19,7 @@ namespace Tests\Localizations;
 
 use Tests\TestCase;
 
-final class FrTest extends TestCase
+class FrTest extends TestCase
 {
     public function testApp()
     {

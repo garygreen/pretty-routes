@@ -20,7 +20,7 @@ namespace PrettyRoutes\Support;
 use Helldar\LaravelRoutesCore\Contracts\Config as ConfigContract;
 use Illuminate\Support\Facades\Config as Conf;
 
-final class Config implements ConfigContract
+class Config implements ConfigContract
 {
     public function getApiMiddleware(): array
     {

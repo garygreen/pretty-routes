@@ -19,7 +19,7 @@ namespace PrettyRoutes\Support;
 
 use Illuminate\Support\Facades\Artisan;
 
-final class Cache
+class Cache
 {
     protected $when = true;
 

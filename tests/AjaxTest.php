@@ -19,7 +19,7 @@ namespace Tests;
 
 use Illuminate\Support\Facades\Validator;
 
-final class AjaxTest extends TestCase
+class AjaxTest extends TestCase
 {
     public function testStructure()
     {
