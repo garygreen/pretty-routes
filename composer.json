@@ -1,7 +1,7 @@
 {
-    "name": "andrey-helldar/pretty-routes",
-    "description": "Pretty routes for Laravel 5+",
-    "keywords": ["laravel", "routes", "pretty", "pretty-routes"],
+    "name": "dragon-code/pretty-routes",
+    "description": "Pretty Routes for Laravel",
+    "keywords": ["laravel", "routes", "pretty", "pretty-routes", "dragon-code", "dragon", "andrey-helldar"],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -15,24 +15,25 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/andrey-helldar/pretty-routes/issues",
-        "source": "https://github.com/andrey-helldar/pretty-routes"
+        "issues": "https://github.com/TheDragonCode/pretty-routes/issues",
+        "source": "https://github.com/TheDragonCode/pretty-routes"
     },
     "require": {
-        "php": "^7.2|^8.0",
+        "php": "^7.3|^8.0",
         "ext-json": "*",
-        "andrey-helldar/laravel-routes-core": "^2.0|^3.0",
-        "andrey-helldar/support": "^2.0|^3.0|^4.0",
-        "illuminate/contracts": "^5.0|^6.0|^7.0|^8.0",
-        "illuminate/http": "^5.0|^6.0|^7.0|^8.0",
-        "illuminate/routing": "^5.0|^6.0|^7.0|^8.0",
-        "illuminate/support": "^5.0|^6.0|^7.0|^8.0",
-        "illuminate/view": "^5.0|^6.0|^7.0|^8.0"
+        "dragon-code/contracts": "^2.4",
+        "dragon-code/laravel-routes-core": "^4.0",
+        "dragon-code/support": "^5.0",
+        "illuminate/contracts": "^6.0|^7.0|^8.0",
+        "illuminate/http": "^6.0|^7.0|^8.0",
+        "illuminate/routing": "^6.0|^7.0|^8.0",
+        "illuminate/support": "^6.0|^7.0|^8.0",
+        "illuminate/view": "^6.0|^7.0|^8.0"
     },
     "require-dev": {
-        "mockery/mockery": "^0.9|^1.0",
-        "orchestra/testbench": "^3.4|^4.0|^5.0|^6.0",
-        "phpunit/phpunit": "^5.7|^6.0|^7.0|^8.0|^9.0"
+        "mockery/mockery": "^1.0",
+        "orchestra/testbench": "^4.0|^5.0|^6.0",
+        "phpunit/phpunit": "^8.0|^9.0"
     },
     "autoload": {
         "psr-4": {
@@ -58,12 +59,12 @@
         },
         "thanks": [
             {
-                "name": "andrey-helldar/laravel-routes-core",
-                "url": "https://github.com/andrey-helldar/laravel-routes-core"
+                "name": "dragon-code/laravel-routes-core",
+                "url": "https://github.com/TheDragonCode/laravel-routes-core"
             },
             {
-                "name": "andrey-helldar/support",
-                "url": "https://github.com/andrey-helldar/support"
+                "name": "dragon-code/support",
+                "url": "https://github.com/TheDragonCode/support"
             }
         ]
     }
