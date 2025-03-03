@@ -32,12 +32,28 @@
         table.hide-domains .domain {
             display: none;
         }
+
+        .float-right {
+            float: right;
+        }
+
+        .clear-search {
+            color:black; 
+            font-weight: bold; 
+        }
     </style>
 </head>
 <body>
 
     <h1 class="display-4">Routes ({{ count($routes) }})</h1>
-
+    
+    <form action="">
+        <input type="text" name="search" placeholder="Search" value="{{ request('search') != null ? request('search') : "" }}">
+        @if(request('search') != null)
+        <a class="clear-search" href="?search=">x</a>
+        @endif
+    </form>
+    
     <table class="table table-sm table-hover" style="visibility: hidden;">
         <thead>
             <tr>
